@@ -8,11 +8,17 @@ from vpython import *
 import pandas as pd
 import numpy as np
 from formatdata import format
-
+from collections import Counter
 
 data_f = format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF1_3d_data.json')
 
+
 frame=100
+
+
+
+
+
 #    % H36M_NAMES[0]  = 'Hip'
 #    % H36M_NAMES[1]  = 'RHip'
 #    % H36M_NAMES[2]  = 'RKnee'
@@ -34,9 +40,16 @@ frame=100
 # 10.head  11.L clavicle 12.L upperarm 13.L lowerarm 14.R clav 15.R up arm 16.R low arm
 bones=[[0,1],[1,2],[2,3],[0,6],[6,7],[7,8],[0,12],[12,13],[13,14],[14,15],[13,17],[17,18],[18,19],[13,25],[25,26],[26,27],[14,15]];
 
-skeleton=[]
 
-#[skeleton{bones(i,1),x}(1),skeleton{bones(i,2),x}(1)],[skeleton{bones(i,1),x}(2),skeleton{bones(i,2),x}(2)],[skeleton{bones(i,1),x}(3),skeleton{bones(i,2),x}(3)])
+flat_bones = []
+for sublist in bones:
+    for item in sublist:
+        flat_bones.append(item)
+
+
+num_joints=len(Counter(flat_bones).keys())
+joints=[0]*num_joints
+skeleton=[]
 
 
 for i in range(len(bones)):
@@ -44,7 +57,12 @@ for i in range(len(bones)):
     end=data_f[frame][bones[i][1]]
     delta=np.subtract(end,start)
     
-    rod = cylinder(pos=vector(start[0],start[1],start[2]), axis=vector(delta[0],delta[1],delta[2]), radius=30)
+    
+    skeleton.append(cylinder(pos=vector(start[0],start[1],start[2]), axis=vector(delta[0],delta[1],delta[2]), radius=20))
+ 
+ 
+    if joints[i]==0:
+        joints[i]=(sphere(pos=vector(start[0],start[1],start[2]), radius=30))
 
 scene.width = scene.height = 800
 #scene.range = 1.8
