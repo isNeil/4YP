@@ -11,7 +11,7 @@ from formatdata import format
 from collections import Counter
 
 data_f = format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF1_3d_data.json')
-data_f_end = format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF1_3d_data.json')
+data_f_new = format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF1_3d_data.json')
 
 
 #    % H36M_NAMES[0]  = 'Hip'
@@ -62,14 +62,19 @@ for i in range(len(bones)):
     
     if i ==0:
         skeleton.append(cylinder(pos=vector(start[0],start[1],start[2]), axis=vector(delta_n[0],delta_n[1],delta_n[2]), radius=20))
-        data_f_end[frame][bones[i][1]]=delta_n
+        data_f_new[frame][bones[i][1]]=np.add(start,delta_n)
     else:
-        endpoint=data_f_end[frame][bones[i][0]]
-        skeleton.append(cylinder(pos=vector(endpoint[0],endpoint[1],endpoint[2]), axis=vector(delta_n[0],delta_n[1],delta_n[2]), radius=20))
-        data_f_end[frame][bones[i][1]]=np.add(endpoint,delta_n)
+        start=data_f_new[frame][bones[i][0]]
+        skeleton.append(cylinder(pos=vector(start[0],start[1],start[2]), axis=vector(delta_n[0],delta_n[1],delta_n[2]), radius=20))
+#        if i in joints:
+#            jeleton.append(sphere(pos=vector(endpoint[0],endpoint[1],endpoint[2]), radius=30))
+        data_f_new[frame][bones[i][1]]=np.add(start,delta_n)
  
 for i in range(len(joints)):
-    start=data_f[frame][joints[i]]
+#    if i ==0:
+#        jeleton.append(sphere(pos=vector(data_f[frame][bones[i][0]][0],data_f[frame][bones[i][0]][1],data_f[frame][bones[i][0]][2]), radius=30))
+#    else:
+    start=data_f_new[frame][joints[i]]
     jeleton.append(sphere(pos=vector(start[0],start[1],start[2]), radius=30))
     
 ##############################################################################
@@ -89,13 +94,13 @@ while frame<np.shape(data_f)[1]-1:
         delta_n=np.divide(delta,np.linalg.norm(delta)/limb_length[i])
         
 #        skeleton[i]=cylinder(pos=vector(start[0],start[1],start[2]), axis=vector(delta[0],delta[1],delta[2]), radius=20)        
-        endpoint=data_f_end[frame][bones[i][0]]
-        skeleton[i].pos=vector(endpoint[0],endpoint[1],endpoint[2])
+        start=data_f_new[frame][bones[i][0]]
+        skeleton[i].pos=vector(start[0],start[1],start[2])
         skeleton[i].axis=vector(delta_n[0],delta_n[1],delta_n[2])
-        data_f_end[frame][bones[i][1]]=np.add(endpoint,delta_n)
+        data_f_new[frame][bones[i][1]]=np.add(start,delta_n)
  
     for i in range(len(joints)):
-        start=data_f[frame][joints[i]]
+        start=data_f_new[frame][joints[i]]
         jeleton[i].pos=vector(start[0],start[1],start[2])
     
     

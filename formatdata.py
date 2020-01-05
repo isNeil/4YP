@@ -25,10 +25,11 @@ def format(json_file):
     
     #centre coordinates on hip
        
-        
-    for i in range(np.shape(df)[1]): 
+    
+    for i in range(np.shape(df)[1]):
+        shift=df[i][0]
         for j in range(np.shape(df)[0]):
-            df[i][j]=np.subtract(df[i][j],df[i][0])
+            df[i][j]=np.subtract(df[i][j],shift)
     
     return df
         
