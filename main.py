@@ -34,9 +34,10 @@ frame=100
 # 10.head  11.L clavicle 12.L upperarm 13.L lowerarm 14.R clav 15.R up arm 16.R low arm
 bones=[[0,1],[1,2],[2,3],[0,6],[6,7],[7,8],[0,12],[12,13],[13,14],[14,15],[13,17],[17,18],[18,19],[13,25],[25,26],[26,27],[14,15]];
 
-
+skeleton=[]
 
 #[skeleton{bones(i,1),x}(1),skeleton{bones(i,2),x}(1)],[skeleton{bones(i,1),x}(2),skeleton{bones(i,2),x}(2)],[skeleton{bones(i,1),x}(3),skeleton{bones(i,2),x}(3)])
+
 
 for i in range(len(bones)):
     start=data_f[frame][bones[i][0]]
