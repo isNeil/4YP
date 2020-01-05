@@ -31,11 +31,11 @@ data_f_new = format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF1_3d_data.jso
 #    % H36M_NAMES[25] = 'RShoulder'
 #    % H36M_NAMES[26] = 'RElbow'
 #    % H36M_NAMES[27] = 'RWrist'
-# 1.R pelvis 2.R femur 3.R tibia 4.L pelvis 5.L femur 6.L tibia 7.lowerback 8.upperback 9.neck 10.head 
-# 10.head  11.L clavicle 12.L upperarm 13.L lowerarm 14.R clav 15.R up arm 16.R low arm
+# 1.R pelvis [124] 2.R femur[452] 3.R tibia[504] 4.L pelvis[124] 5.L femur 6.L tibia 7.lowerback[252] 8.upperback[231] 9.neck[78] 10.head [112]
+#11.L clavicle[120] 12.L upperarm[250] 13.L lowerarm[190] 14.R clav 15.R up arm 16.R low arm
 bones=[[0,1],[1,2],[2,3],[0,6],[6,7],[7,8],[0,12],[12,13],[13,14],[14,15],[13,17],[17,18],[18,19],[13,25],[25,26],[26,27]]
 joints=[0,1,2,3,6,7,8,12,13,14,15,17,18,19,25,26,27]
-limb_length=[124,452,504,124,452,504,252,231,78,112,113,259,174,113,259,174]
+limb_length=[124,452,504,124,452,504,252,231,78,112,120,250,230,120,250,230]
 #flat_bones = []
 #for sublist in bones:
 #    for item in sublist:
