@@ -24,12 +24,11 @@ def format(json_file):
             df[i][j]=df[i][j].get("translate")
     
     #centre coordinates on hip
-    
-    pelvis=df[0][0]        
+       
         
     for i in range(np.shape(df)[1]): 
         for j in range(np.shape(df)[0]):
-            df[i][j]=np.subtract(df[i][j],pelvis)
+            df[i][j]=np.subtract(df[i][j],df[i][0])
     
     return df
         
