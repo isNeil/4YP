@@ -10,7 +10,7 @@ import numpy as np
 from formatdata import format
 from collections import Counter
 
-data_f = format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF3_3d_data.json')
+data_f = format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF1_3d_data.json')
 
 
 
@@ -67,7 +67,7 @@ for i in range(len(joints)):
 ##############################################################################
 #Animation start
 
-while frame<np.shape(data_f)[1]:
+while frame<np.shape(data_f)[1]-1:
 
     sleep(0.02)
     frame+=1
