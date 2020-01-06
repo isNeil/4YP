@@ -9,10 +9,15 @@ import pandas as pd
 import numpy as np
 from formatdata import format
 from collections import Counter
+from scipy import signal
+from simulation import sim
+import matplotlib.pyplot as plt
+import calc_vel_accel as dt
 
 data_f = format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF1_3d_data.json')
-data_f_new = format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF1_3d_data.json')
 
+#data_f_3= format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF3_3d_data.json') 
+#data_f_4= format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF4_3d_data.json') 
 
 #    % H36M_NAMES[0]  = 'Hip'
 #    % H36M_NAMES[1]  = 'RHip'
@@ -36,78 +41,35 @@ data_f_new = format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF1_3d_data.jso
 bones=[[0,1],[1,2],[2,3],[0,6],[6,7],[7,8],[0,12],[12,13],[13,14],[14,15],[13,17],[17,18],[18,19],[13,25],[25,26],[26,27]]
 joints=[0,1,2,3,6,7,8,12,13,14,15,17,18,19,25,26,27]
 limb_length=[124,452,504,124,452,504,252,231,78,112,120,250,230,120,250,230]
-#flat_bones = []
-#for sublist in bones:
-#    for item in sublist:
-#        flat_bones.append(item)
-#
-#num_joints=len(Counter(flat_bones).keys())
 
-##############################################################################
-##############################################################################
-#Initialise
     
 frame=0
-skeleton=[]
-jeleton=[]
-length=[]
+data_f_new=sim(frame,data_f,bones,joints,limb_length,vec(1,0,0))
 
-for i in range(len(bones)):
-    start=data_f[frame][bones[i][0]]
-    end=data_f[frame][bones[i][1]]
-    delta=np.subtract(end,start)
-    delta_n=np.divide(delta,np.linalg.norm(delta)/limb_length[i])
-    
-    length.append(np.linalg.norm(delta))
-    
-    if i ==0:
-        skeleton.append(cylinder(pos=vector(start[0],start[1],start[2]), axis=vector(delta_n[0],delta_n[1],delta_n[2]), radius=20))
-        data_f_new[frame][bones[i][1]]=np.add(start,delta_n)
-    else:
-        start=data_f_new[frame][bones[i][0]]
-        skeleton.append(cylinder(pos=vector(start[0],start[1],start[2]), axis=vector(delta_n[0],delta_n[1],delta_n[2]), radius=20))
-#        if i in joints:
-#            jeleton.append(sphere(pos=vector(endpoint[0],endpoint[1],endpoint[2]), radius=30))
-        data_f_new[frame][bones[i][1]]=np.add(start,delta_n)
- 
-for i in range(len(joints)):
-#    if i ==0:
-#        jeleton.append(sphere(pos=vector(data_f[frame][bones[i][0]][0],data_f[frame][bones[i][0]][1],data_f[frame][bones[i][0]][2]), radius=30))
-#    else:
-    start=data_f_new[frame][joints[i]]
-    jeleton.append(sphere(pos=vector(start[0],start[1],start[2]), radius=30))
-    
-##############################################################################
-##############################################################################
-#Animation start
+df_v=dt.df_v(data_f_new)
+df_a=dt.df_a(df_v)
 
-while frame<np.shape(data_f)[1]-1:
-
-    sleep(0.02)
-    frame+=1
-    
-    
-    for i in range(len(bones)):
-        start=data_f[frame][bones[i][0]]
-        end=data_f[frame][bones[i][1]]
-        delta=np.subtract(end,start)
-        delta_n=np.divide(delta,np.linalg.norm(delta)/limb_length[i])
-        
-#        skeleton[i]=cylinder(pos=vector(start[0],start[1],start[2]), axis=vector(delta[0],delta[1],delta[2]), radius=20)        
-        start=data_f_new[frame][bones[i][0]]
-        skeleton[i].pos=vector(start[0],start[1],start[2])
-        skeleton[i].axis=vector(delta_n[0],delta_n[1],delta_n[2])
-        data_f_new[frame][bones[i][1]]=np.add(start,delta_n)
- 
-    for i in range(len(joints)):
-        start=data_f_new[frame][joints[i]]
-        jeleton[i].pos=vector(start[0],start[1],start[2])
-    
-    
+#data_f_new_3=sim(frame,data_f_3,bones,joints,limb_length,vec(0,0,1))
 
 
-##############################################################################
-##############################################################################    
+#data_f_new_4=sim(frame,data_f_4,bones,joints,limb_length,vec(0,1,0))
+
+
+#def list_coords(joint,axis,data):    
+#    list=[]
+#    for i in range(len(data)):
+#        list.append(data[i][joint][axis])
+#    return list
+#
+#x1=list_coords(31,0,data_f_new)
+#y1=list_coords(31,1,data_f_new)
+#z1=list_coords(31,2,data_f_new)
+#x3=list_coords(31,0,data_f_new_3)
+#y3=list_coords(31,1,data_f_new_3)
+#z3=list_coords(31,2,data_f_new_3)
+
+
+
 #scene.width = scene.height = 800
 #scene.range = 1.8
 scene.title = "Pose Visualisation"   
