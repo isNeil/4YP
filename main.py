@@ -36,11 +36,10 @@ data_f = format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF1_3d_data.json',b
 frame=0
 
 scene1 = canvas()
-while frame<np.shape(data_f)[1]-1:
+
     
-    rate(25)
-    frame+=1
-    sim(frame,data_f,bones,joints,limb_length,vec(1,0,0))
+sim(frame,data_f,bones,joints,limb_length,vec(1,0,0))
+
 
 #df_v=dt.df_v(data_f_new)
 #df_a=dt.df_a(df_v)
