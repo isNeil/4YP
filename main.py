@@ -26,35 +26,28 @@ limb_length=[124,452,504,124,452,504,252,231,78,112,120,250,230,120,250,230]
 
 
 #formats data so that becomes matrix of dimensions. Rows are joints. Columns are frames. Also centres coords on hip
-data_f = format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF1_3d_data.json',bones,joints,limb_length)
-#data_f_3= format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF3_3d_data.json')
-#data_f_4= format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF4_3d_data.json') 
+#data_f = format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF1_3d_data.json',bones,joints,limb_length)
+#data_f_3= format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF3_3d_data.json',bones,joints,limb_length)
+data_f_4= format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF4_3d_data.json',bones,joints,limb_length) 
 
 
 
     
 frame=0
 
-scene1 = canvas()
+#scene1 = canvas()
 
     
-sim(frame,data_f,bones,joints,limb_length,vec(1,0,0))
+#sim(frame,data_f,bones,joints,limb_length,vec(1,0,0))
 
 
 #df_v=dt.df_v(data_f_new)
 #df_a=dt.df_a(df_v)
-
-
 #scene2 = canvas()
-#data_f_new_3=sim(frame,data_f_3,bones,joints,limb_length,vec(0,0,1))
-#
-#scene3= canvas()
-#data_f_new_4=sim(frame,data_f_4,bones,joints,limb_length,vec(0,1,0))
-#
+#sim(frame,data_f_3,bones,joints,limb_length,vec(0,0,1))
 
-
-
-
+scene3= canvas()
+sim(frame,data_f_4,bones,joints,limb_length,vec(0,1,0))
 
 
 #scene.width = scene.height = 800
