@@ -15,7 +15,7 @@ def sim(frame,data_f,bones,joints,limb_length,trace_colour):
     data_f_new=pd.DataFrame.copy(data_f)
     skeleton=[]
     jeleton=[]
-    length=[]
+#    length=[]
     
     for i in range(len(bones)):
         start=data_f[frame][bones[i][0]]
@@ -23,7 +23,7 @@ def sim(frame,data_f,bones,joints,limb_length,trace_colour):
         delta=np.subtract(end,start)
         delta_n=np.divide(delta,np.linalg.norm(delta)/limb_length[i])
         
-        length.append(np.linalg.norm(delta))
+#        length.append(np.linalg.norm(delta))
         
         if i ==0:
             skeleton.append(cylinder(pos=vector(start[0],start[1],start[2]), axis=vector(delta_n[0],delta_n[1],delta_n[2]), radius=20))
@@ -68,9 +68,8 @@ def sim(frame,data_f,bones,joints,limb_length,trace_colour):
             start=data_f_new[frame][joints[i]]
             jeleton[i].pos=vector(start[0],start[1],start[2])
     ##################################################################################
-            #########################################################################
-            ##################
-        k=10
+  # plot trails 
+        k=20
         k_skeleton=[]
   
         if frame%k==0:
@@ -81,7 +80,7 @@ def sim(frame,data_f,bones,joints,limb_length,trace_colour):
                 delta=np.subtract(end,start)
                 delta_n=np.divide(delta,np.linalg.norm(delta)/limb_length[i])
         
-                length.append(np.linalg.norm(delta))
+#                length.append(np.linalg.norm(delta))
         
                 if i ==0:
                     skeleton.append(cylinder(pos=vector(start[0],start[1],start[2]), axis=vector(delta_n[0],delta_n[1],delta_n[2]), radius=20, opacity=1))
@@ -103,14 +102,14 @@ def sim(frame,data_f,bones,joints,limb_length,trace_colour):
                 jeleton.append(sphere(pos=vector(start[0],start[1],start[2]), radius=30, opacity= 1))
             for j in range(len(skeleton)):
                 
-                skeleton[j].opacity+=-0.2
-                if skeleton[j].opacity<=0.4:
+                skeleton[j].opacity+=-0.1
+                if skeleton[j].opacity<=0.2:
                     skeleton[j].opacity=0.2
                 
               
             for l in range(len(jeleton)):
-                jeleton[l].opacity+=-0.2
-                if jeleton[l].opacity<=0.4:
+                jeleton[l].opacity+=-0.1
+                if jeleton[l].opacity<=0.2:
                     jeleton[l].opacity=0.2
 #########################################################################################################################
         
