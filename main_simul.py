@@ -29,7 +29,7 @@ limb_length=[124,452,504,124,452,504,252,231,78,112,120,250,230,120,250,230]
 
 
 #formats data so that becomes matrix of dimensions. Rows are joints. Columns are frames. Also centres coords on hip
-data_f = format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF1_3d_data.json',bones,joints,limb_length)
+#data_f = format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF1_3d_data.json',bones,joints,limb_length)
 data_f_3= format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF3_3d_data.json',bones,joints,limb_length)
 data_f_4= format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF4_3d_data.json',bones,joints,limb_length) 
 
@@ -72,7 +72,7 @@ plot1.columns = range(plot1.shape[1])
 plot2=data_f_4.iloc[:,10:112]
 plot2.columns = range(plot2.shape[1])
 
-
+d_lines=[]
 
 while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
     if frame<np.shape(plot1)[1]-1:
@@ -81,10 +81,20 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
         jeleton=temp[1]
     if frame<np.shape(plot2)[1]-1:     
         temp2=sim(skeleton1,jeleton1,frame,plot2,bones,joints,limb_length,vec(1,0,0))
-        skeleton2=temp2[0]
-        jeleton2=temp2[1]
+        skeleton1=temp2[0]
+        jeleton1=temp2[1]
         frame+=1
-
+    
+    start=plot2[frame]
+    end=plot1[frame]
+    delta=np.subtract(end[joints[-1]],start[joints[-1]])
+    start_temp=start[joints[-1]]
+    
+    d_lines.append(cylinder(pos=vector(start_temp[0],start_temp[1],start_temp[2]), axis=vector(delta[0],delta[1],delta[2]), radius=5, color=vec(0,0,1)))
+    
+    print(start_temp)
+    print("s")
+    print(delta)
 
     frame+=1
 

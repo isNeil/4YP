@@ -75,3 +75,4 @@ def sim(skeleton,jeleton,frame,data_f,bones,joints,limb_length,trace_colour):
             jeleton[i].color=vector(rgbc[0],rgbc[1],rgbc[2])
     return [skeleton,jeleton]
             
+#
