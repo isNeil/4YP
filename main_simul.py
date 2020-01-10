@@ -49,7 +49,7 @@ frame=0
 #scene2 = canvas()
 #sim(frame,data_f_3,bones,joints,limb_length,vec(0,0,1))
 
-
+scene=canvas()
 scene.camera.pos=vector(0,-2000,0)
 scene.camera.axis=vector(0,+2000,0)
 scene.up=vector(0,-1,0)
@@ -64,8 +64,15 @@ jeleton=[]
 skeleton1=[]
 jeleton1=[]
 
-plot1=data_f
-plot2=data_f_3.iloc[:,0:100]
+#plot1=data_f
+
+plot1=data_f_3.iloc[:,40:142]
+plot1.columns = range(plot1.shape[1])
+
+plot2=data_f_4.iloc[:,10:112]
+plot2.columns = range(plot2.shape[1])
+
+
 
 while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
     if frame<np.shape(plot1)[1]-1:
