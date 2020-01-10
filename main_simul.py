@@ -10,7 +10,7 @@ import numpy as np
 from formatdata_length_constraint import format
 from collections import Counter
 from scipy import signal
-from simulation import sim
+from simulation_simul import sim
 import matplotlib.pyplot as plt
 import calc_vel_accel as dt
 import joint_angle as ja
