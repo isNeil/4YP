@@ -29,8 +29,8 @@ limb_length=[124,452,504,124,452,504,252,231,78,112,120,250,230,120,250,230]
 
 
 #formats data so that becomes matrix of dimensions. Rows are joints. Columns are frames. Also centres coords on hip
-#data_f = format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF1_3d_data.json',bones,joints,limb_length)
-#data_f_3= format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF3_3d_data.json',bones,joints,limb_length)
+data_f = format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF1_3d_data.json',bones,joints,limb_length)
+data_f_3= format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF3_3d_data.json',bones,joints,limb_length)
 data_f_4= format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF4_3d_data.json',bones,joints,limb_length) 
 
 
@@ -54,9 +54,32 @@ scene.camera.pos=vector(0,-2000,0)
 scene.camera.axis=vector(0,+2000,0)
 scene.up=vector(0,-1,0)
 scene.userzoom =False
-scene.userspin=False
+#scene.userspin=True
 scene.width = scene.height = 1000
-sim(frame,data_f_4,bones,joints,limb_length,vec(0,1,0))
+############################################################################
+
+skeleton=[]
+jeleton=[]
+
+skeleton1=[]
+jeleton1=[]
+
+plot1=data_f
+plot2=data_f_3.iloc[:,0:100]
+
+while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
+    if frame<np.shape(plot1)[1]-1:
+        temp=sim(skeleton,jeleton,frame,plot1,bones,joints,limb_length,vec(0,1,0))
+        skeleton=temp[0]
+        jeleton=temp[1]
+    if frame<np.shape(plot2)[1]-1:     
+        temp2=sim(skeleton1,jeleton1,frame,plot2,bones,joints,limb_length,vec(1,0,0))
+        skeleton2=temp2[0]
+        jeleton2=temp2[1]
+        frame+=1
+
+
+    frame+=1
 
 
 
