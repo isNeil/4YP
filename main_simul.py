@@ -17,7 +17,7 @@ import joint_angle as ja
 import math
 from colour import Color
 import joint_angle as ja
-
+from spherical import asSpherical
 
 #    [0]  = 'Hip'   [1]  = 'RHip'   [2]  = 'RKnee'   [3]  = 'RFoot'   [6]  = 'LHip'   [7]  = 'LKnee'   [8]  = 'LFoot'   [12] = 'Spine'   [13] = 'Thorax'
 #    [14] = 'Neck/Nose'   [15] = 'Head'   [17] = 'LShoulder'   [18] = 'LElbow'   [19] = 'LWrist'   [25] = 'RShoulder'   [26] = 'RElbow'   [27] = 'RWrist'
@@ -85,14 +85,13 @@ plot1.columns = range(plot1.shape[1])
 plot2=data_f_5.iloc[:,25:127]
 plot2.columns = range(plot2.shape[1])
 d_lines=[]
-
 while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
     if frame<np.shape(plot1)[1]-1:
         temp=sim(skeleton,jeleton,frame,plot1,bones,joints,limb_length,vec(0,1,0))
         skeleton=temp[0]
         jeleton=temp[1]
     if frame<np.shape(plot2)[1]-1:     
-        temp2=sim(skeleton1,jeleton1,frame,plot2,bones,joints,limb_length,vec(1,0,0))
+        temp2=sim(skeleton1,jeleton1,frame,plot2,bones,joints,limb_length,vec(1,0,0),False)
         skeleton1=temp2[0]
         jeleton1=temp2[1]
         
@@ -102,15 +101,20 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
     delta=np.subtract(end[joints[-1]],start[joints[-1]])
     start_temp=start[joints[-1]]
     
+    #plot difference lines
     d_lines.append(cylinder(pos=vector(start_temp[0],start_temp[1],start_temp[2]), axis=vector(delta[0],delta[1],delta[2]), radius=2, color=vec(0,0,1)))
-
+    #plot axis
+    arx=arrow(pos=vector(500,0,0),axis=vector(100,0,0),color=vec(1,0,0))
+    ary=arrow(pos=vector(500,0,0),axis=vector(0,100,0),color=vec(0,1,0))
+    arz=arrow(pos=vector(500,0,0),axis=vector(0,0,100),color=vec(0,0,1))
+    
+    
+    
     #joint angle colouring
-
     angles1=ja.joint_angle(frame,plot1,bones,joints)  
     angles2=ja.joint_angle(frame,plot2,bones,joints) 
     angles=np.subtract(angles1,angles2)
-    #print(max(angles))
-    
+
     red = Color("yellow")
     colors = list(red.range_to(Color("red"),70))
     
@@ -121,24 +125,48 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
             rgbc=colors[abs(int(angles[i]))].rgb
             jeleton[i].color=vector(rgbc[0],rgbc[1],rgbc[2])
 
-    #label right arm angle 
-    start_temp=start[joints[-2]]
     
+    #label right shoulder in polar coordinates
+    shoulder=np.subtract(end[joints[-2]],end[joints[-3]])
+    #np.subtract(end[joints[-3]],start[joints[-3]])
+    s_s=asSpherical(shoulder)
+    start_temp3=start[joints[-3]]
+    
+    #label right arm angle 
+    start_temp2=start[joints[-2]]
+
     if frame ==0:
-        al=label(pos=vec(start_temp[0],start_temp[1],start_temp[2]), text=int(angles1[15]), yoffset=-50)
-        
+        al=label(pos=vec(start_temp2[0],start_temp2[1],start_temp2[2]), text=int(angles1[15]), yoffset=-50)
+        adl=label(pos=vec(start_temp2[0],start_temp2[1],start_temp2[2]), text=int(angles[15]), yoffset=50, color=color.red)
+        dl=label(pos=vec(start_temp[0],start_temp[1],start_temp[2]), text='%d,%d,%d' % (start_temp[0],start_temp[1],start_temp[2]), yoffset=-50)
+        ddl=label(pos=vec(start_temp[0],start_temp[1],start_temp[2]),  text='%d,%d,%d' % (delta[0],delta[1],delta[2]), yoffset=50, color=color.red)
+        sl=label(pos=vec(start_temp3[0],start_temp3[1],start_temp3[2]), text='%d,%d' % (s_s[1],s_s[2]), yoffset=-50)
     else:
         
-        al.pos=vec(start_temp[0],start_temp[1],start_temp[2])
-        al.text=angles1[15]
-    
+        al.pos=vec(start_temp2[0],start_temp2[1],start_temp2[2])
+        al.text=int(angles1[15])
+        adl.pos=vec(start_temp2[0],start_temp2[1],start_temp2[2])
+        adl.text=int(angles[15])
+        dl.pos=vec(start_temp[0],start_temp[1],start_temp[2])
+        dl.text= text='%d,%d,%d' % (start_temp[0],start_temp[1],start_temp[2])
+        ddl.pos=vec(start_temp[0],start_temp[1],start_temp[2])
+        ddl.text= text='%d,%d,%d' % (delta[0],delta[1],delta[2])
+        sl.pos=vec(start_temp3[0],start_temp3[1],start_temp3[2])
+        sl.text= text='%d,%d' % (s_s[1],s_s[2])
+        
 
+    
+    
     #graph
     f1 = gdots(color=color.cyan)
     f1.plot(pos=[frame,angles1[15]])
     f2 = gdots(color=color.magenta)
     f2.plot(pos=[frame,angles2[15]])
     frame+=1
+
+
+
+
 
 
 #scene.range = 1.8
