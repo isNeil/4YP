@@ -37,11 +37,15 @@ limb_length=[124,452,504,124,452,504,252,231,78,112,120,250,230,120,250,230]
 #data_f_3.to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF3formated.json')
 #data_f_4= format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF4_3d_data.json',bones,joints,limb_length) 
 #data_f_4.to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF4formated.json')
+#data_f_5= format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF5_3d_data.json',bones,joints,limb_length) 
+#data_f_5.to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF5formated.json')
+
 
 #load formated data instead
 data_f = pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF1formated.json')
 data_f_3= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF3formated.json')
 data_f_4= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF4formated.json')  
+data_f_5= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF5formated.json')  
 
 
 frame=0
@@ -66,14 +70,20 @@ jeleton=[]
 skeleton1=[]
 jeleton1=[]
 
-plot1=data_f
+#plot1=data_f
+#plot2=data_f_4.iloc[:,15:117]
+#plot2.columns = range(plot2.shape[1])
 
-#plot1=data_f_3.iloc[:,40:142]
-#plot1.columns = range(plot1.shape[1])
+plot1=data_f_3.iloc[:,40:142]
+plot1.columns = range(plot1.shape[1])
+#plot1=data_f_4.iloc[:,10:112]
+#plot1.columns = range(plot2.shape[1])
 
-plot2=data_f_4.iloc[:,10:112]
+#plot2=data_f_3.iloc[:,70:172]
+#plot2.columns = range(plot1.shape[1])
+
+plot2=data_f_5.iloc[:,25:127]
 plot2.columns = range(plot2.shape[1])
-
 d_lines=[]
 
 while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
@@ -102,7 +112,7 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
     #print(max(angles))
     
     red = Color("yellow")
-    colors = list(red.range_to(Color("red"),60))
+    colors = list(red.range_to(Color("red"),70))
     
     for i in range(len(jeleton)):
         if angles[i]==0:
@@ -115,7 +125,7 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
     start_temp=start[joints[-2]]
     
     if frame ==0:
-        al=label(pos=vec(start_temp[0],start_temp[1],start_temp[2]), text=angles1[15], yoffset=-50)
+        al=label(pos=vec(start_temp[0],start_temp[1],start_temp[2]), text=int(angles1[15]), yoffset=-50)
         
     else:
         
