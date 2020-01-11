@@ -40,8 +40,6 @@ def sim(skeleton,jeleton,frame,data_f,bones,joints,limb_length,trace_colour):
     #Animation
     else:
 
-        
-        
         for i in range(len(bones)):
             start=data_f[frame][bones[i][0]]
             end=data_f[frame][bones[i][1]]

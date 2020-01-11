@@ -15,8 +15,7 @@ import matplotlib.pyplot as plt
 import calc_vel_accel as dt
 import joint_angle as ja
 import math
-import joint_angle as ja
-from colour import Color
+
 
 #    [0]  = 'Hip'   [1]  = 'RHip'   [2]  = 'RKnee'   [3]  = 'RFoot'   [6]  = 'LHip'   [7]  = 'LKnee'   [8]  = 'LFoot'   [12] = 'Spine'   [13] = 'Thorax'
 #    [14] = 'Neck/Nose'   [15] = 'Head'   [17] = 'LShoulder'   [18] = 'LElbow'   [19] = 'LWrist'   [25] = 'RShoulder'   [26] = 'RElbow'   [27] = 'RWrist'
@@ -33,12 +32,22 @@ limb_length=[124,452,504,124,452,504,252,231,78,112,120,250,230,120,250,230]
 #data_f = format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF1_3d_data.json',bones,joints,limb_length)
 data_f_3= format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF3_3d_data.json',bones,joints,limb_length)
 data_f_4= format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF4_3d_data.json',bones,joints,limb_length) 
+
+
+
     
 frame=0
+
+#scene1 = canvas()
+
+    
+#sim(frame,data_f,bones,joints,limb_length,vec(1,0,0))
+
 
 #df_v=dt.df_v(data_f_new)
 #df_a=dt.df_a(df_v)
 #scene2 = canvas()
+#sim(frame,data_f_3,bones,joints,limb_length,vec(0,0,1))
 
 scene=canvas()
 scene.camera.pos=vector(0,-2000,0)
@@ -54,6 +63,8 @@ jeleton=[]
 
 skeleton1=[]
 jeleton1=[]
+
+#plot1=data_f
 
 plot1=data_f_3.iloc[:,40:142]
 plot1.columns = range(plot1.shape[1])
@@ -80,7 +91,14 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
     start_temp=start[joints[-1]]
     
     d_lines.append(cylinder(pos=vector(start_temp[0],start_temp[1],start_temp[2]), axis=vector(delta[0],delta[1],delta[2]), radius=5, color=vec(0,0,1)))
+    
+    print(start_temp)
+    print("s")
+    print(delta)
 
     frame+=1
-    
+
+
+
+#scene.range = 1.8
 scene.title = "Pose Visualisation"   
