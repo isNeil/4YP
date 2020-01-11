@@ -32,19 +32,19 @@ limb_length=[124,452,504,124,452,504,252,231,78,112,120,250,230,120,250,230]
 
 #formats data so that becomes matrix of dimensions. Rows are joints. Columns are frames. Also centres coords on hip
 #data_f = format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF1_3d_data.json',bones,joints,limb_length)
-data_f_3= format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF3_3d_data.json',bones,joints,limb_length)
-data_f_4= format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF4_3d_data.json',bones,joints,limb_length) 
+#data_f.to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF1formated.json')
+#data_f_3= format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF3_3d_data.json',bones,joints,limb_length)
+#data_f_3.to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF3formated.json')
+#data_f_4= format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF4_3d_data.json',bones,joints,limb_length) 
+#data_f_4.to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF4formated.json')
+
+#load formated data instead
+data_f = pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF1formated.json')
+data_f_3= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF3formated.json')
+data_f_4= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF4formated.json')  
 
 
-
-    
 frame=0
-
-#scene1 = canvas()
-
-    
-#sim(frame,data_f,bones,joints,limb_length,vec(1,0,0))
-
 
 #df_v=dt.df_v(data_f_new)
 #df_a=dt.df_a(df_v)
@@ -66,10 +66,10 @@ jeleton=[]
 skeleton1=[]
 jeleton1=[]
 
-#plot1=data_f
+plot1=data_f
 
-plot1=data_f_3.iloc[:,40:142]
-plot1.columns = range(plot1.shape[1])
+#plot1=data_f_3.iloc[:,40:142]
+#plot1.columns = range(plot1.shape[1])
 
 plot2=data_f_4.iloc[:,10:112]
 plot2.columns = range(plot2.shape[1])
@@ -82,7 +82,7 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
         skeleton=temp[0]
         jeleton=temp[1]
     if frame<np.shape(plot2)[1]-1:     
-        temp2=sim(skeleton1,jeleton1,frame,plot2,bones,joints,limb_length,vec(1,0,0),False)
+        temp2=sim(skeleton1,jeleton1,frame,plot2,bones,joints,limb_length,vec(1,0,0))
         skeleton1=temp2[0]
         jeleton1=temp2[1]
         
@@ -123,8 +123,11 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
         al.text=angles1[15]
     
 
-
-
+    #graph
+    f1 = gdots(color=color.cyan)
+    f1.plot(pos=[frame,angles1[15]])
+    f2 = gdots(color=color.magenta)
+    f2.plot(pos=[frame,angles2[15]])
     frame+=1
 
 
