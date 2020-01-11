@@ -12,7 +12,7 @@ from collections import Counter
 import scipy
 from colour import Color
 #simulates a single frame
-def sim(skeleton,jeleton,frame,data_f,bones,joints,limb_length,trace_colour):
+def sim(skeleton,jeleton,frame,data_f,bones,joints,limb_length,trace_colour,vis=True):
 
 
     rate(25)
@@ -26,11 +26,13 @@ def sim(skeleton,jeleton,frame,data_f,bones,joints,limb_length,trace_colour):
             
             
             skeleton.append(cylinder(pos=vector(start[0],start[1],start[2]), axis=vector(delta[0],delta[1],delta[2]), radius=20))
+            skeleton[-1].visible= vis
         
         for i in range(len(joints)):
             start=data_f[frame][joints[i]]
 
             jeleton.append(sphere(pos=vector(start[0],start[1],start[2]), radius=30))
+            jeleton[-1].visible= vis
 #                if i==len(joints)-1:
 #                    jeleton.append(sphere(pos=vector(start[0],start[1],start[2]), radius=30, make_trail=True, trail_color=trace_colour))
 #                    
@@ -59,18 +61,7 @@ def sim(skeleton,jeleton,frame,data_f,bones,joints,limb_length,trace_colour):
     a=attach_trail(jeleton[-1],color=trace_colour)    
     b=attach_trail(jeleton[-2],color=trace_colour)
     
-#joint angle colouring
-    
-    red = Color("yellow")
-    colors = list(red.range_to(Color("red"),180))
 
-    angles=ja.joint_angle(frame,data_f,bones,joints)  
-    for i in range(len(jeleton)):
-        if angles[i]==0:
-            jeleton[i].color=color.white
-        else:
-            rgbc=colors[abs(int(angles[i]))].rgb
-            jeleton[i].color=vector(rgbc[0],rgbc[1],rgbc[2])
     return [skeleton,jeleton]
             
 #
