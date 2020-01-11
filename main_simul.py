@@ -85,10 +85,10 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
         temp2=sim(skeleton1,jeleton1,frame,plot2,bones,joints,limb_length,vec(1,0,0),False)
         skeleton1=temp2[0]
         jeleton1=temp2[1]
-        frame+=1
+        
     
-    start=plot2[frame]
-    end=plot1[frame]
+    start=plot1[frame]
+    end=plot2[frame]
     delta=np.subtract(end[joints[-1]],start[joints[-1]])
     start_temp=start[joints[-1]]
     
@@ -110,6 +110,18 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
         else:
             rgbc=colors[abs(int(angles[i]))].rgb
             jeleton[i].color=vector(rgbc[0],rgbc[1],rgbc[2])
+
+    #label right arm angle 
+    start_temp=start[joints[-2]]
+    
+    if frame ==0:
+        al=label(pos=vec(start_temp[0],start_temp[1],start_temp[2]), text=angles1[15], yoffset=-50)
+        
+    else:
+        
+        al.pos=vec(start_temp[0],start_temp[1],start_temp[2])
+        al.text=angles1[15]
+    
 
 
 

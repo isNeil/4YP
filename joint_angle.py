@@ -36,7 +36,8 @@ def joint_angle(frame,df,bones,joints):
     joint_a=[0]*len(joints)
     for i in range(len(angles)):
         if len(angles[i])==2:
-            joint_a[i]=math.degrees(angle(bone_v[angles[i][0]],bone_v[angles[i][1]]))
+            #######################################################have made negative to get angle between
+            joint_a[i]=math.degrees(angle(bone_v[angles[i][0]],-bone_v[angles[i][1]]))
     
     return joint_a
            
