@@ -18,6 +18,7 @@ import math
 from colour import Color
 import joint_angle as ja
 from spherical import asSpherical
+from spherical import asCartesian
 
 #    [0]  = 'Hip'   [1]  = 'RHip'   [2]  = 'RKnee'   [3]  = 'RFoot'   [6]  = 'LHip'   [7]  = 'LKnee'   [8]  = 'LFoot'   [12] = 'Spine'   [13] = 'Thorax'
 #    [14] = 'Neck/Nose'   [15] = 'Head'   [17] = 'LShoulder'   [18] = 'LElbow'   [19] = 'LWrist'   [25] = 'RShoulder'   [26] = 'RElbow'   [27] = 'RWrist'
@@ -87,11 +88,11 @@ plot2.columns = range(plot2.shape[1])
 d_lines=[]
 while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
     if frame<np.shape(plot1)[1]-1:
-        temp=sim(skeleton,jeleton,frame,plot1,bones,joints,limb_length,vec(0,1,0))
+        temp=sim(skeleton,jeleton,frame,plot1,bones,joints,limb_length,vec(0,1,0),True,False)
         skeleton=temp[0]
         jeleton=temp[1]
     if frame<np.shape(plot2)[1]-1:     
-        temp2=sim(skeleton1,jeleton1,frame,plot2,bones,joints,limb_length,vec(1,0,0),False)
+        temp2=sim(skeleton1,jeleton1,frame,plot2,bones,joints,limb_length,vec(0.5,0,0),True,False,vec(0.5,0.5,0.5))
         skeleton1=temp2[0]
         jeleton1=temp2[1]
         
@@ -126,10 +127,20 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
             jeleton[i].color=vector(rgbc[0],rgbc[1],rgbc[2])
 
     
-    #label right shoulder in polar coordinates
-    shoulder=np.subtract(end[joints[-2]],end[joints[-3]])
-    #np.subtract(end[joints[-3]],start[joints[-3]])
-    s_s=asSpherical(shoulder)
+    #label right shoulder in polar coordinates length angle from vertical angle anticlockwise from red x axis
+    shoulderstart=np.subtract(start[joints[-2]],start[joints[-3]])
+    s_s=asSpherical(shoulderstart)
+    shoulderend=np.subtract(end[joints[-2]],end[joints[-3]])
+    s_send=asSpherical(shoulderend)
+    def res(y):
+        for x in range(len(y)):
+            if y[x]<0:
+                y[x]=360+y[x]             
+        return y
+
+    s_s=res(s_s)
+    s_send=res(s_send)
+    s_diff=np.subtract(s_send,s_s)
     start_temp3=start[joints[-3]]
     
     #label right arm angle 
@@ -140,6 +151,7 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
         adl=label(pos=vec(start_temp2[0],start_temp2[1],start_temp2[2]), text=int(angles[15]), yoffset=50, color=color.red)
         dl=label(pos=vec(start_temp[0],start_temp[1],start_temp[2]), text='%d,%d,%d' % (start_temp[0],start_temp[1],start_temp[2]), yoffset=-50)
         ddl=label(pos=vec(start_temp[0],start_temp[1],start_temp[2]),  text='%d,%d,%d' % (delta[0],delta[1],delta[2]), yoffset=50, color=color.red)
+        sdl=label(pos=vec(start_temp3[0],start_temp3[1],start_temp3[2]), text='%d,%d' % (s_diff[1],s_diff[2]), yoffset=50, color=color.red)
         sl=label(pos=vec(start_temp3[0],start_temp3[1],start_temp3[2]), text='%d,%d' % (s_s[1],s_s[2]), yoffset=-50)
     else:
         
@@ -151,10 +163,12 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
         dl.text= text='%d,%d,%d' % (start_temp[0],start_temp[1],start_temp[2])
         ddl.pos=vec(start_temp[0],start_temp[1],start_temp[2])
         ddl.text= text='%d,%d,%d' % (delta[0],delta[1],delta[2])
+        sdl.pos=vec(start_temp3[0],start_temp3[1],start_temp3[2])
+        sdl.text= text='%d,%d' % (s_diff[1],s_diff[2])
         sl.pos=vec(start_temp3[0],start_temp3[1],start_temp3[2])
         sl.text= text='%d,%d' % (s_s[1],s_s[2])
-        
-
+#    ppos=asCartesian([250,50,90])    
+ #   x=arrow(pos=vector(start_temp3[0],start_temp3[1],start_temp3[2]),axis=vector(ppos[0],ppos[1],ppos[2]),color=vec(1,0,0))
     
     
     #graph
@@ -162,8 +176,18 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
     f1.plot(pos=[frame,angles1[15]])
     f2 = gdots(color=color.magenta)
     f2.plot(pos=[frame,angles2[15]])
+    f3 = gdots(color=color.blue)
+    f3.plot(pos=[frame,float(s_s[2])])
+    f4 = gdots(color=color.yellow)
+    f4.plot(pos=[frame,float(s_send[2])])
+    f5 = gdots(color=color.red)
+    f5.plot(pos=[frame,float(s_s[1])])
+    f6 = gdots(color=color.green)
+    f6.plot(pos=[frame,float(s_send[1])])
+    
+    
     frame+=1
-
+    
 
 
 
