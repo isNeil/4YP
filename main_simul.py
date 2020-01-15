@@ -21,6 +21,7 @@ from spherical import asSpherical
 from spherical import asCartesian
 
 
+
 #    [0]  = 'Hip'   [1]  = 'RHip'   [2]  = 'RKnee'   [3]  = 'RFoot'   [6]  = 'LHip'   [7]  = 'LKnee'   [8]  = 'LFoot'   [12] = 'Spine'   [13] = 'Thorax'
 #    [14] = 'Neck/Nose'   [15] = 'Head'   [17] = 'LShoulder'   [18] = 'LElbow'   [19] = 'LWrist'   [25] = 'RShoulder'   [26] = 'RElbow'   [27] = 'RWrist'
 
@@ -44,9 +45,9 @@ limb_length=[124,452,504,124,452,504,252,231,78,112,120,250,230,120,250,230]
 
 
 #load formated data instead
-data_f = pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF1formated.json')
+#data_f = pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF1formated.json')
 data_f_3= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF3formated.json')
-data_f_4= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF4formated.json')  
+#data_f_4= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF4formated.json')  
 data_f_5= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF5formated.json')  
 
 
@@ -76,24 +77,20 @@ jeleton1=[]
 A=[]
 B=[]
 
-#plot1=data_f
-#plot2=data_f_4.iloc[:,15:117]
-#plot2.columns = range(plot2.shape[1])
-
+#make sure time matches for each (to be corrected by xcorr eventually)
 plot1=data_f_3.iloc[:,37:139]
 plot1.columns = range(plot1.shape[1])
-#plot1=data_f_4.iloc[:,10:112]
-#plot1.columns = range(plot2.shape[1])
-
-#plot2=data_f_3.iloc[:,70:172]
-#plot2.columns = range(plot1.shape[1])
 
 plot2=data_f_5.iloc[:,25:127]
 plot2.columns = range(plot2.shape[1])
+
+#for d lines
 d_lines=[]
+
+#simulation
 while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
     if frame<np.shape(plot1)[1]-1:
-        temp=sim(skeleton,jeleton,frame,plot1,bones,joints,limb_length,vec(0,1,0),True,False)
+        temp=sim(skeleton,jeleton,frame,plot1,bones,joints,limb_length,vec(0,1,0),True,False,vec(1,1,1),0)
         skeleton=temp[0]
         jeleton=temp[1]
     if frame<np.shape(plot2)[1]-1:     
@@ -109,6 +106,7 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
     
     #plot difference lines
     d_lines.append(cylinder(pos=vector(start_temp[0],start_temp[1],start_temp[2]), axis=vector(delta[0],delta[1],delta[2]), radius=2, color=vec(0,0,1)))
+    
     #plot axis
     arx=arrow(pos=vector(500,0,0),axis=vector(100,0,0),color=vec(1,0,0))
     ary=arrow(pos=vector(500,0,0),axis=vector(0,100,0),color=vec(0,1,0))
@@ -121,8 +119,8 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
     angles2=ja.joint_angle(frame,plot2,bones,joints) 
     angles=np.subtract(angles1,angles2)
 
-    red = Color("yellow")
-    colors = list(red.range_to(Color("red"),70))
+    red = Color("blue")
+    colors = list(red.range_to(Color("green"),70))
     
     for i in range(len(jeleton)):
         if angles[i]==0:
@@ -171,13 +169,11 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
         sdl.pos=vec(start_temp3[0],start_temp3[1],start_temp3[2])
         sdl.text= text='%d,%d' % (s_diff[1],s_diff[2])
         sl.pos=vec(start_temp3[0],start_temp3[1],start_temp3[2])
-        sl.text= text='%d,%d' % (s_s[1],s_s[2])
-#    ppos=asCartesian([250,50,90])    
- #   x=arrow(pos=vector(start_temp3[0],start_temp3[1],start_temp3[2]),axis=vector(ppos[0],ppos[1],ppos[2]),color=vec(1,0,0))
-   
+        sl.text= text='%d,%d' % (s_s[1],s_s[2])   
          
     
     #graph
+   
     f1 = gdots(color=color.cyan)
     f1.plot(pos=[frame,angles1[15]])
     f2 = gdots(color=color.magenta)
@@ -198,8 +194,13 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
     B.append(angles2[15])    
    
     
+ 
+        
+        
     frame+=1
 
+
+#xcorr
 nsamples = len(A)
 
 # regularize datasets by subtracting mean and dividing by s.d.

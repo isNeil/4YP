@@ -12,9 +12,15 @@ from collections import Counter
 import scipy
 from colour import Color
 #simulates a single frame
-def sim(skeleton,jeleton,frame,data_f,bones,joints,limb_length,trace_colour,vis=True,ball=True,col=vec(1,1,1)):
+def sim(skeleton,jeleton,frame,data_f,bones,joints,limb_length,trace_colour,vis=True,ball=True,col=vec(1,1,1),k=0):
 
-
+    ghost=[]
+    ghost_s=[]
+    opa= frame/len(data_f)
+    
+    
+    
+    
     rate(25)
     
     if frame==0:
@@ -24,10 +30,15 @@ def sim(skeleton,jeleton,frame,data_f,bones,joints,limb_length,trace_colour,vis=
             end=data_f[frame][bones[i][1]]
             delta=np.subtract(end,start)
             
-            
             skeleton.append(cylinder(pos=vector(start[0],start[1],start[2]), axis=vector(delta[0],delta[1],delta[2]), radius=20, color=col))
             skeleton[-1].visible= vis
-        
+            
+            #ghost trail
+            if k!=0:
+                if frame%k==0:
+                    ghost.append(cylinder(pos=vector(start[0],start[1],start[2]), axis=vector(delta[0],delta[1],delta[2]), radius=20, color=col, opacity=opa))
+            
+            
         for i in range(len(joints)):
             start=data_f[frame][joints[i]]
 
@@ -38,6 +49,11 @@ def sim(skeleton,jeleton,frame,data_f,bones,joints,limb_length,trace_colour,vis=
 #                    
 #                else:
 #                    jeleton.append(sphere(pos=vector(start[0],start[1],start[2]), radius=30))
+            
+            #ghost_s trail
+            if k!=0:
+                if frame%k==0:
+                    ghost_s.append(sphere(pos=vector(start[0],start[1],start[2]), radius=30,color=col,opacity= opa))
     ##############################################################################
     #Animation
     else:
@@ -46,8 +62,11 @@ def sim(skeleton,jeleton,frame,data_f,bones,joints,limb_length,trace_colour,vis=
             start=data_f[frame][bones[i][0]]
             end=data_f[frame][bones[i][1]]
             delta=np.subtract(end,start)
-#                if i == 15:
- #                   print(np.linalg.norm(delta))
+            #ghost
+            if k!=0:
+                if frame%k==0:
+                    ghost.append(cylinder(pos=vector(start[0],start[1],start[2]), axis=vector(delta[0],delta[1],delta[2]), radius=20, color=col,opacity= opa))
+            
             
             skeleton[i].pos=vector(start[0],start[1],start[2])
             skeleton[i].axis=vector(delta[0],delta[1],delta[2])
@@ -55,8 +74,12 @@ def sim(skeleton,jeleton,frame,data_f,bones,joints,limb_length,trace_colour,vis=
         for i in range(len(joints)):
             start=data_f[frame][joints[i]]
             jeleton[i].pos=vector(start[0],start[1],start[2])
-    
-#########################################################################################################################
+            #ghost
+            if k!=0:
+                if frame%k==0:
+                    ghost_s.append(sphere(pos=vector(start[0],start[1],start[2]), radius=30,color=col,opacity= opa))
+    #########################################################################################################################
+
 #attach trail , type points not so good actually
     if ball == True:
         a=attach_trail(jeleton[-1],color=trace_colour,type="points")    
