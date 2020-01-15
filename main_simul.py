@@ -152,8 +152,8 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
     if frame ==0:
         al=label(pos=vec(start_temp2[0],start_temp2[1],start_temp2[2]), text=int(angles1[15]), yoffset=-50)
         adl=label(pos=vec(start_temp2[0],start_temp2[1],start_temp2[2]), text=int(angles[15]), yoffset=50, color=color.red)
-        dl=label(pos=vec(start_temp[0],start_temp[1],start_temp[2]), text='%d,%d,%d' % (start_temp[0],start_temp[1],start_temp[2]), yoffset=-50)
-        ddl=label(pos=vec(start_temp[0],start_temp[1],start_temp[2]),  text='%d,%d,%d' % (delta[0],delta[1],delta[2]), yoffset=50, color=color.red)
+        dl=label(pos=vec(start_temp[0],start_temp[1],start_temp[2]), text='%d,%d,%d' % (start_temp[0],start_temp[1],start_temp[2]), yoffset=-50, box=False)
+        ddl=label(pos=vec(start_temp[0],start_temp[1],start_temp[2]),  text='%d,%d,%d' % (delta[0],delta[1],delta[2]), yoffset=50, color=color.red, box=False)
         sdl=label(pos=vec(start_temp3[0],start_temp3[1],start_temp3[2]), text='%d,%d' % (s_diff[1],s_diff[2]), yoffset=50, color=color.red)
         sl=label(pos=vec(start_temp3[0],start_temp3[1],start_temp3[2]), text='%d,%d' % (s_s[1],s_s[2]), yoffset=-50)
     else:
