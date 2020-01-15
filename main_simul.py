@@ -9,16 +9,17 @@ import pandas as pd
 import numpy as np
 from formatdata_length_constraint import format
 from collections import Counter
-from scipy import signal
+from scipy.signal import correlate
 from simulation_simul import sim
 import matplotlib.pyplot as plt
-import calc_vel_accel as dt
+import calc_vel_accel as delta
 import joint_angle as ja
 import math
 from colour import Color
 import joint_angle as ja
 from spherical import asSpherical
 from spherical import asCartesian
+
 
 #    [0]  = 'Hip'   [1]  = 'RHip'   [2]  = 'RKnee'   [3]  = 'RFoot'   [6]  = 'LHip'   [7]  = 'LKnee'   [8]  = 'LFoot'   [12] = 'Spine'   [13] = 'Thorax'
 #    [14] = 'Neck/Nose'   [15] = 'Head'   [17] = 'LShoulder'   [18] = 'LElbow'   [19] = 'LWrist'   [25] = 'RShoulder'   [26] = 'RElbow'   [27] = 'RWrist'
@@ -71,11 +72,15 @@ jeleton=[]
 skeleton1=[]
 jeleton1=[]
 
+#for x correlation
+A=[]
+B=[]
+
 #plot1=data_f
 #plot2=data_f_4.iloc[:,15:117]
 #plot2.columns = range(plot2.shape[1])
 
-plot1=data_f_3.iloc[:,40:142]
+plot1=data_f_3.iloc[:,37:139]
 plot1.columns = range(plot1.shape[1])
 #plot1=data_f_4.iloc[:,10:112]
 #plot1.columns = range(plot2.shape[1])
@@ -92,7 +97,7 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
         skeleton=temp[0]
         jeleton=temp[1]
     if frame<np.shape(plot2)[1]-1:     
-        temp2=sim(skeleton1,jeleton1,frame,plot2,bones,joints,limb_length,vec(0.5,0,0),True,False,vec(0.5,0.5,0.5))
+        temp2=sim(skeleton1,jeleton1,frame,plot2,bones,joints,limb_length,vec(1,0,0),True,False,vec(0.5,0.5,0.5))
         skeleton1=temp2[0]
         jeleton1=temp2[1]
         
@@ -169,7 +174,8 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
         sl.text= text='%d,%d' % (s_s[1],s_s[2])
 #    ppos=asCartesian([250,50,90])    
  #   x=arrow(pos=vector(start_temp3[0],start_temp3[1],start_temp3[2]),axis=vector(ppos[0],ppos[1],ppos[2]),color=vec(1,0,0))
-    
+   
+         
     
     #graph
     f1 = gdots(color=color.cyan)
@@ -184,10 +190,31 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
     f5.plot(pos=[frame,float(s_s[1])])
     f6 = gdots(color=color.green)
     f6.plot(pos=[frame,float(s_send[1])])
+      
+     #cross correlation elbow angles
     
+    
+    A.append(angles1[15])
+    B.append(angles2[15])    
+   
     
     frame+=1
-    
+
+nsamples = len(A)
+
+# regularize datasets by subtracting mean and dividing by s.d.
+A -= np.mean(A); A /= np.std(A)
+B -= np.mean(B); B /= np.std(B)
+
+# Find cross-correlation
+xcorr = correlate(A, B)
+
+# delta time array to match xcorr
+dt = np.arange(1-nsamples, nsamples)
+
+recovered_time_shift = dt[np.argmax(xcorr)]
+
+print( "Recovered time shift: %d" % (recovered_time_shift))
 
 
 
