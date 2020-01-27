@@ -194,7 +194,7 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
     B.append(angles2[15])    
    
     
- 
+
         
         
     frame+=1
