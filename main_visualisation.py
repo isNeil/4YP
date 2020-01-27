@@ -19,7 +19,7 @@ from colour import Color
 import joint_angle as ja
 from spherical import asSpherical
 from spherical import asCartesian
-
+import pickle
 
 
 #    [0]  = 'Hip'   [1]  = 'RHip'   [2]  = 'RKnee'   [3]  = 'RFoot'   [6]  = 'LHip'   [7]  = 'LKnee'   [8]  = 'LFoot'   [12] = 'Spine'   [13] = 'Thorax'
@@ -65,6 +65,13 @@ scene.up=vector(0,0,1)
 scene.userzoom =False
 scene.userspin=True
 scene.width = scene.height = 1000
+scene.caption = """To rotate "camera", drag with right button or Ctrl-drag.
+To zoom, drag with middle button or Alt/Option depressed, or use scroll wheel.
+  On a two-button mouse, middle is left + right.
+To pan left/right and up/down, Shift-drag.
+Touch screen: pinch/extend to zoom, swipe or two-finger rotate.
+
+"""
 ############################################################################
 
 skeleton=[]
@@ -157,15 +164,20 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
         sdl=label(pos=vec(start_temp3[0],start_temp3[1],start_temp3[2]), text='%d,%d' % (s_diff[1],s_diff[2]), yoffset=50, color=color.red)
         sl=label(pos=vec(start_temp3[0],start_temp3[1],start_temp3[2]), text='%d,%d' % (s_s[1],s_s[2]), yoffset=-50)
     else:
-        
+        #elbow
         al.pos=vec(start_temp2[0],start_temp2[1],start_temp2[2])
         al.text=int(angles1[15])
         adl.pos=vec(start_temp2[0],start_temp2[1],start_temp2[2])
         adl.text=int(angles[15])
+        
+        #hand
         dl.pos=vec(start_temp[0],start_temp[1],start_temp[2])
         dl.text= text='%d,%d,%d' % (start_temp[0],start_temp[1],start_temp[2])
+        
         ddl.pos=vec(start_temp[0],start_temp[1],start_temp[2])
         ddl.text= text='%d,%d,%d' % (delta[0],delta[1],delta[2])
+        
+        #shoulder
         sdl.pos=vec(start_temp3[0],start_temp3[1],start_temp3[2])
         sdl.text= text='%d,%d' % (s_diff[1],s_diff[2])
         sl.pos=vec(start_temp3[0],start_temp3[1],start_temp3[2])
@@ -174,18 +186,26 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
     
     #graph
     
-    f1 = gdots(color=color.cyan)
-    f1.plot(pos=[frame,angles1[15]])
-    f2 = gdots(color=color.magenta)
-    f2.plot(pos=[frame,angles2[15]])
-    f3 = gdots(color=color.blue)
-    f3.plot(pos=[frame,float(s_s[2])])
-    f4 = gdots(color=color.yellow)
-    f4.plot(pos=[frame,float(s_send[2])])
-    f5 = gdots(color=color.red)
-    f5.plot(pos=[frame,float(s_s[1])])
-    f6 = gdots(color=color.green)
-    f6.plot(pos=[frame,float(s_send[1])])
+#        f1 = gdots(color=color.cyan)
+#        f1.plot(pos=[frame,angles1[15]])
+#        f2 = gdots(color=color.magenta)
+#        f2.plot(pos=[frame,angles2[15]])
+#        f3 = gdots(color=color.blue)
+#        f3.plot(pos=[frame,float(s_s[2])])
+#        f4 = gdots(color=color.yellow)
+#        f4.plot(pos=[frame,float(s_send[2])])
+#        f5 = gdots(color=color.red)
+#        f5.plot(pos=[frame,float(s_s[1])])
+#        f6 = gdots(color=color.green)
+#        f6.plot(pos=[frame,float(s_send[1])])
+ 
+        f1 = gdots(color=color.red)
+        f1.plot(pos=[frame,start_temp[0]])
+        f2 = gdots(color=color.blue)
+        f2.plot(pos=[frame,start_temp[1]])
+        f3 = gdots(color=color.black)
+        f3.plot(pos=[frame,start_temp[2]])       
+    
       
      #cross correlation elbow angles
     
@@ -198,28 +218,60 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
         
         
     frame+=1
+#plot 3d trace time color
+#scene2=canvas()
+#scene2.up=vector(0,0,1)
+#scene2.width = scene2.height = 1000
+#scene2.camera.pos=vector(1,-2000,2000)
+#scene2.camera.axis=vector(-1,+2000,-2000)
+##above
+##scene2.width = scene2.height = 1000
+##scene2.camera.pos=vector(1,-2000,2000)
+##scene2.camera.axis=vector(-1,+2000,-2000)
+#frame=0
+#while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
+#    red = Color("red")
+#    colors = list(red.range_to(Color("white"),100))
+#    rgbc=colors[frame].rgb
+#           
+#    a=(frame/max(np.shape(plot2)[1],np.shape(plot1)[1]))*0.9+0.1
+#    
+#    xyz=[]
+#    x=plot1[frame][joints[-1]][0]
+#    y=plot1[frame][joints[-1]][1]
+#    z=plot1[frame][joints[-1]][2]
+#
+#    xyz.append(sphere(pos=vector(x,y,z), radius=10,color=vector(rgbc[0],rgbc[1],rgbc[2])))
+#    frame+=1
 
+#plot 3d trace time xy plane yz plane
+scene2=canvas()
+scene2.background=color.white
+scene2.up=vector(0,0,1)
+scene2.width = scene2.height = 1000
+scene2.camera.pos=vector(1,-2000,2000)
+scene2.camera.axis=vector(-1,+2000,-2000)
+#above
+#scene2.width = scene2.height = 1000
+#scene2.camera.pos=vector(1,-2000,2000)
+#scene2.camera.axis=vector(-1,+2000,-2000)
+frame=0
+arx=arrow(pos=vector(500,0,0),axis=vector(100,0,0),color=vec(1,0,0))
+ary=arrow(pos=vector(500,0,0),axis=vector(0,100,0),color=vec(0,1,0))
+arz=arrow(pos=vector(500,0,0),axis=vector(0,0,100),color=vec(0,0,1))
+while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
+    
+    xyz=[]
+    x=plot1[frame][joints[-1]][0]
+    y=plot1[frame][joints[-1]][1]
+    z=frame*10
 
-#xcorr
-nsamples = len(A)
-
-# regularize datasets by subtracting mean and dividing by s.d.
-A -= np.mean(A); A /= np.std(A)
-B -= np.mean(B); B /= np.std(B)
-
-# Find cross-correlation
-xcorr = correlate(A, B)
-
-# delta time array to match xcorr
-dt = np.arange(1-nsamples, nsamples)
-
-recovered_time_shift = dt[np.argmax(xcorr)]
-
-print( "Recovered time shift: %d" % (recovered_time_shift))
-
-
-
-
+    xyz.append(sphere(pos=vector(x,y,z), radius=10,color=color.red))
+    frame+=1
 
 #scene.range = 1.8
 scene.title = "Pose Visualisation"   
+
+
+plot1.to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\plot1rf3.json')
+plot2.to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\plot2rf5.json')
