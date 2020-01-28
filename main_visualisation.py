@@ -76,6 +76,8 @@ Touch screen: pinch/extend to zoom, swipe or two-finger rotate.
 
 """
 ############################################################################
+s_recovery=[]
+j_recovery=[]
 
 skeleton=[]
 jeleton=[]
@@ -100,15 +102,16 @@ d_lines=[]
 #simulation
 while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
     if frame<np.shape(plot1)[1]-1:
-        temp=simv(skeleton,jeleton,frame,plot1,bones,joints,limb_length,vec(0,1,0),False,False,vec(1,1,1),1)
+        temp=simv(skeleton,jeleton,frame,plot1,bones,joints,limb_length,vec(0,1,0),False,True,vec(1,1,1),1)
         skeleton=temp[0]
         jeleton=temp[1]
     if frame<np.shape(plot2)[1]-1:     
-        temp2=sim(skeleton1,jeleton1,frame,plot2,bones,joints,limb_length,vec(1,0,0),False,False,vec(0.5,0.5,0.5))
+        temp2=sim(skeleton1,jeleton1,frame,plot2,bones,joints,limb_length,vec(1,0,0),False,True,vec(0.5,0.5,0.5))
         skeleton1=temp2[0]
         jeleton1=temp2[1]
         
-    
+    s_recovery.append(skeleton)
+    j_recovery.append(jeleton)
     start=plot1[frame]
     end=plot2[frame]
     delta=np.subtract(end[joints[-1]],start[joints[-1]])
@@ -230,6 +233,7 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
         
         
     frame+=1
+##############################################################################
 #plot 3d trace time color
 scene2=canvas()
 scene2.background=color.white
@@ -286,9 +290,25 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
 #    xyz.append(sphere(pos=vector(x,y,z), radius=10,color=color.red))
 #    frame+=1
 
+
+####################################################################
 #scene.range = 1.8
 scene.title = "Pose Visualisation"   
 
+scene3=canvas()
+scene3.background=color.black
+scene3.up=vector(0,0,1)
+scene3.width = scene2.height = 1000
+scene3.camera.pos=vector(1,-2000,2000)
+scene3.camera.axis=vector(-1,+2000,-2000)
+distant_light(direction=vector( 0.88,  -0.44,  0.2),       color=color.gray(0.8))
+arx=arrow(pos=vector(500,0,0),axis=vector(100,0,0),color=vec(1,0,0))
+ary=arrow(pos=vector(500,0,0),axis=vector(0,100,0),color=vec(0,1,0))
+arz=arrow(pos=vector(500,0,0),axis=vector(0,0,100),color=vec(0,0,1))
+
+
+######################################################################
+#export jsons
 #deltas.df_v(plot1).to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\plot1rf3vel.json')
 #deltas.df_a(plot1).to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\plot1rf3accel.json')
 #deltas.df_v(plot1).to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\plot2rf5vel.json')

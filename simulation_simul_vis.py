@@ -92,12 +92,10 @@ def simv(skeleton,jeleton,frame,data_f,bones,joints,limb_length,trace_colour,vis
 
 #attach trail , type points not so good actually
     if ball == True:
-        a=attach_trail(jeleton[-1],color=trace_colour,type="points")    
-        b=attach_trail(jeleton[-2],color=trace_colour,type="points")
-        
-    elif ball ==False:
         a=attach_trail(jeleton[-1],color=trace_colour)    
         b=attach_trail(jeleton[-2],color=trace_colour)
+        
+
     
 
     return [skeleton,jeleton]

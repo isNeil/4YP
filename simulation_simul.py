@@ -12,12 +12,12 @@ from collections import Counter
 import scipy
 from colour import Color
 #simulates a single frame
-def sim(skeleton,jeleton,frame,data_f,bones,joints,limb_length,trace_colour,vis=True,ball=True,col=vec(1,1,1),k=0):
+def sim(skeleton,jeleton,frame,data_f,bones,joints,limb_length,trace_colour,vis=True,tra=True,col=vec(1,1,1),k=0):
 
     ghost=[]
     ghost_s=[]
     opa= frame/len(data_f)
-    
+  #  cyl_delta=[]
     
     
     
@@ -38,6 +38,7 @@ def sim(skeleton,jeleton,frame,data_f,bones,joints,limb_length,trace_colour,vis=
                 if frame%k==0:
                     ghost.append(cylinder(pos=vector(start[0],start[1],start[2]), axis=vector(delta[0],delta[1],delta[2]), radius=20, color=col, opacity=opa))
             
+ #           cyl_delta.append(delta)
             
         for i in range(len(joints)):
             start=data_f[frame][joints[i]]
@@ -71,6 +72,7 @@ def sim(skeleton,jeleton,frame,data_f,bones,joints,limb_length,trace_colour,vis=
             skeleton[i].pos=vector(start[0],start[1],start[2])
             skeleton[i].axis=vector(delta[0],delta[1],delta[2])
             
+            
         for i in range(len(joints)):
             start=data_f[frame][joints[i]]
             jeleton[i].pos=vector(start[0],start[1],start[2])
@@ -81,13 +83,13 @@ def sim(skeleton,jeleton,frame,data_f,bones,joints,limb_length,trace_colour,vis=
     #########################################################################################################################
 
 #attach trail , type points not so good actually
-    if ball == True:
-        a=attach_trail(jeleton[-1],color=trace_colour,type="points")    
-        b=attach_trail(jeleton[-2],color=trace_colour,type="points")
-        
-    elif ball ==False:
+    if tra == True:
         a=attach_trail(jeleton[-1],color=trace_colour)    
         b=attach_trail(jeleton[-2],color=trace_colour)
+        
+#    elif tra ==False:
+#        a=attach_trail(jeleton[-1],color=trace_colour)    
+#        b=attach_trail(jeleton[-2],color=trace_colour,vis)
     
 
     return [skeleton,jeleton]
