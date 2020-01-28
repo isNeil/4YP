@@ -289,9 +289,9 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
 #scene.range = 1.8
 scene.title = "Pose Visualisation"   
 
-deltas.df_v(plot1).to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\plot1rf3vel.json')
-deltas.df_a(plot1).to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\plot1rf3accel.json')
-deltas.df_v(plot1).to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\plot2rf5vel.json')
-deltas.df_a(plot1).to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\plot2rf5accel.json')
-plot1.to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\plot1rf3.json')
-plot2.to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\plot2rf5.json')
+#deltas.df_v(plot1).to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\plot1rf3vel.json')
+#deltas.df_a(plot1).to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\plot1rf3accel.json')
+#deltas.df_v(plot1).to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\plot2rf5vel.json')
+#deltas.df_a(plot1).to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\plot2rf5accel.json')
+#plot1.to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\plot1rf3.json')
+#plot2.to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\plot2rf5.json')
