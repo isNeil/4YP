@@ -28,6 +28,7 @@ import joint_angle as ja
 from spherical import asSpherical
 from spherical import asCartesian
 import pickle
+from vis import vis
 
 
 #    [0]  = 'Hip'   [1]  = 'RHip'   [2]  = 'RKnee'   [3]  = 'RFoot'   [6]  = 'LHip'   [7]  = 'LKnee'   [8]  = 'LFoot'   [12] = 'Spine'   [13] = 'Thorax'
@@ -56,9 +57,9 @@ scene.userspin=True
 scene.width = scene.height = 600
 scene.background= color.white
 distant_light(direction=vector( 0.88,  -0.44,  0.2),       color=color.gray(0.8))
-scene.caption = """To rotate "camera", drag with right button
-To zoom, drag with middle button
-Adjust slider to change frame: \n\n"
+scene.caption = """To rotate humanoid, drag with right button
+To zoom, drag with middle button\n
+Adjust slider to change frame: \n\n
 """
 ############################################################################
 
@@ -87,17 +88,11 @@ ary=arrow(pos=vector(500,0,0),axis=vector(0,100,0),color=vec(0,1,0))
 arz=arrow(pos=vector(500,0,0),axis=vector(0,0,100),color=vec(0,0,1))
 
 #simulation initialisation
-#while frame<np.shape(plot1)[1]-1:
-#    if frame<np.shape(plot1)[1]-1:
-
 
 temp=sim(skeleton,jeleton,frame,plot1,bones,joints,limb_length,vec(0,1,0),True,False,vec(1,1,1))
 skeleton=temp[0]
 jeleton=temp[1]
-#    if frame<np.shape(plot2)[1]-1:     
-#        temp2=sim(skeleton1,jeleton1,frame,plot2,bones,joints,limb_length,vec(1,0,0),False,False,vec(0.5,0.5,0.5))
-#        skeleton1=temp2[0]
-#        jeleton1=temp2[1]
+
 
 start=plot1[frame]
 end=plot2[frame]
@@ -143,22 +138,19 @@ running = True
 #slider 
 def fr(s):
     global running
-    print(s.value)
+    
     running = True
     wt.text='{:1.2f}'.format(sl.value)
 
-sl = slider(min=0, max=np.size(plot1,1)-1, value=1, length=400, step=1, bind=fr)
+sl = slider(min=0, max=np.size(plot1,1)-1, value=1, length=500, step=1, bind=fr)
 
 wt = wtext(text='100'.format(sl.value))
 scene.append_to_caption(' frame \n')
 
-#def Run(b):
-#    global running
-#    running = not running
-#    if running: b.text = "Pause"
-#    else: b.text = "Run"
-#    
-#button(text="Pause", pos=scene.title_anchor, bind=Run)
+def Run(b):
+    vis(plot1)
+    print('button')
+button(text="3D plot", pos=scene.title_anchor, bind=Run)
 
 while True:
     if running:
@@ -169,15 +161,19 @@ while True:
             start=plot1[frame][bones[i][0]]
             end=plot1[frame][bones[i][1]]
             delta=np.subtract(end,start)
-           
-            
             
             skeleton[i].pos=vector(start[0],start[1],start[2])
             skeleton[i].axis=vector(delta[0],delta[1],delta[2])
             
-            
         for i in range(len(joints)):
             start=plot1[frame][joints[i]]
             jeleton[i].pos=vector(start[0],start[1],start[2])
-            
+        
+        
+        
+        
+        
+        
+        
+        
         running = False
