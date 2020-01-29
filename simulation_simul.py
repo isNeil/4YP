@@ -11,7 +11,8 @@ import joint_angle as ja
 from collections import Counter
 import scipy
 from colour import Color
-#simulates a single frame
+#simulates a single frame 
+###########!!!!!!!!!!!!!!!!!!problem cant simulate 0 frame after initialisation
 def sim(skeleton,jeleton,frame,data_f,bones,joints,limb_length,trace_colour,vis=True,tra=True,col=vec(1,1,1),k=0):
 
     ghost=[]
@@ -90,10 +91,7 @@ def sim(skeleton,jeleton,frame,data_f,bones,joints,limb_length,trace_colour,vis=
         a=attach_trail(jeleton[-1],color=trace_colour)    
         b=attach_trail(jeleton[-2],color=trace_colour)
         
-#    elif tra ==False:
-#        a=attach_trail(jeleton[-1],color=trace_colour)    
-#        b=attach_trail(jeleton[-2],color=trace_colour,vis)
-    
+
 
     return [skeleton,jeleton]
             

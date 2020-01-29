@@ -14,20 +14,17 @@ Created on Fri Jan  3 23:45:43 2020
 from vpython import *
 import pandas as pd
 import numpy as np
-from formatdata_length_constraint import format
-from collections import Counter
-from scipy.signal import correlate
+#from formatdata_length_constraint import format
+#from scipy.signal import correlate
 
 from simulation_simul import sim
-import matplotlib.pyplot as plt
-import calc_vel_accel as deltas
-import joint_angle as ja
-import math
-from colour import Color
-import joint_angle as ja
-from spherical import asSpherical
-from spherical import asCartesian
-import pickle
+from sim import create_frame
+#import calc_vel_accel as deltas
+#import joint_angle as ja
+
+#from spherical import asSpherical
+#from spherical import asCartesian
+
 import vis
 
 
@@ -57,6 +54,8 @@ scene.userspin=True
 scene.width = scene.height = 600
 #scene.background= color.white
 distant_light(direction=vector( 0.88,  -0.44,  0.2),       color=color.gray(0.8))
+
+
 scene.title = "Pose Visualisation\n\nSelect joint and choose visualisation technique to plot\n <br>"   
 scene.caption = """\nDrag with right button to rotate model
 Use middle mouse to zoom\n
@@ -95,9 +94,9 @@ temp=sim(skeleton,jeleton,frame,plot1,bones,joints,limb_length,vec(0,1,0),True,F
 skeleton=temp[0]
 jeleton=temp[1]
 
-temp2=sim(skeleton2,jeleton2,frame,plot2,bones,joints,limb_length,vec(1,0,0),True,False,vec(0.5,0.5,0.5))
-skeleton2=temp2[0]
-jeleton2=temp2[1]
+temp=sim(skeleton2,jeleton2,frame,plot2,bones,joints,limb_length,vec(1,0,0),True,False,vec(0.5,0.5,0.5))
+skeleton2=temp[0]
+jeleton2=temp[1]
 
 
 
@@ -236,49 +235,51 @@ while True:
 
         frame= sl.value    
         
-        for i in range(len(bones)):
-            start=plot1[frame][bones[i][0]]
-            end=plot1[frame][bones[i][1]]
-            delta=np.subtract(end,start)
-            
-            skeleton[i].pos=vector(start[0],start[1],start[2])
-            skeleton[i].axis=vector(delta[0],delta[1],delta[2])
-            
-        for i in range(len(joints)):
-            start=plot1[frame][joints[i]]
-            jeleton[i].pos=vector(start[0],start[1],start[2])
+#        for i in range(len(bones)):
+#            start=plot1[frame][bones[i][0]]
+#            end=plot1[frame][bones[i][1]]
+#            delta=np.subtract(end,start)
+#            
+#            skeleton[i].pos=vector(start[0],start[1],start[2])
+#            skeleton[i].axis=vector(delta[0],delta[1],delta[2])
+#            
+#        for i in range(len(joints)):
+#            start=plot1[frame][joints[i]]
+#            jeleton[i].pos=vector(start[0],start[1],start[2])
 
-#        temp=sim(skeleton,jeleton,frame,plot1,bones,joints,limb_length,vec(0,1,0),True,False,vec(1,1,1))
-#        skeleton=temp[0]
-#        jeleton=temp[1]
+        temp=create_frame(skeleton,jeleton,frame,plot1,bones,joints,True,False)
+        skeleton=temp[0]
+        jeleton=temp[1]
 
-#        temp2=sim(skeleton2,jeleton2,frame,plot2,bones,joints,limb_length,vec(1,0,0),Visible,False,vec(0.5,0.5,0.5))
-#        skeleton2=temp2[0]
-#        jeleton2=temp2[1]
         ########
         #1.simul now is bad in that we can go back to frame 0 so it creates a whole new set of skele
         #2. Also just being invis doesnt mean it cant be selected, actually better if we send it away. Better than deleting and recreating
         #######
         if Visible:
-            
-            for i in range(len(bones)):
-                start=plot2[frame][bones[i][0]]
-                end=plot2[frame][bones[i][1]]
-                delta=np.subtract(end,start)
+            temp=create_frame(skeleton2,jeleton2,frame,plot2,bones,joints,Visible,False)
+            skeleton2=temp[0]
+            jeleton2=temp[1]
      
-                skeleton2[i].pos=vector(start[0],start[1],start[2])
-                skeleton2[i].axis=vector(delta[0],delta[1],delta[2])
-#                skeleton[i].visible= Visible
-                
-            for i in range(len(joints)):
-                start=plot2[frame][joints[i]]
-                jeleton2[i].pos=vector(start[0],start[1],start[2])
-#                jeleton[i].visible= Visible
+#        for i in range(len(bones)):
+#                start=plot2[frame][bones[i][0]]
+#                end=plot2[frame][bones[i][1]]
+#                delta=np.subtract(end,start)
+#     
+#                skeleton2[i].pos=vector(start[0],start[1],start[2])
+#                skeleton2[i].axis=vector(delta[0],delta[1],delta[2])
+#                skeleton2[i].visible= Visible
+#                
+#            for i in range(len(joints)):
+#                start=plot2[frame][joints[i]]
+#                jeleton2[i].pos=vector(start[0],start[1],start[2])
+#                jeleton2[i].visible= Visible
+#                jeleton2[i].radius=30
         else:
             for i in range(len(bones)):
-                skeleton2[i].pos=vector(2000,0,0)
+                skeleton2[i].pos=vector(0,0,0)
+                skeleton2[i].axis=vector(0,0,0)
             for i in range(len(joints)):
-                jeleton2[i].pos=vector(2000,0,0)
+                jeleton2[i].pos=vector(0,0,0)
         
         running = False
         

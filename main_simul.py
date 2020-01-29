@@ -7,16 +7,16 @@ Created on Fri Jan  3 23:45:43 2020
 from vpython import *
 import pandas as pd
 import numpy as np
-from formatdata_length_constraint import format
-from collections import Counter
+
+
 from scipy.signal import correlate
 from simulation_simul import sim
-import matplotlib.pyplot as plt
+
 import calc_vel_accel as delta
 import joint_angle as ja
-import math
+
 from colour import Color
-import joint_angle as ja
+
 from spherical import asSpherical
 from spherical import asCartesian
 
