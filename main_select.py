@@ -28,7 +28,7 @@ import joint_angle as ja
 from spherical import asSpherical
 from spherical import asCartesian
 import pickle
-from vis import vis
+import vis
 
 
 #    [0]  = 'Hip'   [1]  = 'RHip'   [2]  = 'RKnee'   [3]  = 'RFoot'   [6]  = 'LHip'   [7]  = 'LKnee'   [8]  = 'LFoot'   [12] = 'Spine'   [13] = 'Thorax'
@@ -55,12 +55,14 @@ scene.up=vector(0,0,1)
 scene.userzoom =True
 scene.userspin=True
 scene.width = scene.height = 600
-scene.background= color.white
+#scene.background= color.white
 distant_light(direction=vector( 0.88,  -0.44,  0.2),       color=color.gray(0.8))
-scene.caption = """To rotate humanoid, drag with right button
+scene.title = "\n Pose Visualisation \n"   
+scene.caption = """\n To rotate humanoid, drag with right button
 To zoom, drag with middle button\n
 Adjust slider to change frame: \n\n
 """
+
 ############################################################################
 
 skeleton=[]
@@ -130,7 +132,7 @@ start_temp=start[joints[-1]]
 
 ####################################################################
 #scene.range = 1.8
-scene.title = "Pose Visualisation"   
+
 
 running = True
 
@@ -140,17 +142,77 @@ def fr(s):
     global running
     
     running = True
-    wt.text='{:1.2f}'.format(sl.value)
+    wt.text='{:1}'.format(sl.value)
 
 sl = slider(min=0, max=np.size(plot1,1)-1, value=1, length=500, step=1, bind=fr)
 
-wt = wtext(text='100'.format(sl.value))
-scene.append_to_caption(' frame \n')
+wt = wtext(text='1'.format(sl.value))
+scene.append_to_caption(' frame \n <br>')
+##############################################################
+graph_type=0
+def M(m):
+    global graph_type
+    
+    val = m.selected
+    
+    if val == "TimeColour3D": 
+        graph_type = 0
+    elif val == "Hagerstrand": 
+        graph_type = 1
 
+menu(choices=['TimeColour3D', 'Hagerstrand'], index=0, bind=M)
+
+###################################################
 def Run(b):
-    vis(plot1)
-    print('button')
-button(text="3D plot", pos=scene.title_anchor, bind=Run)
+    global index
+    if index==None:
+        warning.text="""  <font color="red"> No joint selected </font> """
+    else:
+        warning.text=""
+        if val ==0:
+            rngid= vis.TimeColour3D(plot1,index,bones,joints)
+    #        scene.append_to_caption("<img src='me.jpg'/>")
+            gwt.text="\n <img src='%f.jpg'/>"%rngid
+        
+        if val==1:
+            
+
+    
+button(text="3D plot", pos=scene.caption_anchor, bind=Run)
+scene.append_to_caption('<br>')
+warning= wtext(text="\n",pos=scene.caption_anchor)
+
+gwt = wtext(text="\n",pos=scene.caption_anchor)
+
+lasthit = None
+lastpick = None
+lastcolor = None
+index=None
+
+def getevent():
+    global lasthit, lastpick, lastcolor, index
+    if lasthit != None:
+        if lastpick != None: lasthit.modify(lastpick, color=lastcolor)
+        else: lasthit.color = vector(lastcolor)
+        lasthit = lastpick = None
+    
+    hit = scene.mouse.pick
+    if hit != None:
+        lasthit = hit
+        lastpick = None
+        lastcolor = vector(hit.color) # make a copy
+        hit.color = color.red
+    if hit in jeleton:
+        print(jeleton.index(hit))
+        index=jeleton.index(hit)
+#    if hit in skeleton:
+#        print(skeleton.index(hit))
+#        index=skeleton.index(hit)
+    else:
+        print("not in list")
+
+scene.bind("mousedown", getevent)
+
 
 while True:
     if running:
@@ -169,11 +231,5 @@ while True:
             start=plot1[frame][joints[i]]
             jeleton[i].pos=vector(start[0],start[1],start[2])
         
-        
-        
-        
-        
-        
-        
-        
         running = False
+        
