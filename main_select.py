@@ -164,18 +164,22 @@ menu(choices=['TimeColour3D', 'Hagerstrand'], index=0, bind=M)
 
 ###################################################
 def Run(b):
-    global index
-    if index==None:
+    global j_index,graph_type
+    if j_index==None:
         warning.text="""  <font color="red"> No joint selected </font> """
     else:
         warning.text=""
-        if val ==0:
-            rngid= vis.TimeColour3D(plot1,index,bones,joints)
+        if graph_type ==0:
+            rngid= vis.TimeColour3D(plot1,j_index,bones,joints)
     #        scene.append_to_caption("<img src='me.jpg'/>")
-            gwt.text="\n <img src='%f.jpg'/>"%rngid
-        
-        if val==1:
             
+            gwt.text="\n <img src='%f.jpg'/>"%rngid
+            gwt2.text="\n"
+        
+        elif graph_type ==1:
+            rngid= vis.Hagerstrand(plot1,j_index,bones,joints)
+            gwt.text="\n <img src='%f.jpg'/>"%rngid
+            #gwt2.text="\n <img src='%f.jpg'/>"%rngid
 
     
 button(text="3D plot", pos=scene.caption_anchor, bind=Run)
@@ -183,14 +187,15 @@ scene.append_to_caption('<br>')
 warning= wtext(text="\n",pos=scene.caption_anchor)
 
 gwt = wtext(text="\n",pos=scene.caption_anchor)
+gwt2 = wtext(text="\n",pos=scene.caption_anchor)
 
 lasthit = None
 lastpick = None
 lastcolor = None
-index=None
+j_index=None
 
 def getevent():
-    global lasthit, lastpick, lastcolor, index
+    global lasthit, lastpick, lastcolor, j_index
     if lasthit != None:
         if lastpick != None: lasthit.modify(lastpick, color=lastcolor)
         else: lasthit.color = vector(lastcolor)
@@ -203,8 +208,8 @@ def getevent():
         lastcolor = vector(hit.color) # make a copy
         hit.color = color.red
     if hit in jeleton:
-        print(jeleton.index(hit))
-        index=jeleton.index(hit)
+        
+        j_index=jeleton.index(hit)
 #    if hit in skeleton:
 #        print(skeleton.index(hit))
 #        index=skeleton.index(hit)
