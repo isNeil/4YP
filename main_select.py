@@ -57,10 +57,10 @@ scene.userspin=True
 scene.width = scene.height = 600
 #scene.background= color.white
 distant_light(direction=vector( 0.88,  -0.44,  0.2),       color=color.gray(0.8))
-scene.title = "\n Pose Visualisation \n"   
-scene.caption = """\n To rotate humanoid, drag with right button
-To zoom, drag with middle button\n
-Adjust slider to change frame: \n\n
+scene.title = "Pose Visualisation\n\nSelect joint and choose visualisation technique to plot\n <br>"   
+scene.caption = """\nDrag with right button to rotate model
+Use middle mouse to zoom\n
+Adjust slider to change frame of animation: \n\n
 """
 
 ############################################################################
@@ -173,12 +173,12 @@ def Run(b):
             rngid= vis.TimeColour3D(plot1,j_index,bones,joints)
     #        scene.append_to_caption("<img src='me.jpg'/>")
             
-            gwt.text="\n <img src='%f.jpg'/>"%rngid
+            gwt.text="\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n <img src='%f.jpg'/>"%rngid
             gwt2.text="\n"
         
         elif graph_type ==1:
             rngid= vis.Hagerstrand(plot1,j_index,bones,joints)
-            gwt.text="\n <img src='%f.jpg'/>"%rngid
+            gwt.text="\n1st figure shows position in y-z plane with time in x direction. 2nd figure shows position in x-y plane with time in y direction:\n <img src='%f.jpg'/>"%rngid
             #gwt2.text="\n <img src='%f.jpg'/>"%rngid
 
     

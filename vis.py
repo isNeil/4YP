@@ -43,7 +43,7 @@ def TimeColour3D(plot1,index,bones,joints):
         plot1z.append(plot1.iloc[dex][i][2])
                       
                       
-    fig = plt.figure(figsize=(15, 10))
+    fig = plt.figure(figsize=(12.5, 10))
     ax = fig.add_subplot(111, projection='3d')
     
     red = Color("blue")
@@ -73,9 +73,10 @@ def TimeColour3D(plot1,index,bones,joints):
     ax.set_ylim(ym-600, ym+600)
     ax.set_zlabel('Z')
     ax.set_zlim(zm-600, zm+600)
-    
+    plt.tight_layout()
     rngid=random.random()
-    plt.savefig("%f.jpg"%rngid, dpi=60)    
+    plt.savefig("%f.jpg"%rngid, dpi=60)  
+    
     plt.show()
     return rngid
    
@@ -102,7 +103,7 @@ def Hagerstrand(plot1,index,bones,joints):
         plot1z.append(plot1.iloc[dex][i][2])
                       
                       
-    fig = plt.figure(figsize=(25, 12.5))
+    fig = plt.figure(figsize=(25, 10))
     ax = fig.add_subplot(121, projection='3d')
     
     red = Color("blue")
