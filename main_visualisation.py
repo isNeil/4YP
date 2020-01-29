@@ -110,14 +110,15 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
         skeleton1=temp2[0]
         jeleton1=temp2[1]
         
-    s_recovery.append(skeleton)
-    j_recovery.append(jeleton)
-    start=plot1[frame]
-    end=plot2[frame]
-    delta=np.subtract(end[joints[-1]],start[joints[-1]])
-    start_temp=start[joints[-1]]
-    
-    #plot difference lines
+    #plot difference lines       
+#    s_recovery.append(skeleton)
+#    j_recovery.append(jeleton)
+#    start=plot1[frame]
+#    end=plot2[frame]
+#    delta=np.subtract(end[joints[-1]],start[joints[-1]])
+#    start_temp=start[joints[-1]]
+#    
+#    
 #    red = Color("red")
 #    colors = list(red.range_to(Color("white"),101))
 #    rgbc=colors[frame].rgb

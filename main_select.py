@@ -68,8 +68,8 @@ Adjust slider to change frame of animation: \n\n
 skeleton=[]
 jeleton=[]
 
-#skeleton1=[]
-#jeleton1=[]
+skeleton2=[]
+jeleton2=[]
 
 
 #make sure time matches for each (to be corrected by xcorr eventually)
@@ -95,11 +95,9 @@ temp=sim(skeleton,jeleton,frame,plot1,bones,joints,limb_length,vec(0,1,0),True,F
 skeleton=temp[0]
 jeleton=temp[1]
 
-
-start=plot1[frame]
-end=plot2[frame]
-delta=np.subtract(end[joints[-1]],start[joints[-1]])
-start_temp=start[joints[-1]]
+temp2=sim(skeleton2,jeleton2,frame,plot2,bones,joints,limb_length,vec(1,0,0),True,False,vec(0.5,0.5,0.5))
+skeleton2=temp2[0]
+jeleton2=temp2[1]
 
 
 
@@ -163,6 +161,20 @@ def M(m):
 menu(choices=['TimeColour3D', 'Hagerstrand'], index=0, bind=M)
 
 ###################################################
+Visible=True
+def Show(b):
+    global Visible,running
+    if Visible== True:
+        b.text="Show comparison"
+        Visible= False
+        running=True
+    else:
+        
+        b.text="Hide comparison"
+        Visible= True
+        running=True
+show_b=button(text="Hide comparison", pos=scene.title_anchor, bind=Show)
+##################################################
 def Run(b):
     global j_index,graph_type
     if j_index==None:
@@ -182,7 +194,7 @@ def Run(b):
             #gwt2.text="\n <img src='%f.jpg'/>"%rngid
 
     
-button(text="3D plot", pos=scene.caption_anchor, bind=Run)
+run_b=button(text="3D plot", pos=scene.caption_anchor, bind=Run)
 scene.append_to_caption('<br>')
 warning= wtext(text="\n",pos=scene.caption_anchor)
 
@@ -235,6 +247,38 @@ while True:
         for i in range(len(joints)):
             start=plot1[frame][joints[i]]
             jeleton[i].pos=vector(start[0],start[1],start[2])
+
+#        temp=sim(skeleton,jeleton,frame,plot1,bones,joints,limb_length,vec(0,1,0),True,False,vec(1,1,1))
+#        skeleton=temp[0]
+#        jeleton=temp[1]
+
+#        temp2=sim(skeleton2,jeleton2,frame,plot2,bones,joints,limb_length,vec(1,0,0),Visible,False,vec(0.5,0.5,0.5))
+#        skeleton2=temp2[0]
+#        jeleton2=temp2[1]
+        ########
+        #1.simul now is bad in that we can go back to frame 0 so it creates a whole new set of skele
+        #2. Also just being invis doesnt mean it cant be selected, actually better if we send it away. Better than deleting and recreating
+        #######
+        if Visible:
+            
+            for i in range(len(bones)):
+                start=plot2[frame][bones[i][0]]
+                end=plot2[frame][bones[i][1]]
+                delta=np.subtract(end,start)
+     
+                skeleton2[i].pos=vector(start[0],start[1],start[2])
+                skeleton2[i].axis=vector(delta[0],delta[1],delta[2])
+#                skeleton[i].visible= Visible
+                
+            for i in range(len(joints)):
+                start=plot2[frame][joints[i]]
+                jeleton2[i].pos=vector(start[0],start[1],start[2])
+#                jeleton[i].visible= Visible
+        else:
+            for i in range(len(bones)):
+                skeleton2[i].pos=vector(2000,0,0)
+            for i in range(len(joints)):
+                jeleton2[i].pos=vector(2000,0,0)
         
         running = False
         

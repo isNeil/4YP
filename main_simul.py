@@ -98,13 +98,13 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
         skeleton1=temp2[0]
         jeleton1=temp2[1]
         
-    
+    #plot difference lines
     start=plot1[frame]
     end=plot2[frame]
     delta=np.subtract(end[joints[-1]],start[joints[-1]])
     start_temp=start[joints[-1]]
     
-    #plot difference lines
+    
     d_lines.append(cylinder(pos=vector(start_temp[0],start_temp[1],start_temp[2]), axis=vector(delta[0],delta[1],delta[2]), radius=2, color=vec(0,0,1)))
     
     #plot axis

@@ -63,6 +63,8 @@ def sim(skeleton,jeleton,frame,data_f,bones,joints,limb_length,trace_colour,vis=
             start=data_f[frame][bones[i][0]]
             end=data_f[frame][bones[i][1]]
             delta=np.subtract(end,start)
+            
+            skeleton[i].visible= vis
             #ghost
             if k!=0:
                 if frame%k==0:
@@ -76,6 +78,7 @@ def sim(skeleton,jeleton,frame,data_f,bones,joints,limb_length,trace_colour,vis=
         for i in range(len(joints)):
             start=data_f[frame][joints[i]]
             jeleton[i].pos=vector(start[0],start[1],start[2])
+            jeleton[i].visible= vis
             #ghost
             if k!=0:
                 if frame%k==0:
