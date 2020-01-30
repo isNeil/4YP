@@ -37,4 +37,23 @@ def create_frame(skeleton,jeleton,frame,data_f,bones,joints,vis=True,tra=True):
 
     return [skeleton,jeleton]
             
-#
+#initialises skeleton in frame position
+def frame_init(skeleton,jeleton,frame,data_f,bones,joints,vis=True,tra=True,col=vec(1,1,1)):
+        
+    for i in range(len(bones)):
+        start=data_f[frame][bones[i][0]]
+        end=data_f[frame][bones[i][1]]
+        delta=np.subtract(end,start)
+        
+        skeleton.append(cylinder(pos=vector(start[0],start[1],start[2]), axis=vector(delta[0],delta[1],delta[2]), radius=20, color=col))
+        skeleton[-1].visible= vis
+        
+        
+    for i in range(len(joints)):
+        start=data_f[frame][joints[i]]
+        jeleton.append(sphere(pos=vector(start[0],start[1],start[2]), radius=30,color=col))
+        jeleton[-1].visible= vis
+
+    return [skeleton,jeleton]
+
+
