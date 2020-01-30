@@ -129,8 +129,9 @@ def M(m):
         graph_type = 0
     elif val == "Hagerstrand": 
         graph_type = 1
-
-menu(choices=['TimeColour3D', 'Hagerstrand'], index=0, bind=M)
+    elif val == "TC3DLimb":
+        graph_type = 2
+menu(choices=['TimeColour3D', 'Hagerstrand','TC3DLimb'], index=0, bind=M)
 
 #-----------------------------------------------------------------------------
 #Toggle comparison model
@@ -160,22 +161,43 @@ def Run(b):
     else:
         warning.text=""
         if graph_type ==0:
-            if s_index==None:
+            if j_index!=None and s_index==None:
                 warning.text="""  <font color="red"> Loading graph </font> """
                 vis.TimeColour3DJ(plot1,j_index,bones,joints,graph_id)
                 gwt.text="\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n <img src='graph%d.jpg'/>"%graph_id
                 warning.text=""
                 # gwt2.text="\n"
-            else:
+            elif j_index==None and s_index!=None:
                 warning.text="""  <font color="red"> Loading graph </font> """
                 vis.TimeColour3DS(plot1,s_index,bones,joints,graph_id)
                 gwt.text="\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n <img src='graph%d.jpg'/>"%graph_id
                 warning.text=""
+#            else:
+#                warning.text="""  <font color="red"> Both joint and bone selected</font> """
+                #considering requiring multiple to be selected
         elif graph_type ==1:
-            vis.Hagerstrand(plot1,j_index,bones,joints,graph_id)
-            gwt.text="\n1st figure shows position in y-z plane with time in x direction. 2nd figure shows position in x-y plane with time in y direction:\n <img src='graph%d.jpg'/>"%graph_id
-            #gwt2.text="\n <img src='%f.jpg'/>"%rngid
-
+            if s_index!=None:
+                warning.text="""  <font color="red"> Select a joint</font> """
+            else:
+                warning.text="""  <font color="red"> Loading graph </font> """
+                vis.Hagerstrand(plot1,j_index,bones,joints,graph_id)
+                gwt.text="\n1st figure shows position in y-z plane with time in x direction. 2nd figure shows position in x-y plane with time in y direction:\n <img src='graph%d.jpg'/>"%graph_id
+                warning.text=""
+                #gwt2.text="\n <img src='%f.jpg'/>"%rngid
+        
+        elif graph_type ==2:
+            if j_index!=None:               
+                if joints[j_index-1]+1!=joints[j_index+1]-1:
+                    warning.text="""  <font color="red"> Select a limb joint! (elbows and knees only)</font> """
+                    
+                else:
+                    warning.text="""  <font color="red"> Loading graph </font> """
+                    vis.TC3DLimb(plot1,j_index,bones,joints,graph_id)
+                    gwt.text="\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n <img src='graph%d.jpg'/>"%graph_id
+                    warning.text=""
+            else: 
+                warning.text="""  <font color="red"> Select a limb joint</font> """
+            
         graph_id+=1
         
 run_b=button(text="3D plot", pos=scene.caption_anchor, bind=Run)

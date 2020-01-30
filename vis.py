@@ -9,7 +9,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from colour import Color
-
+import time
 
 #plot1= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\RFVP\json\plot1rf3.json')
 #plot2= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\RFVP\json\plot2rf5.json')
@@ -72,7 +72,7 @@ def TimeColour3DJ(plot1,index,bones,joints,graph_id):
     
     
 def TimeColour3DS(plot1,index,bones,joints,graph_id):
- 
+
     frames=np.shape(plot1)[1]
     #joint 0 to 27 Rwrist
     plot1x=[]
@@ -92,7 +92,7 @@ def TimeColour3DS(plot1,index,bones,joints,graph_id):
         x.append(plot1.iloc[dex_prev][i][0])
         y.append(plot1.iloc[dex_prev][i][1])
         z.append(plot1.iloc[dex_prev][i][2])
-                                      
+                                  
     fig = plt.figure(figsize=(12.5, 10))
     ax = fig.add_subplot(111, projection='3d')
     
@@ -102,18 +102,19 @@ def TimeColour3DS(plot1,index,bones,joints,graph_id):
     rgbc=[]
     for i in colors:
         rgbc.append(i.rgb)
-    
+
     #make axis fit correctly
     xm=(max(plot1x)+min(plot1x))/2
     ym=(max(plot1y)+min(plot1y))/2
     zm=(max(plot1z)+min(plot1z))/2
     
+
     for i in range(frames):
         ax.plot([plot1x[i],x[i]],[plot1y[i],y[i]],[plot1z[i],z[i]], color=rgbc[i])
         ax.plot([plot1x[i],x[i]],[plot1y[i],y[i]],[zm-600,zm-600],color=rgbc[i],alpha=0.2) #cmap=cm.coolwarm)
         ax.plot([xm-600,xm-600], [plot1y[i],y[i]], [plot1z[i],z[i]],color=rgbc[i],alpha=0.2) #cmap=cm.coolwarm)
         ax.plot([plot1x[i],x[i]], [ym+600,ym+600], [plot1z[i],z[i]],color=rgbc[i],alpha=0.2) #cmap=cm.coolwarm)
-    
+
     ax.set_xlabel('X')
     ax.set_xlim(xm-600, xm+600)
     ax.set_ylabel('Y')
@@ -123,10 +124,87 @@ def TimeColour3DS(plot1,index,bones,joints,graph_id):
     plt.tight_layout()
 
     plt.savefig("graph%d.jpg"%graph_id, dpi=60)  
-    
+
     plt.show()
 
+def TC3DLimb(plot1,index,bones,joints,graph_id):
+    #take joint in between bones
+    
+    frames=np.shape(plot1)[1]
+    #mapping index to bones to find joint number
+    
+    
+    
+    dex=joints[index]
+    dex_prev=joints[index-1]
+    dex_post=joints[index+1]
+    #check it actually is a limb joint by saying limbs are sequential numbers- bit of a gimmicky method- MOVED INTO menu 
+    
+    print(dex)
+    print(dex_prev)
+    print(dex_post)
+    
+    plot1x=[]
+    plot1y=[]
+    plot1z=[]
+    x=[]
+    y=[]
+    z=[]
+    x1=[]
+    y1=[]
+    z1=[]
+    
+    for i in range(np.shape(plot1)[1]):
+        plot1x.append(plot1.iloc[dex_post][i][0])
+        plot1y.append(plot1.iloc[dex_post][i][1])
+        plot1z.append(plot1.iloc[dex_post][i][2])
+        x.append(plot1.iloc[dex][i][0])
+        y.append(plot1.iloc[dex][i][1])
+        z.append(plot1.iloc[dex][i][2])
+        x1.append(plot1.iloc[dex_prev][i][0])
+        y1.append(plot1.iloc[dex_prev][i][1])
+        z1.append(plot1.iloc[dex_prev][i][2])                  
+                      
+    fig = plt.figure(figsize=(15, 10))
+    ax = fig.add_subplot(111, projection='3d')
+    
+    #ax.view_init(20, 200)
+    red = Color("blue")
+    colors = list(red.range_to(Color("green"),102))
+    
+    rgbc=[]
+    for i in colors:
+        rgbc.append(i.rgb)
+        
+    #make axis fit correctly
+    xm=(max(x)+min(x))/2
+    ym=(max(y)+min(y))/2
+    zm=(max(z)+min(z))/2
+    
+    for i in range(frames):
+        
+        ax.plot([plot1x[i],x[i]],[plot1y[i],y[i]],[plot1z[i],z[i]], color=rgbc[i])
+        ax.plot([plot1x[i],x[i]],[plot1y[i],y[i]],[zm-600,zm-600],color=rgbc[i],alpha=0.2) #cmap=cm.coolwarm)
+        ax.plot([xm-600,xm-600], [plot1y[i],y[i]], [plot1z[i],z[i]],color=rgbc[i],alpha=0.2) #cmap=cm.coolwarm)
+        ax.plot([plot1x[i],x[i]], [ym+600,ym+600], [plot1z[i],z[i]],color=rgbc[i],alpha=0.2) #cmap=cm.coolwarm)
+        
+        ax.plot([x[i],x1[i]],[y[i],y1[i]],[z[i],z1[i]], color=rgbc[i])
+        ax.plot([x[i],x1[i]],[y[i],y1[i]],[zm-600,zm-600],color=rgbc[i],alpha=0.2) #cmap=cm.coolwarm)
+        ax.plot([xm-600,xm-600], [y[i],y1[i]], [z[i],z1[i]],color=rgbc[i],alpha=0.2) #cmap=cm.coolwarm)
+        ax.plot([x[i],x1[i]], [ym+600,ym+600], [z[i],z1[i]],color=rgbc[i],alpha=0.2) #cmap=cm.c
    
+    ax.set_xlabel('X')
+    ax.set_xlim(-700, 700)
+    ax.set_ylabel('Y')
+    ax.set_ylim(-700, 700)
+    ax.set_zlabel('Z')
+    ax.set_zlim(-400, 1000)   
+    
+    plt.tight_layout()
+    plt.savefig("graph%d.jpg"%graph_id, dpi=60)    
+    
+    plt.show()
+    
 def Hagerstrand(plot1,index,bones,joints,graph_id):
     
     frames=np.shape(plot1)[1]
