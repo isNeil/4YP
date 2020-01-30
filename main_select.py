@@ -278,8 +278,10 @@ while True:
             for i in range(len(bones)):
                 skeleton2[i].pos=vector(0,0,0)
                 skeleton2[i].axis=vector(0,0,0)
+                skeleton2[i].visible= Visible
             for i in range(len(joints)):
                 jeleton2[i].pos=vector(0,0,0)
-        
+                jeleton2[i].visible= Visible
+                
         running = False
         
