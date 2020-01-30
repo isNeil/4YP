@@ -61,7 +61,7 @@ distant_light(direction=vector(0.88,-0.44,0.2),color=color.gray(0.8))
 #-----------------------------------------------------------------------------
 #scene title and captions
 
-scene.title = "Pose Visualisation\n\nSelect joint and choose visualisation technique to plot\n <br>"   
+scene.title = "Pose Visualisation\n\nSelect joint or bone, and choose visualisation technique to plot\n <br>"   
 scene.caption = """\nDrag with right button to rotate model
 Use middle mouse to zoom\n
 Adjust slider to change frame of animation: \n\n
@@ -149,22 +149,35 @@ def Show(b):
 show_b=button(text="Hide comparison", pos=scene.title_anchor, bind=Show)
 #-----------------------------------------------------------------------------
 #Plot graphs button
-
+graph_id=0
+j_index=None
+s_index=None
 def Run(b):
-    global j_index,graph_type
-    if j_index==None:
-        warning.text="""  <font color="red"> No joint selected </font> """
+    global j_index,graph_type,graph_id,s_index
+    if j_index==None and s_index==None:
+        
+        warning.text="""  <font color="red"> No joint or bone selected </font> """
     else:
         warning.text=""
         if graph_type ==0:
-            rngid= vis.TimeColour3D(plot1,j_index,bones,joints)
-            gwt.text="\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n <img src='%f.jpg'/>"%rngid
-           # gwt2.text="\n"
+            if s_index==None:
+                warning.text="""  <font color="red"> Loading graph </font> """
+                vis.TimeColour3DJ(plot1,j_index,bones,joints,graph_id)
+                gwt.text="\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n <img src='graph%d.jpg'/>"%graph_id
+                warning.text=""
+                # gwt2.text="\n"
+            else:
+                warning.text="""  <font color="red"> Loading graph </font> """
+                vis.TimeColour3DS(plot1,s_index,bones,joints,graph_id)
+                gwt.text="\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n <img src='graph%d.jpg'/>"%graph_id
+                warning.text=""
         elif graph_type ==1:
-            rngid= vis.Hagerstrand(plot1,j_index,bones,joints)
-            gwt.text="\n1st figure shows position in y-z plane with time in x direction. 2nd figure shows position in x-y plane with time in y direction:\n <img src='%f.jpg'/>"%rngid
+            vis.Hagerstrand(plot1,j_index,bones,joints,graph_id)
+            gwt.text="\n1st figure shows position in y-z plane with time in x direction. 2nd figure shows position in x-y plane with time in y direction:\n <img src='graph%d.jpg'/>"%graph_id
             #gwt2.text="\n <img src='%f.jpg'/>"%rngid
-   
+
+        graph_id+=1
+        
 run_b=button(text="3D plot", pos=scene.caption_anchor, bind=Run)
 #scene.append_to_caption('<br>')
 warning= wtext(text="\n",pos=scene.caption_anchor)
@@ -180,10 +193,9 @@ gwt2 = wtext(text="\n",pos=scene.caption_anchor)
 lasthit = None
 lastpick = None
 lastcolor = None
-j_index=None
 
 def getevent():
-    global lasthit, lastpick, lastcolor, j_index
+    global lasthit, lastpick, lastcolor, j_index,s_index
     if lasthit != None:
         if lastpick != None: lasthit.modify(lastpick, color=lastcolor)
         else: lasthit.color = vector(lastcolor)
@@ -194,13 +206,20 @@ def getevent():
         lastpick = None
         lastcolor = vector(hit.color) # make a copy
         hit.color = color.red
+    
     if hit in jeleton:
         j_index=jeleton.index(hit)
-#    if hit in skeleton:
-#        print(skeleton.index(hit))
-#        index=skeleton.index(hit)
+        s_index=None
+        print("joint selected")
+    elif hit in skeleton:
+        s_index=skeleton.index(hit)
+        j_index=None
+        print("bone selected")
+        print(s_index)
     else:
         print("not in list")
+        j_index=None
+        s_index=None
 
 scene.bind("mousedown", getevent)
 #-----------------------------------------------------------------------------
