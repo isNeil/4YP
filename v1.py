@@ -14,6 +14,8 @@ import time
 
 plot1= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\RFVP\json\plot1rf3.json')
 plot2= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\RFVP\json\plot2rf5.json')
+plot3= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\RFVP\json\plot3rf1.json')
+plot4= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\RFVP\json\plot4rf4.json')
 
 #    #index mapping
 bones=[[0,1],[1,2],[2,3],[0,6],[6,7],[7,8],[0,12],[12,13],[13,14],[14,15],[13,17],[17,18],[18,19],[13,25],[25,26],[26,27]]
@@ -33,6 +35,10 @@ frames=np.shape(plot1)[1]
 
 dist=[]
 dist2=[]
+
+dist3=[]
+dist4=[]
+
 diff=[]
 #mapping index to joint 
 dex=joints[index]
@@ -47,7 +53,8 @@ for i in range(np.shape(plot1)[1]):
 #    plot2z.append(plot1.iloc[dex][i][2])
     dist.append(((plot1.iloc[dex][i][0])**2+(plot1.iloc[dex][i][1])**2+(plot1.iloc[dex][i][2])**2)**0.5)
     dist2.append(((plot2.iloc[dex][i][0])**2+(plot2.iloc[dex][i][1])**2+(plot2.iloc[dex][i][2])**2)**0.5)
-    
+    dist3.append(((plot3.iloc[dex][i][0])**2+(plot3.iloc[dex][i][1])**2+(plot3.iloc[dex][i][2])**2)**0.5)
+    dist4.append(((plot4.iloc[dex][i][0])**2+(plot4.iloc[dex][i][1])**2+(plot4.iloc[dex][i][2])**2)**0.5)
  #   diff.append(dist[i]-dist2[i])
 #######################################Below this should be a function but for now just do x
 
@@ -55,6 +62,8 @@ fig = plt.figure(figsize=(10, 5))
 #fig, ax = plt.subplots()
 plt.plot(dist)
 plt.plot(dist2,"r")
+plt.plot(dist3,"y")
+plt.plot(dist4,"g")
 #plt.hist(diff,len(diff))
 plt.ylabel('Distance')
 plt.xlabel('Frame')

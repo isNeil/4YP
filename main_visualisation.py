@@ -46,9 +46,13 @@ limb_length=[124,452,504,124,452,504,252,231,78,112,120,250,230,120,250,230]
 
 
 #load formated data instead
-#data_f = pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF1formated.json')
+#
+#data_f_5 = pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF1formated.json')
+#37:139
 data_f_3= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF3formated.json')
-#data_f_4= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF4formated.json')  
+#17:119
+#data_f_5= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF4formated.json')  
+#27:129
 data_f_5= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF5formated.json')  
 
 
@@ -92,21 +96,22 @@ B=[]
 #make sure time matches for each (to be corrected by xcorr eventually)
 plot1=data_f_3.iloc[:,37:139]
 plot1.columns = range(plot1.shape[1])
-
-plot2=data_f_5.iloc[:,25:127]
+#data_f_5.iloc[:,25:127]
+plot2=data_f_5.iloc[:,27:129]
 plot2.columns = range(plot2.shape[1])
 
+plot2.to_json(r'C:\Users\neilw\Desktop\RF Vpython\RFVP\json\plot2rf5.json')
 #for d lines
 d_lines=[]
 
 #simulation
 while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
     if frame<np.shape(plot1)[1]-1:
-        temp=simv(skeleton,jeleton,frame,plot1,bones,joints,limb_length,vec(0,1,0),False,True,vec(1,1,1),1)
+        temp=simv(skeleton,jeleton,frame,plot1,bones,joints,limb_length,vec(0,1,0),True,True,vec(1,1,1),1)
         skeleton=temp[0]
         jeleton=temp[1]
     if frame<np.shape(plot2)[1]-1:     
-        temp2=sim(skeleton1,jeleton1,frame,plot2,bones,joints,limb_length,vec(1,0,0),False,True,vec(0.5,0.5,0.5))
+        temp2=sim(skeleton1,jeleton1,frame,plot2,bones,joints,limb_length,vec(1,0,0),True,True,vec(0.5,0.5,0.5))
         skeleton1=temp2[0]
         jeleton1=temp2[1]
         
@@ -132,20 +137,20 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
     
     
     
-    #joint angle colouring
-    angles1=ja.joint_angle(frame,plot1,bones,joints)  
-    angles2=ja.joint_angle(frame,plot2,bones,joints) 
-    angles=np.subtract(angles1,angles2)
-
-    red = Color("blue")
-    colors = list(red.range_to(Color("green"),70))
-    
-    for i in range(len(jeleton)):
-        if angles[i]==0:
-            jeleton[i].color=color.white
-        else:
-            rgbc=colors[abs(int(angles[i]))].rgb
-            jeleton[i].color=vector(rgbc[0],rgbc[1],rgbc[2])
+#    #joint angle colouring
+#    angles1=ja.joint_angle(frame,plot1,bones,joints)  
+#    angles2=ja.joint_angle(frame,plot2,bones,joints) 
+#    angles=np.subtract(angles1,angles2)
+#
+#    red = Color("blue")
+#    colors = list(red.range_to(Color("green"),70))
+#    
+#    for i in range(len(jeleton)):
+#        if angles[i]==0:
+#            jeleton[i].color=color.white
+#        else:
+#            rgbc=colors[abs(int(angles[i]))].rgb
+#            jeleton[i].color=vector(rgbc[0],rgbc[1],rgbc[2])
 
 #    
 #    #label right shoulder in polar coordinates length angle from vertical angle anticlockwise from red x axis
@@ -225,10 +230,10 @@ while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
 #        f3.plot(pos=[frame,delta[2]])     
      #cross correlation elbow angles
     
-    
-    A.append(angles1[15])
-    B.append(angles2[15])    
-   
+#    
+#    A.append(angles1[15])
+#    B.append(angles2[15])    
+#   
     
  
         
@@ -315,4 +320,3 @@ arz=arrow(pos=vector(500,0,0),axis=vector(0,0,100),color=vec(0,0,1))
 #deltas.df_v(plot1).to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\plot2rf5vel.json')
 #deltas.df_a(plot1).to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\plot2rf5accel.json')
 #plot1.to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\plot1rf3.json')
-#plot2.to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\plot2rf5.json')
