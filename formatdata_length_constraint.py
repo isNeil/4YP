@@ -11,6 +11,7 @@ import numpy as np
 def format(json_file,bones,joints,limb_length):
     df = pd.read_json(json_file)
     
+
     for i in range(np.shape(df)[1]): 
         for j in range(np.shape(df)[0]):
             df[i][j]=df[i][j].get("translate")

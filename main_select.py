@@ -186,8 +186,10 @@ def Run(b):
                 #gwt2.text="\n <img src='%f.jpg'/>"%rngid
         
         elif graph_type ==2:
-            if j_index!=None:               
-                if joints[j_index-1]+1!=joints[j_index+1]-1:
+            if j_index!=None:
+                if j_index-1<0 or j_index+1>=len(joints):
+                    warning.text="""  <font color="red"> Select a limb joint! (elbows and knees only)</font> """
+                elif joints[j_index-1]+1!=joints[j_index+1]-1:
                     warning.text="""  <font color="red"> Select a limb joint! (elbows and knees only)</font> """
                     
                 else:
