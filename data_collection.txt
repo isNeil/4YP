@@ -5,24 +5,14 @@ C:\openposelatest\openpose-1.5.1-binaries-win64-gpu-python-flir-3d_recommended\o
 --number_people_max 1
 
 Better!!!->
-C:\openposelatest\openpose-1.5.1-binaries-win64-gpu-python-flir-3d_recommended\openpose>bin\OpenPoseDemo.exe --video examples\media\carlton1.mp4 --model_pose BODY_25 --number_people_max 1 --model_pose COCO --write_json ./output/ --display 1  --write_video ../carlton1.avi
+C:\openposelatest\openpose-1.5.1-binaries-win64-gpu-python-flir-3d_recommended\openpose>bin\OpenPoseDemo.exe --video examples\media\rf6.mp4 --model_pose BODY_25 --number_people_max 1 --model_pose COCO --write_json ./output/ --display 1  --write_video ../rf6.avi
 
 
 baseline with input from openpose
-
-python src/openpose_3dpose_sandbox.py --camera_frame --residual --batch_norm --dropout 0.5 --max_norm --evaluateActionWise --use_sh --interpolation --multiplier 0.5 --epochs 200 --load 4874200 --pose_estimation_json C:\openposelatest\openpose-1.5.1-binaries-win64-gpu-python-flir-3d_recommended\openpose\output\fk2 --write_gif --gif_fps 24    
-
-
-, optional --verbose 3 for debug and for interpolation add --interpolation and use --multiplier 0.5
-
-
+C:\posesandbox\3d-pose-baseline
+python src/openpose_3dpose_sandbox.py --camera_frame --residual --batch_norm --dropout 0.5 --max_norm --evaluateActionWise --use_sh --interpolation --multiplier 0.5 --epochs 200 --load 4874200 --pose_estimation_json C:\openposelatest\openpose-1.5.1-binaries-win64-gpu-python-flir-3d_recommended\openpose\output\rf2 --write_gif --gif_fps 24    
 
 ############################################
-C:\posesandbox\3d-pose-baseline>python src/openpose_3dpose_sandbox.py --camera_frame --residual --batch_norm --dropout 0.5 --max_norm --evaluateActionWise --use_sh --epochs 200 --load 4874200 --pose_estimation_json C:\openposelatest\openpose-1.5.1-binaries-win64-gpu-python-flir-3d_recommended\openpose\output --write_gif --gif_fps 24
-
-
-
-
 
 
 
