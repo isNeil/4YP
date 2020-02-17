@@ -55,6 +55,7 @@ scene.up=vector(0,0,1)
 scene.userzoom =True
 scene.userspin=True
 scene.width = scene.height = 600
+#scene.align='left'
 #scene.background= color.white
 distant_light(direction=vector(0.88,-0.44,0.2),color=color.gray(0.8))
 
