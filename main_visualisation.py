@@ -43,6 +43,17 @@ limb_length=[124,452,504,124,452,504,252,231,78,112,120,250,230,120,250,230]
 #data_f_4.to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF4formated.json')
 #data_f_5= format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF5_3d_data.json',bones,joints,limb_length) 
 #data_f_5.to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF5formated.json')
+#
+#data6=format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\rf6\3d_data.json',bones,joints,limb_length)
+#data6.to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\rf6formated.json')
+#data7=format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\rf7\3d_data.json',bones,joints,limb_length)
+#data7.to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\rf7formated.json')
+#data8=format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\rf8\3d_data.json',bones,joints,limb_length)
+#data8.to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\rf8formated.json')
+#data9=format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\rf9\3d_data.json',bones,joints,limb_length)
+#data9.to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\rf9formated.json')
+#data10=format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\rf10\3d_data.json',bones,joints,limb_length)
+#data10.to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\rf10formated.json')
 
 
 #load formated data instead
@@ -53,7 +64,7 @@ data_f_3= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF3formated.
 #17:119
 #data_f_5= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF4formated.json')  
 #27:129
-data_f_5= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF5formated.json')  
+data_f_5= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\rf9formated.json')  
 
 
 frame=0
@@ -97,10 +108,14 @@ B=[]
 plot1=data_f_3.iloc[:,37:139]
 plot1.columns = range(plot1.shape[1])
 #data_f_5.iloc[:,25:127]
-plot2=data_f_5.iloc[:,27:129]
+plot2=data_f_5.iloc[:,0:102]
 plot2.columns = range(plot2.shape[1])
 
-plot2.to_json(r'C:\Users\neilw\Desktop\RF Vpython\RFVP\json\plot2rf5.json')
+#plot2.to_json(r'C:\Users\neilw\Desktop\RF Vpython\RFVP\json\plot4.json')
+
+
+
+
 #for d lines
 d_lines=[]
 
