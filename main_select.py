@@ -54,18 +54,19 @@ scene.camera.axis=vector(-1,+2000,0)
 scene.up=vector(0,0,1)
 scene.userzoom =True
 scene.userspin=True
-scene.width = scene.height = 600
-#scene.align='left'
+scene.width = 600
+scene.height = 900
 #scene.background= color.white
+scene.align="right"
 distant_light(direction=vector(0.88,-0.44,0.2),color=color.gray(0.8))
 
 #-----------------------------------------------------------------------------
 #scene title and captions
 
-scene.title = "Pose Visualisation\n\nSelect joint or bone, and choose visualisation technique to plot\n <br>"   
-scene.caption = """\nDrag with right button to rotate model
-Use middle mouse to zoom\n
-Adjust slider to change frame of animation: \n\n
+  
+scene.caption = """Pose Visualisation\n
+Drag with right button to rotate model, use middle mouse to zoom\n
+Select joint or bone, and choose visualisation technique to plot\n
 """
 #-----------------------------------------------------------------------------
 #plot axis
@@ -110,6 +111,23 @@ jeleton2=temp[1]
    
 running = True
 #-----------------------------------------------------------------------------
+#Toggle comparison model
+Visible=True
+def Show(b):
+    global Visible,running
+    if Visible== True:
+        b.text="Show comparison"
+        Visible= False
+        running=True
+    else:
+        b.text="Hide comparison"
+        Visible= True
+        running=True
+
+show_b=button(text="Hide comparison", pos=scene.caption_anchor, bind=Show)
+scene.append_to_caption( "\n\n Adjust slider to change frame of animation: \n\n")
+
+#-----------------------------------------------------------------------------
 #frame slider 
 def fr(s):
     global running
@@ -134,21 +152,7 @@ def M(m):
         graph_type = 2
 menu(choices=['TimeColour3D', 'Hagerstrand','TC3DLimb'], index=0, bind=M)
 
-#-----------------------------------------------------------------------------
-#Toggle comparison model
-Visible=True
-def Show(b):
-    global Visible,running
-    if Visible== True:
-        b.text="Show comparison"
-        Visible= False
-        running=True
-    else:
-        b.text="Hide comparison"
-        Visible= True
-        running=True
 
-show_b=button(text="Hide comparison", pos=scene.title_anchor, bind=Show)
 #-----------------------------------------------------------------------------
 #Plot graphs button
 graph_id=0
@@ -165,13 +169,13 @@ def Run(b):
             if j_index!=None and s_index==None:
                 warning.text="""  <font color="red"> Loading graph </font> """
                 vis.TimeColour3DJ(plot1,j_index,bones,joints,graph_id)
-                gwt.text="\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n <img src='graph%d.jpg'/>"%graph_id
+                gwt.text="\n\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n <img src='graph%d.jpg'/>"%graph_id
                 warning.text=""
                 # gwt2.text="\n"
             elif j_index==None and s_index!=None:
                 warning.text="""  <font color="red"> Loading graph </font> """
                 vis.TimeColour3DS(plot1,s_index,bones,joints,graph_id)
-                gwt.text="\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n <img src='graph%d.jpg'/>"%graph_id
+                gwt.text="\n\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n <img src='graph%d.jpg'/>"%graph_id
                 warning.text=""
 #            else:
 #                warning.text="""  <font color="red"> Both joint and bone selected</font> """
@@ -182,7 +186,7 @@ def Run(b):
             else:
                 warning.text="""  <font color="red"> Loading graph </font> """
                 vis.Hagerstrand(plot1,j_index,bones,joints,graph_id)
-                gwt.text="\n1st figure shows position in y-z plane with time in x direction. 2nd figure shows position in x-y plane with time in y direction:\n <img src='graph%d.jpg'/>"%graph_id
+                gwt.text="\n\n1st figure shows position in y-z plane with time in x direction. 2nd figure shows position in x-y plane with time in y direction:\n <img src='graph%d.jpg'/>"%graph_id
                 warning.text=""
                 #gwt2.text="\n <img src='%f.jpg'/>"%rngid
         
@@ -196,7 +200,7 @@ def Run(b):
                 else:
                     warning.text="""  <font color="red"> Loading graph </font> """
                     vis.TC3DLimb(plot1,j_index,bones,joints,graph_id)
-                    gwt.text="\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n <img src='graph%d.jpg'/>"%graph_id
+                    gwt.text="\n\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n <img src='graph%d.jpg'/>"%graph_id
                     warning.text=""
             else: 
                 warning.text="""  <font color="red"> Select a limb joint</font> """
