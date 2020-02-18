@@ -16,6 +16,7 @@ from v3f import v3
 from v8f import v8
 from v9f import v9
 from v10f import v10
+from v4f import v4
 
 #plot1= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\RFVP\json\plot1rf3.json')
 #plot2= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\RFVP\json\plot2rf5.json')
@@ -277,7 +278,7 @@ def Hagerstrand(plot1,index,bones,joints,graph_id):
         
 def plotpositionalderivatives(index,bones,joints):
     
-    fig, axs = plt.subplots(3,2,figsize=(20, 10))
+    fig, axs = plt.subplots(4,2,figsize=(20, 10))
    
     
     df=v1(index)
@@ -351,6 +352,19 @@ def plotpositionalderivatives(index,bones,joints):
     axs[2,1].plot(df.iloc[7,:],'b',alpha=0.4)   
     axs[2,1].set_ylabel('Acceleration')
     axs[2,1].set_xlabel('Frame')   
+
+
+    df=v4(15)
+    axs[3,0].plot(df.iloc[0,:],'r')
+    axs[3,0].plot(df.iloc[1,:],'b',alpha=0.4)
+    axs[3,0].plot(df.iloc[2,:],'b',alpha=0.4)
+    axs[3,0].plot(df.iloc[3,:],'b',alpha=0.4)
+    axs[3,0].plot(df.iloc[4,:],'b',alpha=0.4)
+    axs[3,0].plot(df.iloc[5,:],'b',alpha=0.4)
+    axs[3,0].plot(df.iloc[6,:],'b',alpha=0.4)
+    axs[3,0].plot(df.iloc[7,:],'b',alpha=0.4)   
+    axs[3,0].set_ylabel('Angle')
+    axs[3,0].set_xlabel('Frame')   
 
     fig.tight_layout()
     plt.savefig("std_pos_vis%d.jpg"%index, dpi=60)    

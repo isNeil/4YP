@@ -15,9 +15,15 @@ from spherical import asCartesian
 
 import joint_angle as ja
 
+plot3= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\3.json')
+plot4= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\4.json')
+plot5= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\5.json')
+plot6= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\6.json')
+plot7= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\7.json')
+plot8= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\8.json')
+plot9= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\9.json')
+plot10= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\10.json')
 
-plot1= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\RFVP\json\plot1rf3.json')
-plot2= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\RFVP\json\plot2rf5.json')
 
 #    #index mapping
 bones=[[0,1],[1,2],[2,3],[0,6],[6,7],[7,8],[0,12],[12,13],[13,14],[14,15],[13,17],[17,18],[18,19],[13,25],[25,26],[26,27]]
@@ -25,11 +31,18 @@ joints=[0,1,2,3,6,7,8,12,13,14,15,17,18,19,25,26,27]
     
 index=15
  
-frames=np.shape(plot1)[1]
+frames=np.shape(plot3)[1]
 #joint 0 to 27 Rwrist
 
-angle=[]
-angle2=[]
+angle3=[]
+angle4=[]
+angle5=[]
+angle6=[]
+angle7=[]
+angle8=[]
+angle9=[]
+angle10=[]
+
 
 
 
@@ -59,10 +72,17 @@ dex=joints[index]
 
 
 for i in range(frames):
-    
-    angle.append(ja.joint_angle(i,plot1,bones,joints)[index]) #ja.joint_angle returns angles for entire skeleton so select joint using index
-    angle2.append(ja.joint_angle(i,plot2,bones,joints)[index])
-    
+    #ja.joint_angle(i,plot3,bones,joints)
+    angle3.append(ja.joint_angle(i,plot3,bones,joints)[index]) #ja.joint_angle returns angles for entire skeleton so select joint using index
+    angle4.append(ja.joint_angle(i,plot4,bones,joints)[index])
+    angle5.append(ja.joint_angle(i,plot5,bones,joints)[index])
+    angle6.append(ja.joint_angle(i,plot6,bones,joints)[index])
+    angle7.append(ja.joint_angle(i,plot7,bones,joints)[index])
+    angle8.append(ja.joint_angle(i,plot8,bones,joints)[index])
+    angle9.append(ja.joint_angle(i,plot9,bones,joints)[index])
+    angle10.append(ja.joint_angle(i,plot10,bones,joints)[index])
+
+
     
 ########################################Below this should be a function but for now just do x
 #dist = savgol_filter(dist, 21, 3) # window size 51, polynomial order 3
@@ -92,8 +112,18 @@ for i in range(frames):
 
 fig = plt.figure(figsize=(10, 5))
 #fig, ax = plt.subplots()
-plt.plot(angle)
-plt.plot(angle2,"r")
+
+plt.plot(angle3,"r")
+plt.plot(angle4,'b')
+plt.plot(angle5,'y')
+plt.plot(angle6,'orange')
+plt.plot(angle7,'purple')
+plt.plot(angle8,'g')
+plt.plot(angle9,'black')
+plt.plot(angle10,'grey')
+
+
+
 plt.ylabel('Angle')
 plt.xlabel('Frame')
 plt.grid(True)

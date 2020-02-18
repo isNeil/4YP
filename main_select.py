@@ -39,10 +39,10 @@ data_f_3= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF3formated.
 data_f_5= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF5formated.json')  
 
 #chooes frames to match length for each (to be corrected by xcorr eventually)
-plot1=data_f_3.iloc[:,37:139]
+plot1=data_f_3.iloc[:,41:143]
 plot1.columns = range(plot1.shape[1])
 
-plot2=data_f_5.iloc[:,25:127]
+plot2=data_f_5.iloc[:,28:130]
 plot2.columns = range(plot2.shape[1])
 
 #-----------------------------------------------------------------------------
