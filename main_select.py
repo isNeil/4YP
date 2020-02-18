@@ -35,15 +35,28 @@ joints=[0,1,2,3,6,7,8,12,13,14,15,17,18,19,25,26,27]
 
 #-----------------------------------------------------------------------------
 #Load formatted data
-data_f_3= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF3formated.json')
-data_f_5= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF5formated.json')  
 
-#chooes frames to match length for each (to be corrected by xcorr eventually)
-plot1=data_f_3.iloc[:,41:143]
-plot1.columns = range(plot1.shape[1])
+plot3= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\3.json')
+plot4= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\4.json')
+plot5= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\5.json')
+plot6= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\6.json')
+plot7= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\7.json')
+plot8= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\8.json')
+plot9= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\9.json')
+plot10= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\10.json')
 
-plot2=data_f_5.iloc[:,28:130]
-plot2.columns = range(plot2.shape[1])
+plot1=plot4
+plot2=plot3
+
+#data_f_3= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF3formated.json')
+#data_f_5= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF5formated.json')  
+#
+##chooes frames to match length for each (to be corrected by xcorr eventually)
+#plot1=data_f_3.iloc[:,41:143]
+#plot1.columns = range(plot1.shape[1])
+#
+#plot2=data_f_5.iloc[:,28:130]
+#plot2.columns = range(plot2.shape[1])
 
 #-----------------------------------------------------------------------------
 #scene settings
@@ -110,6 +123,28 @@ jeleton2=temp[1]
 #    B.append(angles2[15])    
    
 running = True
+#------------------------------------------------------------------------------
+#change plot menu
+
+def M2(m):
+    global plot1,plot4,plot5,plot6,plot7,plot8,plot9,plot10,running
+    val = m.selected
+    if val == "Plot 4": 
+        plot1= plot4
+    elif val == "Plot 5":
+        plot1=plot5
+    elif val == "Plot 6":
+        plot1=plot6
+    elif val == "Plot 7":
+        plot1=plot7
+    elif val == "Plot 8":
+        plot1=plot8
+    elif val == "Plot 9":
+        plot1=plot9
+    elif val == "Plot 10":
+        plot1=plot10
+    running =True
+plot_menu=menu(choices=['Plot 4','Plot 5','Plot 6','Plot 7','Plot 8','Plot 9','Plot 10'], index=0, bind=M2)
 #-----------------------------------------------------------------------------
 #Toggle comparison model
 Visible=True
@@ -152,7 +187,7 @@ def M(m):
         graph_type = 2
     elif val == "StdPos":
         graph_type = 3
-menu(choices=['TimeColour3D', 'Hagerstrand','TC3DLimb','StdPos'], index=0, bind=M)
+graph_menu=menu(choices=['TimeColour3D', 'Hagerstrand','TC3DLimb','StdPos'], index=0, bind=M)
 
 
 #-----------------------------------------------------------------------------
