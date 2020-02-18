@@ -10,6 +10,12 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from colour import Color
 import time
+from v1f import v1
+from v2f import v2
+from v3f import v3
+from v8f import v8
+from v9f import v9
+from v10f import v10
 
 #plot1= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\RFVP\json\plot1rf3.json')
 #plot2= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\RFVP\json\plot2rf5.json')
@@ -269,6 +275,87 @@ def Hagerstrand(plot1,index,bones,joints,graph_id):
     
     plt.show()
         
+def plotpositionalderivatives(index,bones,joints):
+    
+    fig, axs = plt.subplots(3,2,figsize=(20, 10))
+   
+    
+    df=v1(index)
+    axs[0,0].plot(df.iloc[0,:],'r')
+    axs[0,0].plot(df.iloc[1,:],'b',alpha=0.4)
+    axs[0,0].plot(df.iloc[2,:],'b',alpha=0.4)
+    axs[0,0].plot(df.iloc[3,:],'b',alpha=0.4)
+    axs[0,0].plot(df.iloc[4,:],'b',alpha=0.4)
+    axs[0,0].plot(df.iloc[5,:],'b',alpha=0.4)
+    axs[0,0].plot(df.iloc[6,:],'b',alpha=0.4)
+    axs[0,0].plot(df.iloc[7,:],'b',alpha=0.4)
+    axs[0,0].set_ylabel('Distance')
+    axs[0,0].set_xlabel('Frame')
+    
+    df=v2(index)
+    axs[1,0].plot(df.iloc[0,:],'r')
+    axs[1,0].plot(df.iloc[1,:],'b',alpha=0.4)
+    axs[1,0].plot(df.iloc[2,:],'b',alpha=0.4)
+    axs[1,0].plot(df.iloc[3,:],'b',alpha=0.4)
+    axs[1,0].plot(df.iloc[4,:],'b',alpha=0.4)
+    axs[1,0].plot(df.iloc[5,:],'b',alpha=0.4)
+    axs[1,0].plot(df.iloc[6,:],'b',alpha=0.4)
+    axs[1,0].plot(df.iloc[7,:],'b',alpha=0.4)
+    axs[1,0].set_ylabel('Velocity')
+    axs[1,0].set_xlabel('Frame')    
+    
+    df=v3(index)
+    axs[2,0].plot(df.iloc[0,:],'r')
+    axs[2,0].plot(df.iloc[1,:],'b',alpha=0.4)
+    axs[2,0].plot(df.iloc[2,:],'b',alpha=0.4)
+    axs[2,0].plot(df.iloc[3,:],'b',alpha=0.4)
+    axs[2,0].plot(df.iloc[4,:],'b',alpha=0.4)
+    axs[2,0].plot(df.iloc[5,:],'b',alpha=0.4)
+    axs[2,0].plot(df.iloc[6,:],'b',alpha=0.4)
+    axs[2,0].plot(df.iloc[7,:],'b',alpha=0.4)   
+    axs[2,0].set_ylabel('Acceleration')
+    axs[2,0].set_xlabel('Frame')
+    
+    df=v8(index)
+    axs[0,1].plot(df.iloc[0,:],'r')
+    axs[0,1].plot(df.iloc[1,:],'b',alpha=0.4)
+    axs[0,1].plot(df.iloc[2,:],'b',alpha=0.4)
+    axs[0,1].plot(df.iloc[3,:],'b',alpha=0.4)
+    axs[0,1].plot(df.iloc[4,:],'b',alpha=0.4)
+    axs[0,1].plot(df.iloc[5,:],'b',alpha=0.4)
+    axs[0,1].plot(df.iloc[6,:],'b',alpha=0.4)
+    axs[0,1].plot(df.iloc[7,:],'b',alpha=0.4)   
+    axs[0,1].set_ylabel('Distance')
+    axs[0,1].set_xlabel('Frame')   
+    
+    df=v9(index)
+    axs[1,1].plot(df.iloc[0,:],'r')
+    axs[1,1].plot(df.iloc[1,:],'b',alpha=0.4)
+    axs[1,1].plot(df.iloc[2,:],'b',alpha=0.4)
+    axs[1,1].plot(df.iloc[3,:],'b',alpha=0.4)
+    axs[1,1].plot(df.iloc[4,:],'b',alpha=0.4)
+    axs[1,1].plot(df.iloc[5,:],'b',alpha=0.4)
+    axs[1,1].plot(df.iloc[6,:],'b',alpha=0.4)
+    axs[1,1].plot(df.iloc[7,:],'b',alpha=0.4)   
+    axs[1,1].set_ylabel('Velocity')
+    axs[1,1].set_xlabel('Frame')   
+        
+    df=v10(index)
+    axs[2,1].plot(df.iloc[0,:],'r')
+    axs[2,1].plot(df.iloc[1,:],'b',alpha=0.4)
+    axs[2,1].plot(df.iloc[2,:],'b',alpha=0.4)
+    axs[2,1].plot(df.iloc[3,:],'b',alpha=0.4)
+    axs[2,1].plot(df.iloc[4,:],'b',alpha=0.4)
+    axs[2,1].plot(df.iloc[5,:],'b',alpha=0.4)
+    axs[2,1].plot(df.iloc[6,:],'b',alpha=0.4)
+    axs[2,1].plot(df.iloc[7,:],'b',alpha=0.4)   
+    axs[2,1].set_ylabel('Acceleration')
+    axs[2,1].set_xlabel('Frame')   
 
+    fig.tight_layout()
+    plt.savefig("std_pos_vis%d.jpg"%index, dpi=60)    
+    
 
-
+bones=[[0,1],[1,2],[2,3],[0,6],[6,7],[7,8],[0,12],[12,13],[13,14],[14,15],[13,17],[17,18],[18,19],[13,25],[25,26],[26,27]]
+joints=[0,1,2,3,6,7,8,12,13,14,15,17,18,19,25,26,27]
+plotpositionalderivatives(16,bones,joints)

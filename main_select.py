@@ -64,7 +64,7 @@ distant_light(direction=vector(0.88,-0.44,0.2),color=color.gray(0.8))
 #scene title and captions
 
   
-scene.caption = """Pose Visualisation\n
+scene.caption = """<b>Pose Visualisation</b>\n
 Drag with right button to rotate model, use middle mouse to zoom\n
 Select joint or bone, and choose visualisation technique to plot\n
 """
@@ -150,7 +150,9 @@ def M(m):
         graph_type = 1
     elif val == "TC3DLimb":
         graph_type = 2
-menu(choices=['TimeColour3D', 'Hagerstrand','TC3DLimb'], index=0, bind=M)
+    elif val == "StdPos":
+        graph_type = 3
+menu(choices=['TimeColour3D', 'Hagerstrand','TC3DLimb','StdPos'], index=0, bind=M)
 
 
 #-----------------------------------------------------------------------------
@@ -169,13 +171,13 @@ def Run(b):
             if j_index!=None and s_index==None:
                 warning.text="""  <font color="red"> Loading graph </font> """
                 vis.TimeColour3DJ(plot1,j_index,bones,joints,graph_id)
-                gwt.text="\n\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n <img src='graph%d.jpg'/>"%graph_id
+                gwt.text="\n\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n\n <img src='graph%d.jpg'/>"%graph_id
                 warning.text=""
                 # gwt2.text="\n"
             elif j_index==None and s_index!=None:
                 warning.text="""  <font color="red"> Loading graph </font> """
                 vis.TimeColour3DS(plot1,s_index,bones,joints,graph_id)
-                gwt.text="\n\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n <img src='graph%d.jpg'/>"%graph_id
+                gwt.text="\n\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n\n <img src='graph%d.jpg'/>"%graph_id
                 warning.text=""
 #            else:
 #                warning.text="""  <font color="red"> Both joint and bone selected</font> """
@@ -186,7 +188,7 @@ def Run(b):
             else:
                 warning.text="""  <font color="red"> Loading graph </font> """
                 vis.Hagerstrand(plot1,j_index,bones,joints,graph_id)
-                gwt.text="\n\n1st figure shows position in y-z plane with time in x direction. 2nd figure shows position in x-y plane with time in y direction:\n <img src='graph%d.jpg'/>"%graph_id
+                gwt.text="\n\n1st figure shows position in y-z plane with time in x direction. 2nd figure shows position in x-y plane with time in y direction:\n\n <img src='graph%d.jpg'/>"%graph_id
                 warning.text=""
                 #gwt2.text="\n <img src='%f.jpg'/>"%rngid
         
@@ -200,10 +202,20 @@ def Run(b):
                 else:
                     warning.text="""  <font color="red"> Loading graph </font> """
                     vis.TC3DLimb(plot1,j_index,bones,joints,graph_id)
-                    gwt.text="\n\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n <img src='graph%d.jpg'/>"%graph_id
+                    gwt.text="\n\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n\n <img src='graph%d.jpg'/>"%graph_id
                     warning.text=""
             else: 
                 warning.text="""  <font color="red"> Select a limb joint</font> """
+        elif graph_type ==3:
+            if j_index!=None and s_index==None:
+                warning.text="""  <font color="red"> Loading graph </font> """
+                vis.plotpositionalderivatives(j_index,bones,joints)
+                gwt.text="\n\nStandard selection of visualisations for a joint:\n\n <img src='std_pos_vis%d.jpg'/>"%j_index
+                warning.text=""
+                # gwt2.text="\n"
+            else:
+                warning.text="""  <font color="red"> Select a joint </font> """
+            
             
         graph_id+=1
         

@@ -34,7 +34,7 @@ def v1(index):
     
     
     #    #index mapping
-    bones=[[0,1],[1,2],[2,3],[0,6],[6,7],[7,8],[0,12],[12,13],[13,14],[14,15],[13,17],[17,18],[18,19],[13,25],[25,26],[26,27]]
+#    bones=[[0,1],[1,2],[2,3],[0,6],[6,7],[7,8],[0,12],[12,13],[13,14],[14,15],[13,17],[17,18],[18,19],[13,25],[25,26],[26,27]]
     joints=[0,1,2,3,6,7,8,12,13,14,15,17,18,19,25,26,27]
         
     index=16
@@ -50,7 +50,7 @@ def v1(index):
     dist9=[]
     dist10=[]
     
-    diff=[]
+
     #mapping index to joint 
     dex=joints[index]
     
@@ -77,50 +77,51 @@ def v1(index):
     #######################################Below this should be a function but for now just do x
     
     
-    #fig, ax = plt.subplots()
-    #plt.plot([np.nan]*8+dist,"b")
-    
-    fig = plt.figure(figsize=(10, 3))
-    #plt.plot(dist4[15:117],'b')
-    #plt.plot(dist5[28:130],'y')
-    #plt.plot(dist6[98:200],'orange')
-    #plt.plot(dist7[57:159],'purple')
-    #plt.plot(dist8[64:166],'g')
-    #plt.plot(dist9,'black')
-    #plt.plot(dist10[77:179],'grey')
-    #plt.plot(dist3[41:143],"r")
-    
-    
-    plt.plot(dist4,'b',alpha=0.4)
-    plt.plot(dist5,'b',alpha=0.4)
-    plt.plot(dist6,'b',alpha=0.4)
-    plt.plot(dist7,'b',alpha=0.4)
-    plt.plot(dist8,'b',alpha=0.4)
-    plt.plot(dist9,'b',alpha=0.4)
-    plt.plot(dist10,'b',alpha=0.4)
-    plt.plot(dist3,"r")
-    #plt.hist(diff,len(diff))
-    plt.ylabel('Distance')
-    plt.xlabel('Frame')
-    plt.grid(True)
-    #ax.set_axisbelow(True)
-    #ax.minorticks_on()
-    #ax.grid(which='minor', linestyle=':', linewidth='0.5', color='black')
-    plt.xlim((0,102))
-    plt.show()
-    
-    
-    
-    plt.tight_layout()
-     
-    
+#    #fig, ax = plt.subplots()
+#    #plt.plot([np.nan]*8+dist,"b")
+#    
+#    fig = plt.figure(figsize=(10, 3))
+#    #plt.plot(dist4[15:117],'b')
+#    #plt.plot(dist5[28:130],'y')
+#    #plt.plot(dist6[98:200],'orange')
+#    #plt.plot(dist7[57:159],'purple')
+#    #plt.plot(dist8[64:166],'g')
+#    #plt.plot(dist9,'black')
+#    #plt.plot(dist10[77:179],'grey')
+#    #plt.plot(dist3[41:143],"r")
+#    
+#    
+#    plt.plot(dist4,'b',alpha=0.4)
+#    plt.plot(dist5,'b',alpha=0.4)
+#    plt.plot(dist6,'b',alpha=0.4)
+#    plt.plot(dist7,'b',alpha=0.4)
+#    plt.plot(dist8,'b',alpha=0.4)
+#    plt.plot(dist9,'b',alpha=0.4)
+#    plt.plot(dist10,'b',alpha=0.4)
+#    plt.plot(dist3,"r")
+#
+#    plt.ylabel('Distance')
+#    plt.xlabel('Frame')
+#    plt.grid(True)
+#
+#    plt.xlim((0,102))
+#    plt.show()
+#    
+#    
+#    
+#    plt.tight_layout()
+#     
+
     #plt.show()
     
     #return plt.figure
-    df = pd.DataFrame(np.array([dist3,dist4,dist5,dist6,dist7,dist8,dist9,dist10])
+    df = pd.DataFrame(np.array([dist3,dist4,dist5,dist6,dist7,dist8,dist9,dist10]))
+    
     return df
 
-z=v1(16)
+#
+#df=v1(16)
+#print(df.iloc[0,:].values.tolist())
 
     
     
@@ -155,7 +156,14 @@ z=v1(16)
     #plot8.columns= range(plot8.shape[1])
     #plot8.to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\8.json')
     ##
-    #plot9.to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\9.json')
+    
+#    plot9=plot9.iloc[:,0:102]
+#    plot9.columns= range(plot8.shape[1])    
+#    
+#    plot9.to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\9.json')
+    
+    
+    
     #
     #plot10=plot10.iloc[:,77:179]
     #plot10.columns=range(plot10.shape[1])
