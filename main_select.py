@@ -125,26 +125,36 @@ jeleton2=temp[1]
 running = True
 #------------------------------------------------------------------------------
 #change plot menu
-
+plot_num= 4
 def M2(m):
-    global plot1,plot4,plot5,plot6,plot7,plot8,plot9,plot10,running
+    global plot_num,plot1,plot3,plot4,plot5,plot6,plot7,plot8,plot9,plot10,running
     val = m.selected
     if val == "Plot 4": 
         plot1= plot4
+        plot_num = 1
     elif val == "Plot 5":
         plot1=plot5
+        plot_num = 2
     elif val == "Plot 6":
         plot1=plot6
+        plot_num = 3
     elif val == "Plot 7":
         plot1=plot7
+        plot_num = 4
     elif val == "Plot 8":
         plot1=plot8
+        plot_num = 5
     elif val == "Plot 9":
         plot1=plot9
+        plot_num = 6
     elif val == "Plot 10":
         plot1=plot10
+        plot_num = 7
+    elif val == "Plot 3":
+        plot1 = plot3
+
     running =True
-plot_menu=menu(choices=['Plot 4','Plot 5','Plot 6','Plot 7','Plot 8','Plot 9','Plot 10'], index=0, bind=M2)
+plot_menu=menu(choices=['Plot 3','Plot 4','Plot 5','Plot 6','Plot 7','Plot 8','Plot 9','Plot 10'], index=1, bind=M2)
 #-----------------------------------------------------------------------------
 #Toggle comparison model
 Visible=True
@@ -244,8 +254,8 @@ def Run(b):
         elif graph_type ==3:
             if j_index!=None and s_index==None:
                 warning.text="""  <font color="red"> Loading graph </font> """
-                vis.plotpositionalderivatives(j_index,bones,joints)
-                gwt.text="\n\nStandard selection of visualisations for a joint:\n\n <img src='std_pos_vis%d.jpg'/>"%j_index
+                vis.plotpositionalderivatives(j_index,bones,joints,plot_num)
+                gwt.text="\n\nStandard selection of visualisations for a joint:\n\n <img src='std_pos_vis_%d_%d.jpg'/>"%(j_index,plot_num)
                 warning.text=""
                 # gwt2.text="\n"
             else:

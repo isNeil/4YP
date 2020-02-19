@@ -276,7 +276,7 @@ def Hagerstrand(plot1,index,bones,joints,graph_id):
     
     plt.show()
         
-def plotpositionalderivatives(index,bones,joints):
+def plotpositionalderivatives(index,bones,joints,plot_num):
     
     fig, axs = plt.subplots(4,2,figsize=(20, 10))
    
@@ -290,6 +290,7 @@ def plotpositionalderivatives(index,bones,joints):
     axs[0,0].plot(df.iloc[5,:],'b',alpha=0.4)
     axs[0,0].plot(df.iloc[6,:],'b',alpha=0.4)
     axs[0,0].plot(df.iloc[7,:],'b',alpha=0.4)
+    axs[0,0].plot(df.iloc[plot_num,:],'g')
     axs[0,0].set_ylabel('Distance')
     axs[0,0].set_xlabel('Frame')
     
@@ -302,6 +303,7 @@ def plotpositionalderivatives(index,bones,joints):
     axs[1,0].plot(df.iloc[5,:],'b',alpha=0.4)
     axs[1,0].plot(df.iloc[6,:],'b',alpha=0.4)
     axs[1,0].plot(df.iloc[7,:],'b',alpha=0.4)
+    axs[1,0].plot(df.iloc[plot_num,:],'g')
     axs[1,0].set_ylabel('Velocity')
     axs[1,0].set_xlabel('Frame')    
     
@@ -314,6 +316,7 @@ def plotpositionalderivatives(index,bones,joints):
     axs[2,0].plot(df.iloc[5,:],'b',alpha=0.4)
     axs[2,0].plot(df.iloc[6,:],'b',alpha=0.4)
     axs[2,0].plot(df.iloc[7,:],'b',alpha=0.4)   
+    axs[2,0].plot(df.iloc[plot_num,:],'g')
     axs[2,0].set_ylabel('Acceleration')
     axs[2,0].set_xlabel('Frame')
     
@@ -325,7 +328,8 @@ def plotpositionalderivatives(index,bones,joints):
     axs[0,1].plot(df.iloc[4,:],'b',alpha=0.4)
     axs[0,1].plot(df.iloc[5,:],'b',alpha=0.4)
     axs[0,1].plot(df.iloc[6,:],'b',alpha=0.4)
-    axs[0,1].plot(df.iloc[7,:],'b',alpha=0.4)   
+    axs[0,1].plot(df.iloc[7,:],'b',alpha=0.4) 
+    axs[0,1].plot(df.iloc[plot_num,:],'g')
     axs[0,1].set_ylabel('Distance')
     axs[0,1].set_xlabel('Frame')   
     
@@ -338,6 +342,7 @@ def plotpositionalderivatives(index,bones,joints):
     axs[1,1].plot(df.iloc[5,:],'b',alpha=0.4)
     axs[1,1].plot(df.iloc[6,:],'b',alpha=0.4)
     axs[1,1].plot(df.iloc[7,:],'b',alpha=0.4)   
+    axs[1,1].plot(df.iloc[plot_num,:],'g')
     axs[1,1].set_ylabel('Velocity')
     axs[1,1].set_xlabel('Frame')   
         
@@ -350,6 +355,7 @@ def plotpositionalderivatives(index,bones,joints):
     axs[2,1].plot(df.iloc[5,:],'b',alpha=0.4)
     axs[2,1].plot(df.iloc[6,:],'b',alpha=0.4)
     axs[2,1].plot(df.iloc[7,:],'b',alpha=0.4)   
+    axs[2,1].plot(df.iloc[plot_num,:],'g')
     axs[2,1].set_ylabel('Acceleration')
     axs[2,1].set_xlabel('Frame')   
 
@@ -363,13 +369,14 @@ def plotpositionalderivatives(index,bones,joints):
     axs[3,0].plot(df.iloc[5,:],'b',alpha=0.4)
     axs[3,0].plot(df.iloc[6,:],'b',alpha=0.4)
     axs[3,0].plot(df.iloc[7,:],'b',alpha=0.4)   
+    axs[3,0].plot(df.iloc[plot_num,:],'g')
     axs[3,0].set_ylabel('Angle')
     axs[3,0].set_xlabel('Frame')   
 
     fig.tight_layout()
-    plt.savefig("std_pos_vis%d.jpg"%index, dpi=60)    
+    plt.savefig("std_pos_vis_%d_%d.jpg"%(index,plot_num), dpi=60)    
     
 
 bones=[[0,1],[1,2],[2,3],[0,6],[6,7],[7,8],[0,12],[12,13],[13,14],[14,15],[13,17],[17,18],[18,19],[13,25],[25,26],[26,27]]
 joints=[0,1,2,3,6,7,8,12,13,14,15,17,18,19,25,26,27]
-plotpositionalderivatives(16,bones,joints)
+plotpositionalderivatives(16,bones,joints,4)
