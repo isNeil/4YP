@@ -17,6 +17,7 @@ from v8f import v8
 from v9f import v9
 from v10f import v10
 from v4f import v4
+from v11f import v11
 
 #plot1= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\RFVP\json\plot1rf3.json')
 #plot2= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\RFVP\json\plot2rf5.json')
@@ -277,6 +278,7 @@ def Hagerstrand(plot1,index,bones,joints,graph_id):
     plt.show()
         
 def plotpositionalderivatives(index,bones,joints,plot_num):
+    #plot number starts from 0 i.e. plot 0  is for rf3
     
     fig, axs = plt.subplots(4,2,figsize=(20, 10))
    
@@ -293,32 +295,11 @@ def plotpositionalderivatives(index,bones,joints,plot_num):
     axs[0,0].plot(df.iloc[plot_num,:],'g')
     axs[0,0].set_ylabel('Distance')
     axs[0,0].set_xlabel('Frame')
-    
-    df=v2(index)
-    axs[1,0].plot(df.iloc[0,:],'r')
-    axs[1,0].plot(df.iloc[1,:],'b',alpha=0.4)
-    axs[1,0].plot(df.iloc[2,:],'b',alpha=0.4)
-    axs[1,0].plot(df.iloc[3,:],'b',alpha=0.4)
-    axs[1,0].plot(df.iloc[4,:],'b',alpha=0.4)
-    axs[1,0].plot(df.iloc[5,:],'b',alpha=0.4)
-    axs[1,0].plot(df.iloc[6,:],'b',alpha=0.4)
-    axs[1,0].plot(df.iloc[7,:],'b',alpha=0.4)
-    axs[1,0].plot(df.iloc[plot_num,:],'g')
-    axs[1,0].set_ylabel('Velocity')
-    axs[1,0].set_xlabel('Frame')    
-    
-    df=v3(index)
-    axs[2,0].plot(df.iloc[0,:],'r')
-    axs[2,0].plot(df.iloc[1,:],'b',alpha=0.4)
-    axs[2,0].plot(df.iloc[2,:],'b',alpha=0.4)
-    axs[2,0].plot(df.iloc[3,:],'b',alpha=0.4)
-    axs[2,0].plot(df.iloc[4,:],'b',alpha=0.4)
-    axs[2,0].plot(df.iloc[5,:],'b',alpha=0.4)
-    axs[2,0].plot(df.iloc[6,:],'b',alpha=0.4)
-    axs[2,0].plot(df.iloc[7,:],'b',alpha=0.4)   
-    axs[2,0].plot(df.iloc[plot_num,:],'g')
-    axs[2,0].set_ylabel('Acceleration')
-    axs[2,0].set_xlabel('Frame')
+    #normalise
+    ymin, ymax = axs[0,0].get_ylim()
+    y_range = ymax-ymin
+
+
     
     df=v8(index)
     axs[0,1].plot(df.iloc[0,:],'r')
@@ -332,7 +313,26 @@ def plotpositionalderivatives(index,bones,joints,plot_num):
     axs[0,1].plot(df.iloc[plot_num,:],'g')
     axs[0,1].set_ylabel('Distance')
     axs[0,1].set_xlabel('Frame')   
+    #normalise
+    axs[0,1].set_ylim([-y_range/2, y_range/2])
+
     
+    df=v2(index)
+    axs[1,0].plot(df.iloc[0,:],'r')
+    axs[1,0].plot(df.iloc[1,:],'b',alpha=0.4)
+    axs[1,0].plot(df.iloc[2,:],'b',alpha=0.4)
+    axs[1,0].plot(df.iloc[3,:],'b',alpha=0.4)
+    axs[1,0].plot(df.iloc[4,:],'b',alpha=0.4)
+    axs[1,0].plot(df.iloc[5,:],'b',alpha=0.4)
+    axs[1,0].plot(df.iloc[6,:],'b',alpha=0.4)
+    axs[1,0].plot(df.iloc[7,:],'b',alpha=0.4)
+    axs[1,0].plot(df.iloc[plot_num,:],'g')
+    axs[1,0].set_ylabel('Velocity')
+    axs[1,0].set_xlabel('Frame')    
+    #normalise
+    ymin, ymax = axs[1,0].get_ylim()
+    y_range = ymax-ymin
+
     df=v9(index)
     axs[1,1].plot(df.iloc[0,:],'r')
     axs[1,1].plot(df.iloc[1,:],'b',alpha=0.4)
@@ -345,7 +345,25 @@ def plotpositionalderivatives(index,bones,joints,plot_num):
     axs[1,1].plot(df.iloc[plot_num,:],'g')
     axs[1,1].set_ylabel('Velocity')
     axs[1,1].set_xlabel('Frame')   
-        
+    #normalise
+    axs[1,1].set_ylim([-y_range/2, y_range/2])        
+    
+    df=v3(index)
+    axs[2,0].plot(df.iloc[0,:],'r')
+    axs[2,0].plot(df.iloc[1,:],'b',alpha=0.4)
+    axs[2,0].plot(df.iloc[2,:],'b',alpha=0.4)
+    axs[2,0].plot(df.iloc[3,:],'b',alpha=0.4)
+    axs[2,0].plot(df.iloc[4,:],'b',alpha=0.4)
+    axs[2,0].plot(df.iloc[5,:],'b',alpha=0.4)
+    axs[2,0].plot(df.iloc[6,:],'b',alpha=0.4)
+    axs[2,0].plot(df.iloc[7,:],'b',alpha=0.4)   
+    axs[2,0].plot(df.iloc[plot_num,:],'g')
+    axs[2,0].set_ylabel('Acceleration')
+    axs[2,0].set_xlabel('Frame')
+    #normalise
+    ymin, ymax = axs[2,0].get_ylim()
+    y_range = ymax-ymin
+
     df=v10(index)
     axs[2,1].plot(df.iloc[0,:],'r')
     axs[2,1].plot(df.iloc[1,:],'b',alpha=0.4)
@@ -358,8 +376,9 @@ def plotpositionalderivatives(index,bones,joints,plot_num):
     axs[2,1].plot(df.iloc[plot_num,:],'g')
     axs[2,1].set_ylabel('Acceleration')
     axs[2,1].set_xlabel('Frame')   
-
-
+        #normalise
+    axs[2,1].set_ylim([-y_range/2, y_range/2])
+    
     df=v4(15)
     axs[3,0].plot(df.iloc[0,:],'r')
     axs[3,0].plot(df.iloc[1,:],'b',alpha=0.4)
@@ -371,12 +390,31 @@ def plotpositionalderivatives(index,bones,joints,plot_num):
     axs[3,0].plot(df.iloc[7,:],'b',alpha=0.4)   
     axs[3,0].plot(df.iloc[plot_num,:],'g')
     axs[3,0].set_ylabel('Angle')
-    axs[3,0].set_xlabel('Frame')   
-
-    fig.tight_layout()
-    plt.savefig("std_pos_vis_%d_%d.jpg"%(index,plot_num), dpi=60)    
+    axs[3,0].set_xlabel('Frame')
+    #normalise
+    ymin, ymax = axs[3,0].get_ylim()
+    y_range = ymax-ymin
     
+    df=v11(15)
+    axs[3,1].plot(df.iloc[0,:],'r')
+    axs[3,1].plot(df.iloc[1,:],'b',alpha=0.4)
+    axs[3,1].plot(df.iloc[2,:],'b',alpha=0.4)
+    axs[3,1].plot(df.iloc[3,:],'b',alpha=0.4)
+    axs[3,1].plot(df.iloc[4,:],'b',alpha=0.4)
+    axs[3,1].plot(df.iloc[5,:],'b',alpha=0.4)
+    axs[3,1].plot(df.iloc[6,:],'b',alpha=0.4)
+    axs[3,1].plot(df.iloc[7,:],'b',alpha=0.4)   
+    axs[3,1].plot(df.iloc[plot_num,:],'g')
+    axs[3,1].set_ylabel('Angle')
+    axs[3,1].set_xlabel('Frame')   
+    #normalise
+    axs[3,1].set_ylim([-y_range/2, y_range/2])
+    
+    fig.tight_layout()
+    #for preload
+#    plt.savefig("std_vis_%d.jpg"%(plot_num), dpi=60)    
+    plt.savefig('std_pos_vis_%d_%d.jpg'%(index,plot_num), dpi=60)    
 
 bones=[[0,1],[1,2],[2,3],[0,6],[6,7],[7,8],[0,12],[12,13],[13,14],[14,15],[13,17],[17,18],[18,19],[13,25],[25,26],[26,27]]
 joints=[0,1,2,3,6,7,8,12,13,14,15,17,18,19,25,26,27]
-plotpositionalderivatives(16,bones,joints,4)
+plotpositionalderivatives(16,bones,joints,1)
