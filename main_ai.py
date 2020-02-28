@@ -11,6 +11,7 @@ import numpy as np
 from sim import create_frame
 from sim import frame_init
 import vis
+from smart_frame_select import smart_sel
 #import calc_vel_accel as deltas
 #import joint_angle as ja
 #from spherical import asSpherical
@@ -182,6 +183,21 @@ gwt2 = wtext(text="\n\n<img src='std_vis_1.jpg'/>",pos=scene.caption_anchor)
 
 #-----------------------------------------------------------------------------
 scene.append_to_caption( "\n\n Adjust slider to change frame of animation: \n\n")
+
+def Play(b):
+    global anime
+    if anime== True:
+        anime = False
+        b.text="Play"
+        
+    else:
+        anime = True
+        b.text="Pause"
+        
+
+play_b=button(text="Pause", pos=scene.caption_anchor, bind=Play)
+
+
 #frame slider 
 
 def fr(s):
@@ -192,6 +208,7 @@ def fr(s):
 sl = slider(min=0, max=np.size(plot1,1)-1, value=1, length=500, step=1, bind=fr)
 #slider text
 wt = wtext(text='1'.format(sl.value))
+
 scene.append_to_caption(' frame \n <br>')
 #-----------------------------------------------------------------------------
 #graph menu
@@ -322,9 +339,36 @@ def getevent():
 scene.bind("mousedown", getevent)
 #-----------------------------------------------------------------------------
 #update frames when running = True
-
+anime = True
 while True:
-    if running:
+    if anime:
+        
+                
+        rate(10)
+        sl.value=frame    
+        temp=create_frame(skeleton,jeleton,frame,plot1,bones,joints,True,False)
+        skeleton=temp[0]
+        jeleton=temp[1]  
+        if Visible:
+            temp=create_frame(skeleton2,jeleton2,frame,plot2,bones,joints,Visible,False)
+            skeleton2=temp[0]
+            jeleton2=temp[1]
+        else:
+            for i in range(len(bones)):
+                skeleton2[i].pos=vector(0,0,0)
+                skeleton2[i].axis=vector(0,0,0)
+                skeleton2[i].visible= Visible
+            for i in range(len(joints)):
+                jeleton2[i].pos=vector(0,0,0)
+                jeleton2[i].visible= Visible   
+        wt.text='{:1}'.format(sl.value)
+        if frame<np.size(plot1,1)-1:   
+            frame +=1
+        else:
+            frame =0
+       
+            
+    elif running:
         frame= sl.value    
         temp=create_frame(skeleton,jeleton,frame,plot1,bones,joints,True,False)
         skeleton=temp[0]

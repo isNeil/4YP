@@ -121,6 +121,6 @@ plt.show()
 
 
 plt.tight_layout()
- 
+fig.tight_layout()
 
 plt.show()
