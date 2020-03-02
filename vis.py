@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from colour import Color
 import time
+from smart_frame_select import smart_sel
 from v1f import v1
 from v2f import v2
 from v3f import v3
@@ -279,7 +280,7 @@ def Hagerstrand(plot1,index,bones,joints,graph_id):
         
 def plotpositionalderivatives(index,bones,joints,plot_num):
     #plot number starts from 0 i.e. plot 0  is for rf3
-    
+    hl= smart_sel()
     fig, axs = plt.subplots(4,2,figsize=(20, 10))
    
     
@@ -298,9 +299,7 @@ def plotpositionalderivatives(index,bones,joints,plot_num):
     #normalise
     ymin, ymax = axs[0,0].get_ylim()
     y_range = ymax-ymin
-
-
-    
+        
     df=v8(index)
     axs[0,1].plot(df.iloc[0,:],'r')
     axs[0,1].plot(df.iloc[1,:],'b',alpha=0.4)
@@ -315,8 +314,8 @@ def plotpositionalderivatives(index,bones,joints,plot_num):
     axs[0,1].set_xlabel('Frame')   
     #normalise
     axs[0,1].set_ylim([-y_range/2, y_range/2])
-
     
+
     df=v2(index)
     axs[1,0].plot(df.iloc[0,:],'r')
     axs[1,0].plot(df.iloc[1,:],'b',alpha=0.4)
@@ -347,6 +346,8 @@ def plotpositionalderivatives(index,bones,joints,plot_num):
     axs[1,1].set_xlabel('Frame')   
     #normalise
     axs[1,1].set_ylim([-y_range/2, y_range/2])        
+
+    
     
     df=v3(index)
     axs[2,0].plot(df.iloc[0,:],'r')
@@ -364,6 +365,8 @@ def plotpositionalderivatives(index,bones,joints,plot_num):
     ymin, ymax = axs[2,0].get_ylim()
     y_range = ymax-ymin
 
+
+
     df=v10(index)
     axs[2,1].plot(df.iloc[0,:],'r')
     axs[2,1].plot(df.iloc[1,:],'b',alpha=0.4)
@@ -378,7 +381,7 @@ def plotpositionalderivatives(index,bones,joints,plot_num):
     axs[2,1].set_xlabel('Frame')   
         #normalise
     axs[2,1].set_ylim([-y_range/2, y_range/2])
-    
+
     df=v4(15)
     axs[3,0].plot(df.iloc[0,:],'r')
     axs[3,0].plot(df.iloc[1,:],'b',alpha=0.4)
@@ -410,6 +413,16 @@ def plotpositionalderivatives(index,bones,joints,plot_num):
     #normalise
     axs[3,1].set_ylim([-y_range/2, y_range/2])
     
+    for i in hl[plot_num]:
+        axs[0,0].axvspan(i, i+1, facecolor='grey', alpha=0.5)
+        axs[1,0].axvspan(i, i+1, facecolor='grey', alpha=0.5)
+        axs[2,0].axvspan(i, i+1, facecolor='grey', alpha=0.5)
+        axs[3,0].axvspan(i, i+1, facecolor='grey', alpha=0.5)
+        axs[0,1].axvspan(i, i+1, facecolor='grey', alpha=0.5)
+        axs[1,1].axvspan(i, i+1, facecolor='grey', alpha=0.5)
+        axs[2,1].axvspan(i, i+1, facecolor='grey', alpha=0.5)
+        axs[3,1].axvspan(i, i+1, facecolor='grey', alpha=0.5)
+
     fig.tight_layout()
     #for preload
 #    plt.savefig("std_vis_%d.jpg"%(plot_num), dpi=60)    
@@ -417,4 +430,4 @@ def plotpositionalderivatives(index,bones,joints,plot_num):
 
 bones=[[0,1],[1,2],[2,3],[0,6],[6,7],[7,8],[0,12],[12,13],[13,14],[14,15],[13,17],[17,18],[18,19],[13,25],[25,26],[26,27]]
 joints=[0,1,2,3,6,7,8,12,13,14,15,17,18,19,25,26,27]
-plotpositionalderivatives(16,bones,joints,1)
+plotpositionalderivatives(16,bones,joints,7)

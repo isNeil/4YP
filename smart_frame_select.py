@@ -103,3 +103,4 @@ def smart_sel():
 #    fig.tight_layout()
 
     return hl
+smart_sel()

@@ -120,7 +120,7 @@ jeleton2=temp[1]
 running = True
 #------------------------------------------------------------------------------
 #change plot menu
-plot_num= 4
+plot_num= 1
 def M2(m):
     global plot_num,plot1,plot3,plot4,plot5,plot6,plot7,plot8,plot9,plot10,running
     val = m.selected
@@ -184,6 +184,8 @@ gwt2 = wtext(text="\n\n<img src='std_vis_1.jpg'/>",pos=scene.caption_anchor)
 #-----------------------------------------------------------------------------
 scene.append_to_caption( "\n\n Adjust slider to change frame of animation: \n\n")
 
+
+anime= True
 def Play(b):
     global anime
     if anime== True:
@@ -197,6 +199,19 @@ def Play(b):
 
 play_b=button(text="Pause", pos=scene.caption_anchor, bind=Play)
 
+var_speed= True
+def Timewarp(b):
+    global var_speed
+    if var_speed== True:
+        var_speed = False
+        b.text="Timewarp On"
+        
+    else:
+        var_speed = True
+        b.text="Timewarp Off"
+        
+
+time_b=button(text="Timewarp Off", pos=scene.caption_anchor, bind=Timewarp)
 
 #frame slider 
 
@@ -339,12 +354,19 @@ def getevent():
 scene.bind("mousedown", getevent)
 #-----------------------------------------------------------------------------
 #update frames when running = True
-anime = True
+hl=smart_sel()
+
+
 while True:
+    
+    
     if anime:
-        
-                
-        rate(10)
+        if var_speed:
+            if frame in hl[plot_num]:        
+                sleep(1/2)
+
+    
+        sleep(1/14)
         sl.value=frame    
         temp=create_frame(skeleton,jeleton,frame,plot1,bones,joints,True,False)
         skeleton=temp[0]
