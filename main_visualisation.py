@@ -81,7 +81,7 @@ scene.up=vector(0,0,1)
 scene.userzoom =True
 scene.userspin=True
 scene.width = scene.height = 1000
-scene.background= color.white
+#scene.background= color.white
 distant_light(direction=vector( 0.88,  -0.44,  0.2),       color=color.gray(0.8))
 scene.caption = """To rotate "camera", drag with right button or Ctrl-drag.
 To zoom, drag with middle button or Alt/Option depressed, or use scroll wheel.
@@ -122,22 +122,22 @@ d_lines=[]
 #simulation
 while frame<max(np.shape(plot2)[1],np.shape(plot1)[1])-1:
     if frame<np.shape(plot1)[1]-1:
-        temp=simv(skeleton,jeleton,frame,plot1,bones,joints,limb_length,vec(0,1,0),True,True,vec(1,1,1),1)
+        temp=simv(skeleton,jeleton,frame,plot1,bones,joints,limb_length,vec(0,1,0),False,True,vec(1,1,1),1)
         skeleton=temp[0]
         jeleton=temp[1]
     if frame<np.shape(plot2)[1]-1:     
-        temp2=sim(skeleton1,jeleton1,frame,plot2,bones,joints,limb_length,vec(1,0,0),True,True,vec(0.5,0.5,0.5))
+        temp2=sim(skeleton1,jeleton1,frame,plot2,bones,joints,limb_length,vec(1,0,0),False,False,vec(0.5,0.5,0.5))
         skeleton1=temp2[0]
         jeleton1=temp2[1]
         
-    #plot difference lines       
-#    s_recovery.append(skeleton)
-#    j_recovery.append(jeleton)
-#    start=plot1[frame]
-#    end=plot2[frame]
-#    delta=np.subtract(end[joints[-1]],start[joints[-1]])
-#    start_temp=start[joints[-1]]
-#    
+
+#        plot difference lines       
+    s_recovery.append(skeleton)
+    j_recovery.append(jeleton)
+    start=plot1[frame]
+    end=plot2[frame]
+    delta=np.subtract(end[joints[-1]],start[joints[-1]])
+    start_temp=start[joints[-1]]
 #    
 #    red = Color("red")
 #    colors = list(red.range_to(Color("white"),101))
