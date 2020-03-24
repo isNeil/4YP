@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Created on Fri Mar  6 12:47:11 2020
+Created on Thu Mar 12 21:35:36 2020
 
 @author: neilw
 """
+
+
 
 import pandas as pd
 import numpy as np
@@ -12,7 +14,7 @@ from mpl_toolkits.mplot3d import Axes3D
 from colour import Color
 import time
 from operator import add
-#def v15():
+def v15():
     
 plot3= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\3.json')
 plot4= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\4.json')
@@ -116,13 +118,18 @@ fig = plt.figure(figsize=(10, 3))
 #    plt.plot(dist10,'b',alpha=0.4)
 
 def plot(dist3,dist3p,color,space):
-    plt.scatter(np.add(list(range(102)),[space]*102),dist3,c=color,s=10, alpha=0.5)
+    
     
     for i in range(len(dist3)):
         y=[dist3[i],dist3p[i]]
         x=[i+space,i+space]
-        plt.plot(x,y, color, alpha=0.8)
 
+        plt.plot(x,y, color, alpha=0.4)
+
+    
+    
+    
+    
 #plot(dist3,dist3p,"r",0)
 #plot(dist4,dist4p,"g",0.2)
 #plot(dist5,dist5p,"b",0.4)
@@ -133,8 +140,8 @@ def plot(dist3,dist3p,color,space):
 ##plot(dist10,dist10p,"orange",0.9)
         
 plot(dist3,dist3p,"r",0)
-plot(dist4,dist4p,"blue",0.5)
-
+plot(dist4,dist4p,"blue",0)
+#plot(dist6,dist6p,"y",0)
 
 
 
