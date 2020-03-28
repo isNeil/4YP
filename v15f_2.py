@@ -139,8 +139,8 @@ def v15():
     ##plot(dist9,dist9p,"grey",0.8)
     ##plot(dist10,dist10p,"orange",0.9)
             
-    plot(dist3,dist3p,"r","pink",0)
-    plot(dist4,dist4p,"blue","aqua",0.5)
+    fig.plot(dist3,dist3p,"r","pink",0)
+    fig.plot(dist4,dist4p,"blue","aqua",0.5)
 #    
     #plot(dist6,dist6p,"y",0)
     
@@ -157,15 +157,15 @@ def v15():
     
      
     
-    plt.show()
+
     
-    #return plt.figure
-    #    df = pd.DataFrame(np.array([dist3,dist4,dist5,dist6,dist7,dist8,dist9,dist10]))
-    
-    #    return #df
-    #
-    #v15()
+#    return plt.figure
+#        df = pd.DataFrame(np.array([dist3,dist4,dist5,dist6,dist7,dist8,dist9,dist10]))
+#    
+#        return #df
+#    
+#    v15()
     
 
-        
+v15()  
         

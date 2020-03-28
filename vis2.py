@@ -443,10 +443,10 @@ def plotpositionalderivatives(index,bones,joints,plot_num):
 
     fig.tight_layout()
 #    for preload
-    plt.savefig("std_vis_%d.jpg"%(plot_num), dpi=60)    
+#    plt.savefig("std_vis_%d.jpg"%(plot_num), dpi=60)    
 #    plt.savefig('std_pos_vis_%d_%d.jpg'%(index,plot_num), dpi=60)    
 
 bones=[[0,1],[1,2],[2,3],[0,6],[6,7],[7,8],[0,12],[12,13],[13,14],[14,15],[13,17],[17,18],[18,19],[13,25],[25,26],[26,27]]
 joints=[0,1,2,3,6,7,8,12,13,14,15,17,18,19,25,26,27]
-for i in range(0,8):
-    plotpositionalderivatives(16,bones,joints,i)
+#for i in range(0,8):
+#    plotpositionalderivatives(16,bones,joints,i)

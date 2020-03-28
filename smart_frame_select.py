@@ -19,7 +19,9 @@ from v9f import v9
 from v10f import v10
 from v4f import v4
 from v11f import v11
+
 from scipy.spatial.distance import euclidean
+
 from fastdtw import fastdtw
 
 
@@ -108,7 +110,22 @@ def smart_sel():
 
     return hl
 
-
+def smart_sel2():
+    x = np.array([[1,1], [2,2], [3,3], [4,4], [5,5]])
+    y = np.array([[2,2], [3,3], [4,4]])
+    distance, path = fastdtw(x, y, dist=euclidean)
+    print(distance)
+        
+    
+x = np.array([[1,1], [2,2], [3,3], [4,4], [5,5]])
+y = np.array([[2,2], [3,3] ,[4,4]])
+distance, path = fastdtw(x, y, dist=euclidean)
+print(distance)
+print(path)
+lag=[]
+for i in path:
+    lag.append(i[0]-i[1])
+print(lag)    
 ############################################################################
 #def Dlp(A, B, p=2):
 #    cost = np.sum(np.power(np.abs(A - B), p))
@@ -238,18 +255,18 @@ def smart_sel():
 #    return best_path[1:]
     ######################################################################
     #FDTW
-def FDTW():
-    index=16
-    #not finished want to DTW to either find overall or find path on which to do analysis as above using magnitude difference after warping
-    ref=v1(index)
-    num_plots=len(ref)
-    range_ref=max(ref.iloc[0,:])-min(ref.iloc[0,:])
-    
-    data=v8(index)
-    data_norm1=data.div(range_ref).abs()
-
-    
-    x = np.array([[1,1], [2,2], [3,3], [4,4], [5,5]])
-    y = np.array([[2,2], [3,3], [4,4]])
-    distance, path = fastdtw(x, y, dist=euclidean)
-    return distance
+#def FDTW():
+#    index=16
+#    #not finished want to DTW to either find overall or find path on which to do analysis as above using magnitude difference after warping
+#    ref=v1(index)
+#    num_plots=len(ref)
+#    range_ref=max(ref.iloc[0,:])-min(ref.iloc[0,:])
+#    
+#    data=v8(index)
+#    data_norm1=data.div(range_ref).abs()
+#
+#    
+#    x = np.array([[1,1], [2,2], [3,3], [4,4], [5,5]])
+#    y = np.array([[2,2], [3,3], [4,4]])
+#    distance, path = fastdtw(x, y, dist=euclidean)
+#    return distance

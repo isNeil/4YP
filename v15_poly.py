@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Mar 12 21:35:36 2020
+Created on Sat Mar 28 03:28:46 2020
 
 @author: neilw
 """
 
-
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.patches import Circle, Wedge, Polygon
 from mpl_toolkits.mplot3d import Axes3D
 from colour import Color
 import time
 from operator import add
+from matplotlib.collections import PatchCollection
 
 plot3= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\3.json')
 plot4= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\4.json')
@@ -104,8 +104,8 @@ for i in range(np.shape(plot10)[1]):
 
 
 
-
-fig = plt.figure(figsize=(10, 3))
+fig, ax = plt.subplots(figsize=(10, 3))
+#fig = plt.figure(figsize=(10, 3))
 
 
 #plt.plot(dist4,'b',alpha=0.4)
@@ -116,16 +116,14 @@ fig = plt.figure(figsize=(10, 3))
 #    plt.plot(dist9,'b',alpha=0.4)
 #    plt.plot(dist10,'b',alpha=0.4)
 
-def plot(dist3,dist3p,color,space):
+def plot(dist3,dist3p):
     
-    
-    for i in range(len(dist3)):
-        y=[dist3[i],dist3p[i]]
-        x=[i+space,i+space]
+    patches=[]
+    for i in range(len(dist3)-1):
+        polygon=Polygon(np.array([(i,dist3[i]),(i+1,dist3[i+1]),(i+1,dist3p[i+1]),(i,dist3p[i])]))
+        patches.append(polygon)
 
-        plt.plot(x,y, color, alpha=0.4)
-
-    
+    return patches
     
     
     
@@ -137,19 +135,24 @@ def plot(dist3,dist3p,color,space):
 ##plot(dist8,dist8p,"black",0.7)
 ##plot(dist9,dist9p,"grey",0.8)
 ##plot(dist10,dist10p,"orange",0.9)
+
+
+
+
         
-plot(dist3,dist3p,"r",0)
-plot(dist4,dist4p,"blue",0)
-#plot(dist6,dist6p,"y",0)
+patches1=plot(dist3,dist3p)
+patches2=plot(dist4,dist4p)
 
-
+p = PatchCollection(patches1, alpha=0.4,color='red')
+#p.set_array(np.array(colors))
 
 plt.ylabel('Distance')
 plt.xlabel('Frame')
 plt.grid(True)
 
 plt.xlim((0,102))
-plt.show()
+plt.ylim((200,1000))
+ax.add_collection(p)
 
 
 
