@@ -6,7 +6,8 @@ Created on Fri Jan  3 23:45:43 2020
 """
 from vpython import *
 import pandas as pd
-
+from formatdata_length_constraint import format
+import numpy as np
 
 #    [0]  = 'Hip'   [1]  = 'RHip'   [2]  = 'RKnee'   [3]  = 'RFoot'   [6]  = 'LHip'   [7]  = 'LKnee'   [8]  = 'LFoot'   [12] = 'Spine'   [13] = 'Thorax'
 #    [14] = 'Neck/Nose'   [15] = 'Head'   [17] = 'LShoulder'   [18] = 'LElbow'   [19] = 'LWrist'   [25] = 'RShoulder'   [26] = 'RElbow'   [27] = 'RWrist'
@@ -20,21 +21,14 @@ limb_length=[124,452,504,124,452,504,252,231,78,112,120,250,230,120,250,230]
 
 
 #formats data so that becomes matrix of dimensions. Rows are joints. Columns are frames. Also centres coords on hip
-data_f = format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\jump1\3d_data.json',bones,joints,limb_length)
-data_f.to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF1formated.json')
-data_f_3= format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF3_3d_data.json',bones,joints,limb_length)
-data_f_3.to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF3formated.json')
-data_f_4= format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF4_3d_data.json',bones,joints,limb_length) 
-data_f_4.to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF4formated.json')
-data_f_5= format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF5_3d_data.json',bones,joints,limb_length) 
-data_f_5.to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF5formated.json')
 
 
-#load formated data instead
-#data_f = pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF1formated.json')
-#data_f_3= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF3formated.json')
-#data_f_4= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF4formated.json')  
-#data_f_5= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF5formated.json')  
+
+for i in range(1,11):
+    data_f = format(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\stand%s\3d_data.json'%i,bones,joints,limb_length)
+
+    
+    data_f.to_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\stand%sformated.json'%i)
 
 
 
