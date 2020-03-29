@@ -29,36 +29,35 @@ from fastdtw import fastdtw
 def smart_sel():
     index=16
     
-    #normalise df
-        
-    ref=v1(index)
-    num_plots=len(ref)
+    #to normalise df    
+    ref=v1(index)#absolute position used to normalise
     range_ref=max(ref.iloc[0,:])-min(ref.iloc[0,:])
     
-    data=v8(index)
+    data=v8(index) #position difference are our measure
     data_norm1=data.div(range_ref).abs()
     
     ref=v2(index)
-    num_plots=len(ref)
+    
     range_ref=max(ref.iloc[0,:])-min(ref.iloc[0,:])
     
     data=v9(index)
     data_norm2=data.div(range_ref).abs()
     
     ref=v3(index)
-    num_plots=len(ref)
+    
     range_ref=max(ref.iloc[0,:])-min(ref.iloc[0,:])
     
     data=v10(index)
     data_norm3=data.div(range_ref).abs()
     
     ref=v4(15)
-    num_plots=len(ref)
+    
     range_ref=max(ref.iloc[0,:])-min(ref.iloc[0,:])
     
     data=v11(15)
     data_norm4=data.div(range_ref).abs()
     
+    #summing normalised data 
     norm_sum=data_norm4+data_norm3+data_norm1+data_norm2
     
     
@@ -110,22 +109,44 @@ def smart_sel():
 
     return hl
 
-def smart_sel2():
-    x = np.array([[1,1], [2,2], [3,3], [4,4], [5,5]])
-    y = np.array([[2,2], [3,3], [4,4]])
+
+
+
+
+def smart_sel2(refi,comi):
+    #no normalisation as I'm only analysing with position to begin with     
+    #hardcoding analyse foot
+    data=v1(16)
+    com=[]
+    ref=[]
+
+    for i in range(np.size(data,1)):
+        com.append([i,data.iloc[comi][i]])
+        ref.append([i,data.iloc[refi][i]])      
+    x = np.asarray(com, dtype=np.float32)
+    y = np.asarray(ref, dtype=np.float32)
     distance, path = fastdtw(x, y, dist=euclidean)
-    print(distance)
-        
     
-x = np.array([[1,1], [2,2], [3,3], [4,4], [5,5]])
-y = np.array([[2,2], [3,3] ,[4,4]])
-distance, path = fastdtw(x, y, dist=euclidean)
-print(distance)
-print(path)
+    print(distance)
+
+    return path
+data=v1(16)    
+refi=0
+comi=1
+path=smart_sel2(refi,comi)
 lag=[]
 for i in path:
     lag.append(i[0]-i[1])
-print(lag)    
+print(lag)
+com=[]
+ref=[]
+for i in range(np.size(data,1)):
+    com.append(data.iloc[comi][i])
+    ref.append(data.iloc[refi][i]) 
+difference=[]
+for i in path:
+    difference.append(abs(com[i[0]]-ref[i[1]]))
+
 ############################################################################
 #def Dlp(A, B, p=2):
 #    cost = np.sum(np.power(np.abs(A - B), p))

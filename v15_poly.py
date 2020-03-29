@@ -120,7 +120,7 @@ def plot(dist3,dist3p):
     
     patches=[]
     for i in range(len(dist3)-1):
-        polygon=Polygon(np.array([(i,dist3[i]),(i+1,dist3[i+1]),(i+1,dist3p[i+1]),(i,dist3p[i])]))
+        polygon=Polygon(np.array([(i,dist3[i]),(i+0.8,dist3[i+1]),(i+0.8,dist3p[i+1]),(i,dist3p[i])]))
         patches.append(polygon)
 
     return patches
@@ -143,7 +143,8 @@ def plot(dist3,dist3p):
 patches1=plot(dist3,dist3p)
 patches2=plot(dist4,dist4p)
 
-p = PatchCollection(patches1, alpha=0.4,color='red')
+p1 = PatchCollection(patches1, alpha=0.4,color='red')
+p2 = PatchCollection(patches2,alpha=0.4,color='blue')
 #p.set_array(np.array(colors))
 
 plt.ylabel('Distance')
@@ -152,8 +153,8 @@ plt.grid(True)
 
 plt.xlim((0,102))
 plt.ylim((200,1000))
-ax.add_collection(p)
-
+ax.add_collection(p1)
+ax.add_collection(p2)
 
 
  

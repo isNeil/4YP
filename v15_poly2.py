@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Mar 12 21:35:36 2020
+Created on Sat Mar 28 03:28:46 2020
 
 @author: neilw
 """
 
-
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.patches import Circle, Wedge, Polygon
 from mpl_toolkits.mplot3d import Axes3D
 from colour import Color
-
+import time
 from operator import add
+from matplotlib.collections import PatchCollection
 
 plot3= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\3.json')
 plot4= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\4.json')
@@ -104,8 +104,8 @@ for i in range(np.shape(plot10)[1]):
 
 
 
-
-fig = plt.figure(figsize=(10, 3))
+fig, ax = plt.subplots(figsize=(10, 3))
+#fig = plt.figure(figsize=(10, 3))
 
 
 #plt.plot(dist4,'b',alpha=0.4)
@@ -116,19 +116,16 @@ fig = plt.figure(figsize=(10, 3))
 #    plt.plot(dist9,'b',alpha=0.4)
 #    plt.plot(dist10,'b',alpha=0.4)
 
-def plot(dist3,dist3p,color,space):
-    
-    
-    for i in range(len(dist3)):
-        y=[dist3[i],dist3p[i]]
-        x=[i+space,i+space]
+plt.fill_between(range(102),dist3,dist3p,alpha=0.2,color="blue")
+plt.plot(dist3,color="blue",alpha=0.6)
+plt.fill_between(range(102),dist4,dist4p,alpha=0.2,color="red")
+plt.plot(dist4,color="red",alpha=0.6)  
+plt.fill_between(range(102),dist6,dist6p,alpha=0.2,color="green")   
+plt.plot(dist6,color="green",alpha=0.6)
+plt.fill_between(range(102),dist5,dist5p,alpha=0.2,color="yellow") 
+plt.plot(dist5,color="yellow",alpha=0.6)
 
-        plt.plot(x,y, color, alpha=0.4)
 
-    
-    
-    
-    
 #plot(dist3,dist3p,"r",0)
 #plot(dist4,dist4p,"g",0.2)
 #plot(dist5,dist5p,"b",0.4)
@@ -137,10 +134,7 @@ def plot(dist3,dist3p,color,space):
 ##plot(dist8,dist8p,"black",0.7)
 ##plot(dist9,dist9p,"grey",0.8)
 ##plot(dist10,dist10p,"orange",0.9)
-        
-plot(dist3,dist3p,"r",0)
-plot(dist4,dist4p,"blue",0)
-#plot(dist6,dist6p,"y",0)
+
 
 
 
@@ -149,7 +143,8 @@ plt.xlabel('Frame')
 plt.grid(True)
 
 plt.xlim((0,102))
-plt.show()
+plt.ylim((200,1000))
+#ax.add_collection(p1)
 
 
 
