@@ -76,7 +76,7 @@ def TimeColour3DJ(plot1,index,bones,joints,graph_id):
     ax.set_zlim(zm-600, zm+600)
     plt.tight_layout()
 
-    plt.savefig("graph%d.jpg"%graph_id, dpi=60)  
+    plt.savefig("Images/graph%d.jpg"%graph_id, dpi=60)  
     
     plt.show()
     
@@ -107,7 +107,7 @@ def TimeColour3DS(plot1,index,bones,joints,graph_id):
     ax = fig.add_subplot(111, projection='3d')
     
     red = Color("blue")
-    colors = list(red.range_to(Color("green"),102))
+    colors = list(red.range_to(Color("green"),len(plot1)))
     
     rgbc=[]
     for i in colors:
@@ -133,7 +133,7 @@ def TimeColour3DS(plot1,index,bones,joints,graph_id):
     ax.set_zlim(zm-600, zm+600)
     plt.tight_layout()
 
-    plt.savefig("graph%d.jpg"%graph_id, dpi=60)  
+    plt.savefig("Images/graph%d.jpg"%graph_id, dpi=60)  
 
     plt.show()
 
@@ -180,7 +180,7 @@ def TC3DLimb(plot1,index,bones,joints,graph_id):
     
     #ax.view_init(20, 200)
     red = Color("blue")
-    colors = list(red.range_to(Color("green"),102))
+    colors = list(red.range_to(Color("green"),len(plot1)))
     
     rgbc=[]
     for i in colors:
@@ -211,7 +211,7 @@ def TC3DLimb(plot1,index,bones,joints,graph_id):
     ax.set_zlim(-400, 1000)   
     
     plt.tight_layout()
-    plt.savefig("graph%d.jpg"%graph_id, dpi=60)    
+    plt.savefig("Images/graph%d.jpg"%graph_id, dpi=60)    
     
     plt.show()
     
@@ -233,7 +233,7 @@ def Hagerstrand(plot1,index,bones,joints,graph_id):
     ax = fig.add_subplot(121, projection='3d')
     
     red = Color("blue")
-    colors = list(red.range_to(Color("green"),102))
+    colors = list(red.range_to(Color("green"),len(plot1)))
 
     rgbc=[]
     for i in colors:
@@ -275,7 +275,7 @@ def Hagerstrand(plot1,index,bones,joints,graph_id):
         
 
     plt.tight_layout()
-    plt.savefig("graph%d.jpg"%graph_id, dpi=60)    
+    plt.savefig("Images/graph%d.jpg"%graph_id, dpi=60)    
     
     plt.show()
         
@@ -443,10 +443,9 @@ def plotpositionalderivatives(index,bones,joints,plot_num):
 
     fig.tight_layout()
 #    for preload
-#    plt.savefig("std_vis_%d.jpg"%(plot_num), dpi=60)    
-#    plt.savefig('std_pos_vis_%d_%d.jpg'%(index,plot_num), dpi=60)    
+    plt.savefig("Images/std_vis_%d.jpg"%(plot_num), dpi=60)    
 
 bones=[[0,1],[1,2],[2,3],[0,6],[6,7],[7,8],[0,12],[12,13],[13,14],[14,15],[13,17],[17,18],[18,19],[13,25],[25,26],[26,27]]
 joints=[0,1,2,3,6,7,8,12,13,14,15,17,18,19,25,26,27]
-#for i in range(0,8):
-#    plotpositionalderivatives(16,bones,joints,i)
+for i in range(0,11):
+    plotpositionalderivatives(16,bones,joints,i)

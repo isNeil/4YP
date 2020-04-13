@@ -45,15 +45,7 @@ plot10= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\9.json')
 plot1=plot3
 plot2=plot4
 
-#data_f_3= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF3formated.json')
-#data_f_5= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\RF5formated.json')  
-#
-##chooes frames to match length for each (to be corrected by xcorr eventually)
-#plot1=data_f_3.iloc[:,41:143]
-#plot1.columns = range(plot1.shape[1])
-#
-#plot2=data_f_5.iloc[:,28:130]
-#plot2.columns = range(plot2.shape[1])
+
 
 #-----------------------------------------------------------------------------
 #scene settings
@@ -258,13 +250,13 @@ def Run(b):
             if j_index!=None and s_index==None:
                 warning.text="""  <font color="red"> Loading graph </font> """
                 vis.TimeColour3DJ(plot1,j_index,bones,joints,graph_id)
-                gwt.text="\n\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n\n <img src='graph%d.jpg'/>"%graph_id
+                gwt.text="\n\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n\n <img src='Images/graph%d.jpg'/>"%graph_id
                 warning.text=""
                 # gwt2.text="\n"
             elif j_index==None and s_index!=None:
                 warning.text="""  <font color="red"> Loading graph </font> """
                 vis.TimeColour3DS(plot1,s_index,bones,joints,graph_id)
-                gwt.text="\n\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n\n <img src='graph%d.jpg'/>"%graph_id
+                gwt.text="\n\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n\n <img src='Images/graph%d.jpg'/>"%graph_id
                 warning.text=""
 #            else:
 #                warning.text="""  <font color="red"> Both joint and bone selected</font> """
@@ -275,7 +267,7 @@ def Run(b):
             else:
                 warning.text="""  <font color="red"> Loading graph </font> """
                 vis.Hagerstrand(plot1,j_index,bones,joints,graph_id)
-                gwt.text="\n\n1st figure shows position in y-z plane with time in x direction. 2nd figure shows position in x-y plane with time in y direction:\n\n <img src='graph%d.jpg'/>"%graph_id
+                gwt.text="\n\n1st figure shows position in y-z plane with time in x direction. 2nd figure shows position in x-y plane with time in y direction:\n\n <img src='Images/graph%d.jpg'/>"%graph_id
                 warning.text=""
                 #gwt2.text="\n <img src='%f.jpg'/>"%rngid
         
@@ -289,7 +281,7 @@ def Run(b):
                 else:
                     warning.text="""  <font color="red"> Loading graph </font> """
                     vis.TC3DLimb(plot1,j_index,bones,joints,graph_id)
-                    gwt.text="\n\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n\n <img src='graph%d.jpg'/>"%graph_id
+                    gwt.text="\n\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n\n <img src='Images/graph%d.jpg'/>"%graph_id
                     warning.text=""
             else: 
                 warning.text="""  <font color="red"> Select a limb joint</font> """
@@ -299,7 +291,7 @@ def Run(b):
                 #for current plots week 6 all premade for joint 16
             
                 vis.plotpositionalderivatives(j_index,bones,joints,plot_num)
-                gwt.text="\n\nStandard selection of visualisations for a joint:\n\n <img src='std_pos_vis_%d_%d.jpg'/>"%(j_index,plot_num)
+                gwt.text="\n\nStandard selection of visualisations for a joint:\n\n <img src='Images/std_pos_vis_%d_%d.jpg'/>"%(j_index,plot_num)
                 warning.text=""
                 # gwt2.text="\n"
             else:
