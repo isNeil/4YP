@@ -8,23 +8,22 @@ Created on Thu Feb  6 22:11:03 2020
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from colour import Color
-from scipy.signal import savgol_filter
-from spherical import asSpherical
-from spherical import asCartesian
+
+
 
 import joint_angle as ja
 
 def v4(index):
-    plot3= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\3.json')
-    plot4= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\4.json')
-    plot5= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\5.json')
-    plot6= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\6.json')
-    plot7= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\7.json')
-    plot8= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\8.json')
-    plot9= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\9.json')
-    plot10= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\10.json')
-    
+    plot1= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\1.json')
+    plot2= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\2.json')
+    plot3= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\3.json')
+    plot4= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\4.json')
+    plot5= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\5.json')
+    plot6= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\6.json')
+    plot7= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\7.json')
+    plot8= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\8.json')
+    plot9= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\9.json')
+    plot10= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\10.json')
     
     #    #index mapping
     bones=[[0,1],[1,2],[2,3],[0,6],[6,7],[7,8],[0,12],[12,13],[13,14],[14,15],[13,17],[17,18],[18,19],[13,25],[25,26],[26,27]]
@@ -35,6 +34,8 @@ def v4(index):
     frames=np.shape(plot3)[1]
     #joint 0 to 27 Rwrist
     
+    angle1=[]
+    angle2=[]
     angle3=[]
     angle4=[]
     angle5=[]
@@ -48,31 +49,13 @@ def v4(index):
     
     
     
-    #shoulderstart=np.subtract(start[joints[-2]],start[joints[-3]])
-    #s_s=asSpherical(shoulderstart)
-    #shoulderend=np.subtract(end[joints[-2]],end[joints[-3]])
-    #s_send=asSpherical(shoulderend)
-    #def res(y):
-    #    for x in range(len(y)):
-    #        if y[x]<0:
-    #            y[x]=360+y[x]             
-    #    return y
-    #
-    #s_s=res(s_s)
-    #s_send=res(s_send)
-    #s_diff=np.subtract(s_send,s_s)
-    #start_temp3=start[joints[-3]]
-    
-    
-    
-    
-    
-    
     #mapping index to joint 
 
     
     for i in range(frames):
         #ja.joint_angle(i,plot3,bones,joints)
+        angle1.append(ja.joint_angle(i,plot1,bones,joints)[index])
+        angle2.append(ja.joint_angle(i,plot2,bones,joints)[index])
         angle3.append(ja.joint_angle(i,plot3,bones,joints)[index]) #ja.joint_angle returns angles for entire skeleton so select joint using index
         angle4.append(ja.joint_angle(i,plot4,bones,joints)[index])
         angle5.append(ja.joint_angle(i,plot5,bones,joints)[index])
@@ -83,62 +66,47 @@ def v4(index):
         angle10.append(ja.joint_angle(i,plot10,bones,joints)[index])
     
     
-        
-    ########################################Below this should be a function but for now just do x
-    #dist = savgol_filter(dist, 21, 3) # window size 51, polynomial order 3
-    #dist2 = savgol_filter(dist2, 21, 3)  
-    #
-    #speed=[]
-    #speed2=[]
-    #
-    #
-    #for i in range(np.shape(plot1)[1]-1):
-    #    
-    #    speed.append(dist[i+1]-dist[i])
-    #    speed2.append(dist2[i+1]-dist2[i])
-    #
-    #
-    #speed = savgol_filter(speed, 21, 3) # window size 51, polynomial order 3
-    #speed2 = savgol_filter(speed2, 21, 3)  
-    #
-    #accel=[]
-    #accel2=[]
-    #
-    #for i in range(np.shape(plot1)[1]-2):
-    #    
-    #    accel.append(speed[i+1]-speed[i])
-    #    accel2.append(speed2[i+1]-speed2[i])
+    
+    plt.plot(angle1,"b",alpha=0.4)
+    plt.plot(angle2,"y",alpha=1)
+    plt.plot(angle3,"r",alpha=1) 
+    plt.plot(angle4,'b',alpha=0.4)
+    plt.plot(angle5,'orange',alpha=1)
+    plt.plot(angle6,'b',alpha=0.4)
+    #plt.plot(angle7,'b',alpha=0.4)
+    plt.plot(angle8,'b',alpha=0.4)
+    plt.plot(angle9,'b',alpha=0.4)
+    plt.plot(angle10,'b',alpha=0.4)
+  
+    plt.ylabel('Angle')
+    plt.xlabel('Frame')
+    plt.grid(True)
+
+    plt.xlim((0,140))
+    plt.show()
+    
+    
+    
+    plt.tight_layout()
+     
     
     df = pd.DataFrame(np.array([angle3,angle4,angle5,angle6,angle7,angle8,angle9,angle10]))
     
     return df
     
-#    fig = plt.figure(figsize=(10, 5))
-#    #fig, ax = plt.subplots()
-#    
-#    plt.plot(angle3,"r")
-#    plt.plot(angle4,'b')
-#    plt.plot(angle5,'y')
-#    plt.plot(angle6,'orange')
-#    plt.plot(angle7,'purple')
-#    plt.plot(angle8,'g')
-#    plt.plot(angle9,'black')
-#    plt.plot(angle10,'grey')
-#    
-#    
-#    
-#    plt.ylabel('Angle')
-#    plt.xlabel('Frame')
-#    plt.grid(True)
-#    #ax.set_axisbelow(True)
-#    #ax.minorticks_on()
-#    #ax.grid(which='minor', linestyle=':', linewidth='0.5', color='black')
-#    plt.xlim((0,102))
-#    plt.show()
-#    
-#    
-#    
-#    plt.tight_layout()
-#     
-#    
-#    plt.show()
+df=v4(1) #hip
+df=v4(4)
+df=v4(2) #knee
+df=v4(5)
+df=v4(3) #foot
+df=v4(6)
+df=v4(7) #spine
+df=v4(8) #thorax
+df=v4(9) #nose
+df=v4(10) #head
+df=v4(14) #shoulder
+df=v4(11) 
+df=v4(15) #arm
+df=v4(12)
+df=v4(16) #wrsit
+df=v4(13)

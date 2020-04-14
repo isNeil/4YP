@@ -8,20 +8,21 @@ Created on Thu Feb  6 22:11:03 2020
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from colour import Color
+
 from scipy.signal import savgol_filter
 
 
 def v2(index):
-
-    plot3= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\3.json')
-    plot4= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\4.json')
-    plot5= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\5.json')
-    plot6= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\6.json')
-    plot7= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\7.json')
-    plot8= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\8.json')
-    plot9= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\9.json')
-    plot10= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\102\10.json')
+    plot1= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\1.json')
+    plot2= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\2.json')
+    plot3= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\3.json')
+    plot4= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\4.json')
+    plot5= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\5.json')
+    plot6= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\6.json')
+    plot7= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\7.json')
+    plot8= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\8.json')
+    plot9= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\9.json')
+    plot10= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\10.json')
     
     
     
@@ -36,8 +37,8 @@ def v2(index):
     #joint 0 to 27 Rwrist
     
     
-    #dist=[]
-    
+    dist1=[]
+    dist2=[]
     dist3=[]
     dist4=[]
     dist5=[]
@@ -50,7 +51,9 @@ def v2(index):
     dex=joints[index]
     
     for i in range(frames):
-    
+
+        dist1.append(((plot1.iloc[dex][i][0])**2+(plot1.iloc[dex][i][1])**2+(plot1.iloc[dex][i][2])**2)**0.5)    
+        dist2.append(((plot2.iloc[dex][i][0])**2+(plot2.iloc[dex][i][1])**2+(plot2.iloc[dex][i][2])**2)**0.5)    
         dist3.append(((plot3.iloc[dex][i][0])**2+(plot3.iloc[dex][i][1])**2+(plot3.iloc[dex][i][2])**2)**0.5)
         dist4.append(((plot4.iloc[dex][i][0])**2+(plot4.iloc[dex][i][1])**2+(plot4.iloc[dex][i][2])**2)**0.5)
         dist5.append(((plot5.iloc[dex][i][0])**2+(plot5.iloc[dex][i][1])**2+(plot5.iloc[dex][i][2])**2)**0.5)
@@ -63,7 +66,8 @@ def v2(index):
         
     #######################################Below this should be a function but for now just do x
     #dist = savgol_filter(dist, 21, 3) # window size 51, polynomial order 3
-    
+    dist1 = savgol_filter(dist1, 21, 3)
+    dist2 = savgol_filter(dist2, 21, 3)  
     dist3 = savgol_filter(dist3, 21, 3)  
     dist4 = savgol_filter(dist4, 21, 3)  
     dist5 = savgol_filter(dist5, 21, 3)  
@@ -73,6 +77,8 @@ def v2(index):
     dist9 = savgol_filter(dist9, 21, 3)  
     dist10 = savgol_filter(dist10, 21, 3)  
 
+    temp1=[]
+    temp2=[]
     temp3=[]
     temp4=[]
     temp5=[]
@@ -84,7 +90,8 @@ def v2(index):
     
     for i in range(frames-1):
         
-       # temp.append(dist[i+1]-dist[i])
+        temp1.append(dist1[i+1]-dist1[i])
+        temp2.append(dist2[i+1]-dist2[i])
         temp3.append(dist3[i+1]-dist3[i])
         temp4.append(dist4[i+1]-dist4[i])
         temp5.append(dist5[i+1]-dist5[i])
@@ -98,29 +105,39 @@ def v2(index):
     
     
     
-#    fig = plt.figure(figsize=(10, 5))
-#    #fig, ax = plt.subplots()
-#    #plt.plot([np.nan]*8+temp,'b')
-#    plt.plot(temp4,'b')
-#    plt.plot(temp5,'y')
-#    plt.plot(temp6,'orange')
-#    plt.plot(temp7,'purple')
-#    plt.plot(temp8,'green')
-#    plt.plot(temp9,'black')
-#    plt.plot(temp10,'grey')
-#    plt.plot(temp3,"r")
-#    plt.ylabel('Speed')
-#    plt.xlabel('Frame')
-#    plt.grid(True)
-#    #ax.set_axisbelow(True)
-#    #ax.minorticks_on()
-#    #ax.grid(which='minor', linestyle=':', linewidth='0.5', color='black')
-#    plt.xlim((0,102))
-#    plt.show()
-#    
-#    plt.tight_layout()   
-#    plt.show()
-    df = pd.DataFrame(np.array([temp3,temp4,temp5,temp6,temp7,temp8,temp9,temp10]))
+    plt.plot(temp1,"b",alpha=0.4)
+    plt.plot(temp2,"yellow",alpha=1)
+    plt.plot(temp3,"red",alpha=1) 
+    plt.plot(temp4,'b',alpha=0.4)
+    plt.plot(temp5,'orange',alpha=1)
+    plt.plot(temp6,'b',alpha=0.4)
+   # plt.plot(temp7,'b',alpha=0.4)
+    plt.plot(temp8,'b',alpha=0.4)
+    plt.plot(temp9,'b',alpha=0.4)
+    plt.plot(temp10,'b',alpha=0.4)
+  
+    plt.ylabel('Velocity')
+    plt.xlabel('Frame')
+    plt.grid(True)
+
+    plt.xlim((0,140))
+    plt.show()
+    
+    
+    
+    plt.tight_layout()
+     
+    df = pd.DataFrame(np.array([temp1,temp2,temp3,temp4,temp5,temp6,temp7,temp8,temp9,temp10]))
     
     return df
 
+df=v2(1) #hip
+df=v2(2) #knee
+df=v2(3) #foot
+df=v2(7) #spine
+df=v2(8) #thorax
+df=v2(9) #nose
+df=v2(10) #head
+df=v2(14) #shoulder 
+df=v2(15) #arm
+df=v2(16) #wrsit

@@ -8,9 +8,9 @@ Created on Thu Feb  6 22:11:03 2020
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-from colour import Color
-import time
+
+
+
 
 def v1(index):
     plot1= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\1.json')
@@ -54,25 +54,17 @@ def v1(index):
     
     
     for i in range(np.shape(plot1)[1]):
-        dist1.append(((plot1.iloc[dex][i][0])**2+(plot1.iloc[dex][i][1])**2+(plot1.iloc[dex][i][2])**2)**0.5)    
-    
-        dist2.append(((plot2.iloc[dex][i][0])**2+(plot2.iloc[dex][i][1])**2+(plot2.iloc[dex][i][2])**2)**0.5)    
-  
-        dist3.append(((plot3.iloc[dex][i][0])**2+(plot3.iloc[dex][i][1])**2+(plot3.iloc[dex][i][2])**2)**0.5)    
+        dist1.append(plot1.iloc[dex][i][2])
+        dist2.append(plot2.iloc[dex][i][2]) 
+        dist3.append(plot3.iloc[dex][i][2])
+        dist4.append(plot4.iloc[dex][i][2])
+        dist5.append(plot5.iloc[dex][i][2])
+        dist6.append(plot6.iloc[dex][i][2])
+        dist7.append(plot7.iloc[dex][i][2])
+        dist8.append(plot8.iloc[dex][i][2])
+        dist9.append(plot9.iloc[dex][i][2])
+        dist10.append(plot10.iloc[dex][i][2])
         
-        dist4.append(((plot4.iloc[dex][i][0])**2+(plot4.iloc[dex][i][1])**2+(plot4.iloc[dex][i][2])**2)**0.5)
-   
-        dist5.append(((plot5.iloc[dex][i][0])**2+(plot5.iloc[dex][i][1])**2+(plot5.iloc[dex][i][2])**2)**0.5)
-       
-        dist6.append(((plot6.iloc[dex][i][0])**2+(plot6.iloc[dex][i][1])**2+(plot6.iloc[dex][i][2])**2)**0.5)
-    
-        dist7.append(((plot7.iloc[dex][i][0])**2+(plot7.iloc[dex][i][1])**2+(plot7.iloc[dex][i][2])**2)**0.5)
-    
-        dist9.append(((plot9.iloc[dex][i][0])**2+(plot9.iloc[dex][i][1])**2+(plot9.iloc[dex][i][2])**2)**0.5)
-  
-        dist10.append(((plot10.iloc[dex][i][0])**2+(plot10.iloc[dex][i][1])**2+(plot10.iloc[dex][i][2])**2)**0.5)
-      
-        dist8.append(((plot8.iloc[dex][i][0])**2+(plot8.iloc[dex][i][1])**2+(plot8.iloc[dex][i][2])**2)**0.5)
         
     #######################################Below this should be a function but for now just do x
     
@@ -112,7 +104,7 @@ def v1(index):
     plt.plot(dist4,'b',alpha=0.4)
     plt.plot(dist5,'orange',alpha=1)
     plt.plot(dist6,'b',alpha=0.4)
-   # plt.plot(dist7,'b',alpha=0.4)
+  #  plt.plot(dist7,'pink',alpha=0.4)
     plt.plot(dist8,'b',alpha=0.4)
     plt.plot(dist9,'b',alpha=0.4)
     plt.plot(dist10,'b',alpha=0.4)
