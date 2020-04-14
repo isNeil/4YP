@@ -7,9 +7,7 @@ Created on Tue Jan 28 23:22:35 2020
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 from colour import Color
-import time
 from smart_frame_select import smart_sel
 from v1f import v1
 from v2f import v2

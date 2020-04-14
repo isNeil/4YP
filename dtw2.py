@@ -139,7 +139,7 @@ def dtwd(data,refi,comi):
     lag=[]
     for i in path:
         lag.append(i[0]-i[1])
-    print(lag)
+    #print(lag)
     com=[]
     ref=[]
     for i in range(np.size(data,1)):
@@ -168,36 +168,111 @@ def dtwd(data,refi,comi):
     
     return dtwd
 
-rankings=[3,5,2,1,10,8,9,4,6]
-data=v1(3)    
-refi=rankings[0]
-
-#comi=2 
-
-#dtwed=dtwd(data,refi,comi)
-#plt.plot(dtwed,'r',alpha=0.4)
-#plt.plot(data.iloc[refi],'g',alpha=0.4)
-#plt.plot(data.iloc[comi],'b',alpha=0.4)
-#plt.ylabel('Distance')
-#plt.xlabel('Frame')
-#plt.grid(True)
-#plt.xlim((0,140))
 
 
-dtwdlist=data[:]
-for i in range(len(data)):
-    dtwed=dtwd(data,refi,i)
-    for j in range(np.size(data,1)):
-        dtwdlist.iloc[i][j]=dtwed[j]
+
+def dtwrecon(top,vdata):
+    #top are the plots you want to cluster, top and bott should be in descending performance
+    #top=[3,5,2]
+    #bott=[1,10,8,9,4,6]
     
+    data=vdata.copy()
+    refi=top[0]
+    
+    
+    #comi=2 
+    
+    #dtwed=dtwd(data,refi,comi)
+    #plt.plot(dtwed,'r',alpha=0.4)
+    #plt.plot(data.iloc[refi],'g',alpha=0.4)
+    #plt.plot(data.iloc[comi],'b',alpha=0.4)
+    #plt.ylabel('Distance')
+    #plt.xlabel('Frame')
+    #plt.grid(True)
+    #plt.xlim((0,140))
+    
+    
+    dtwdlist=data.copy()
+    
+    
+    for i in range(len(data)):
+        dtwed=dtwd(data,refi,i)
+        for j in range(np.size(data,1)):
+            dtwdlist.iloc[i][j]=dtwed[j]
+        
+    
+        
+        plt.plot(dtwdlist.iloc[i],'g',alpha=0.4)
+         
+        
+    plt.ylabel('Distance')
+    plt.xlabel('Frame')
+    plt.grid(True)
+    plt.xlim((0,140))
+    
+    return dtwdlist
 
     
-    plt.plot(data.iloc[i],'g',alpha=0.4)
-     
-plt.ylabel('Distance')
-plt.xlabel('Frame')
-plt.grid(True)
-plt.xlim((0,140))
+def dtwhighlight(top,bott,dtwdlist):  
+
+    frame_good=[]
+    frame_bad_higher=[]
+    frame_bad_lower=[]
     
     
+    separation=[]
+    norm_dtwdlist=dtwdlist.copy()
     
+    for i in range(np.size(dtwdlist,1)): 
+        minval=min(dtwdlist.iloc[:][i])
+        rang=max(dtwdlist.iloc[:][i])-minval
+        for j in range(len(dtwdlist)):
+            norm_dtwdlist.iloc[j][i]=(dtwdlist.iloc[j][i]-minval)/rang
+        
+        
+        for j in top:
+            frame_good.append(norm_dtwdlist.iloc[j-1][i])
+        mean_good=np.mean(frame_good)
+        for k in bott:
+            
+            if norm_dtwdlist.iloc[k-1][i]>=mean_good:
+                frame_bad_higher.append(norm_dtwdlist.iloc[k-1][i])
+            elif norm_dtwdlist.iloc[k-1][i]<mean_good:
+                frame_bad_lower.append(norm_dtwdlist.iloc[k-1][i])    
+            
+            
+        if frame_bad_lower == True:
+            mean_bad_lower=np.mean(frame_bad_lower)
+        else: mean_bad_lower=0
+        if frame_bad_higher == True:
+            mean_bad_higher=np.mean(frame_bad_higher)
+        else: mean_bad_higher=0
+        separation.append(min(abs(mean_good-mean_bad_higher),abs(mean_good-mean_bad_lower)))
+        
+    
+    separation_sorted=sorted(separation) #ascending order
+    
+    cutoff=separation_sorted[int(np.floor(len(separation)*0.8))]
+    
+    
+    chose_times=[]
+    for i in range(len(separation)):
+        if separation[i] > cutoff:
+            chose_times.append(i)
+    
+    for i in chose_times:
+        plt.axvspan(i, i+1, facecolor='grey', alpha=0.5)
+    
+    return chose_times,separation
+
+top=[3,5,2]
+bott=[1,10,8,9,4,6]
+
+dtwdlist=dtwrecon(top,v1(3))
+[chose_times,separation]=dtwhighlight(top,bott,dtwdlist)
+
+
+#raw = 'asdfa3fa'
+#functions = [str.isalnum, str.isalpha, str.isdigit, str.islower, str.isupper]
+#isanything = [func(raw) for func in functions]
+#print repr(isanything)
