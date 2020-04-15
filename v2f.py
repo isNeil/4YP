@@ -105,39 +105,39 @@ def v2(index):
     
     
     
-    plt.plot(temp1,"b",alpha=0.4)
-    plt.plot(temp2,"yellow",alpha=1)
-    plt.plot(temp3,"red",alpha=1) 
-    plt.plot(temp4,'b',alpha=0.4)
-    plt.plot(temp5,'orange',alpha=1)
-    plt.plot(temp6,'b',alpha=0.4)
-   # plt.plot(temp7,'b',alpha=0.4)
-    plt.plot(temp8,'b',alpha=0.4)
-    plt.plot(temp9,'b',alpha=0.4)
-    plt.plot(temp10,'b',alpha=0.4)
-  
-    plt.ylabel('Velocity')
-    plt.xlabel('Frame')
-    plt.grid(True)
-
-    plt.xlim((0,140))
-    plt.show()
-    
-    
-    
-    plt.tight_layout()
+#    plt.plot(temp1,"b",alpha=0.4)
+#    plt.plot(temp2,"yellow",alpha=1)
+#    plt.plot(temp3,"red",alpha=1) 
+#    plt.plot(temp4,'b',alpha=0.4)
+#    plt.plot(temp5,'orange',alpha=1)
+#    plt.plot(temp6,'b',alpha=0.4)
+#   # plt.plot(temp7,'b',alpha=0.4)
+#    plt.plot(temp8,'b',alpha=0.4)
+#    plt.plot(temp9,'b',alpha=0.4)
+#    plt.plot(temp10,'b',alpha=0.4)
+#  
+#    plt.ylabel('Velocity')
+#    plt.xlabel('Frame')
+#    plt.grid(True)
+#
+#    plt.xlim((0,140))
+#    plt.show()
+#    
+#    
+#    
+#    plt.tight_layout()
      
     df = pd.DataFrame(np.array([temp1,temp2,temp3,temp4,temp5,temp6,temp7,temp8,temp9,temp10]))
     
     return df
 
-df=v2(1) #hip
-df=v2(2) #knee
-df=v2(3) #foot
-df=v2(7) #spine
-df=v2(8) #thorax
-df=v2(9) #nose
-df=v2(10) #head
-df=v2(14) #shoulder 
-df=v2(15) #arm
-df=v2(16) #wrsit
+#df=v2(1) #hip
+#df=v2(2) #knee
+#df=v2(3) #foot
+#df=v2(7) #spine
+#df=v2(8) #thorax
+#df=v2(9) #nose
+#df=v2(10) #head
+#df=v2(14) #shoulder 
+#df=v2(15) #arm
+#df=v2(16) #wrsit

@@ -67,46 +67,46 @@ def v4(index):
     
     
     
-    plt.plot(angle1,"b",alpha=0.4)
-    plt.plot(angle2,"y",alpha=1)
-    plt.plot(angle3,"r",alpha=1) 
-    plt.plot(angle4,'b',alpha=0.4)
-    plt.plot(angle5,'orange',alpha=1)
-    plt.plot(angle6,'b',alpha=0.4)
-    #plt.plot(angle7,'b',alpha=0.4)
-    plt.plot(angle8,'b',alpha=0.4)
-    plt.plot(angle9,'b',alpha=0.4)
-    plt.plot(angle10,'b',alpha=0.4)
-  
-    plt.ylabel('Angle')
-    plt.xlabel('Frame')
-    plt.grid(True)
-
-    plt.xlim((0,140))
-    plt.show()
-    
-    
-    
-    plt.tight_layout()
+#    plt.plot(angle1,"b",alpha=0.4)
+#    plt.plot(angle2,"y",alpha=1)
+#    plt.plot(angle3,"r",alpha=1) 
+#    plt.plot(angle4,'b',alpha=0.4)
+#    plt.plot(angle5,'orange',alpha=1)
+#    plt.plot(angle6,'b',alpha=0.4)
+#    #plt.plot(angle7,'b',alpha=0.4)
+#    plt.plot(angle8,'b',alpha=0.4)
+#    plt.plot(angle9,'b',alpha=0.4)
+#    plt.plot(angle10,'b',alpha=0.4)
+#  
+#    plt.ylabel('Angle')
+#    plt.xlabel('Frame')
+#    plt.grid(True)
+#
+#    plt.xlim((0,140))
+#    plt.show()
+#    
+#    
+#    
+#    plt.tight_layout()
      
     
     df = pd.DataFrame(np.array([angle3,angle4,angle5,angle6,angle7,angle8,angle9,angle10]))
     
     return df
     
-df=v4(1) #hip
-df=v4(4)
-df=v4(2) #knee
-df=v4(5)
-df=v4(3) #foot
-df=v4(6)
-df=v4(7) #spine
-df=v4(8) #thorax
-df=v4(9) #nose
-df=v4(10) #head
-df=v4(14) #shoulder
-df=v4(11) 
-df=v4(15) #arm
-df=v4(12)
-df=v4(16) #wrsit
-df=v4(13)
+#df=v4(1) #hip
+#df=v4(4)
+#df=v4(2) #knee
+#df=v4(5)
+#df=v4(3) #foot
+#df=v4(6)
+#df=v4(7) #spine
+#df=v4(8) #thorax
+#df=v4(9) #nose
+#df=v4(10) #head
+#df=v4(14) #shoulder
+#df=v4(11) 
+#df=v4(15) #arm
+#df=v4(12)
+#df=v4(16) #wrsit
+#df=v4(13)

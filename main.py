@@ -333,7 +333,7 @@ def getevent():
         j_index=jeleton.index(hit)
         s_index=None
         print("joint selected")
-    elif hit in skeleton:
+    elif hit in  skeleton:
         s_index=skeleton.index(hit)
         j_index=None
         print("bone selected")

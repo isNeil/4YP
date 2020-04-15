@@ -17,7 +17,7 @@ from v9f import v9
 from v10f import v10
 from v4f import v4
 from v11f import v11
-from v15f_3 import v15
+from v15f import v15
 
 #plot1= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\RFVP\json\plot1rf3.json')
 #plot2= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\RFVP\json\plot2rf5.json')
@@ -443,7 +443,7 @@ def plotpositionalderivatives(index,bones,joints,plot_num):
 #    for preload
     plt.savefig("Images/std_vis_%d.jpg"%(plot_num), dpi=60)    
 
-bones=[[0,1],[1,2],[2,3],[0,6],[6,7],[7,8],[0,12],[12,13],[13,14],[14,15],[13,17],[17,18],[18,19],[13,25],[25,26],[26,27]]
-joints=[0,1,2,3,6,7,8,12,13,14,15,17,18,19,25,26,27]
-for i in range(0,11):
-    plotpositionalderivatives(16,bones,joints,i)
+#bones=[[0,1],[1,2],[2,3],[0,6],[6,7],[7,8],[0,12],[12,13],[13,14],[14,15],[13,17],[17,18],[18,19],[13,25],[25,26],[26,27]]
+#joints=[0,1,2,3,6,7,8,12,13,14,15,17,18,19,25,26,27]
+#for i in range(0,11):
+#    plotpositionalderivatives(16,bones,joints,i)

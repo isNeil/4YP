@@ -131,27 +131,27 @@ def v3(index):
     
 
     
-    plt.plot(accel1,"b",alpha=0.4)
-    plt.plot(accel2,"y",alpha=1)
-    plt.plot(accel3,"r",alpha=1) 
-    plt.plot(accel4,'b',alpha=0.4)
-    plt.plot(accel5,'orange',alpha=1)
-    plt.plot(accel6,'b',alpha=0.4)
-    #plt.plot(accel7,'b',alpha=0.4)
-    plt.plot(accel8,'b',alpha=0.4)
-    plt.plot(accel9,'b',alpha=0.4)
-    plt.plot(accel10,'b',alpha=0.4)
-  
-    plt.ylabel('Acceleration')
-    plt.xlabel('Frame')
-    plt.grid(True)
-
-    plt.xlim((0,140))
-    plt.show()
-    
-    
-    
-    plt.tight_layout()
+#    plt.plot(accel1,"b",alpha=0.4)
+#    plt.plot(accel2,"y",alpha=1)
+#    plt.plot(accel3,"r",alpha=1) 
+#    plt.plot(accel4,'b',alpha=0.4)
+#    plt.plot(accel5,'orange',alpha=1)
+#    plt.plot(accel6,'b',alpha=0.4)
+#    #plt.plot(accel7,'b',alpha=0.4)
+#    plt.plot(accel8,'b',alpha=0.4)
+#    plt.plot(accel9,'b',alpha=0.4)
+#    plt.plot(accel10,'b',alpha=0.4)
+#  
+#    plt.ylabel('Acceleration')
+#    plt.xlabel('Frame')
+#    plt.grid(True)
+#
+#    plt.xlim((0,140))
+#    plt.show()
+#    
+#    
+#    
+#    plt.tight_layout()
      
     df = pd.DataFrame(np.array([accel1,accel2,accel3,accel4,accel5,accel6,accel7,accel8,accel9,accel10]))
     
@@ -159,14 +159,14 @@ def v3(index):
     
     
     return df
-
-df=v3(1) #hip
-df=v3(2) #knee
-df=v3(3) #foot
-df=v3(7) #spine
-df=v3(8) #thorax
-df=v3(9) #nose
-df=v3(10) #head
-df=v3(14) #shoulder 
-df=v3(15) #arm
-df=v3(16) #wrsit
+#
+#df=v3(1) #hip
+#df=v3(2) #knee
+#df=v3(3) #foot
+#df=v3(7) #spine
+#df=v3(8) #thorax
+#df=v3(9) #nose
+#df=v3(10) #head
+#df=v3(14) #shoulder 
+#df=v3(15) #arm
+#df=v3(16) #wrsit
