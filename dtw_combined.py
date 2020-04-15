@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 
 from fastdtw import fastdtw
 from scipy.spatial.distance import euclidean
-
+from v17f import v17
 
 def v1(index):
     plot1= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\1.json')
@@ -166,7 +166,7 @@ def dtwd(data,refi,comi):
         if x<len(data.iloc[refi]):
             dtwd.append(data.iloc[comi][x])
         else:
-            dtwd.append(data.iloc[comi][i]) #not sure about this line
+            dtwd.append(dtwd[-1]) #not sure about this line
     return dtwd
 
 
@@ -205,7 +205,11 @@ def dtwrecon(top,vdata):
         
     
         if i != 6:
-            plt.plot(dtwdlist.iloc[i],'g',alpha=0.4)
+            if i ==2:
+                
+                plt.plot(dtwdlist.iloc[i],'purple',alpha=0.4)
+            else:
+                plt.plot(dtwdlist.iloc[i],'green',alpha=0.4)
          
         
     plt.ylabel('Distance')
@@ -231,6 +235,7 @@ def dtwhighlight(top,bott,dtwdlist):
     rangel=[]
     for i in range(np.size(dtwdlist,1)): 
         minval=min(dtwdlist.iloc[:][i])
+       
         rang=max(dtwdlist.iloc[:][i])-minval
         
 #        if rang<min_rang:
@@ -277,55 +282,68 @@ def dtwhighlight(top,bott,dtwdlist):
                 frame_bad_higher.append(norm_dtwdlist.iloc[k-1][i])
             elif norm_dtwdlist.iloc[k-1][i]<mean_good:
                 frame_bad_lower.append(norm_dtwdlist.iloc[k-1][i])      
-        if frame_bad_lower == True:
+        if len(frame_bad_lower) > 0:
             mean_bad_lower=np.mean(frame_bad_lower)
             
         else: mean_bad_lower=0
-        if frame_bad_higher == True:
+        if len(frame_bad_higher) > 0:
             mean_bad_higher=np.mean(frame_bad_higher)
-        else: mean_bad_higher=0
+        else: 
+            mean_bad_higher=0
         
         if abs(mean_bad_higher-mean_good) and abs(mean_bad_lower-mean_good) > min_rang:
             
             #only here normalisation
-            separation.append((min(abs(mean_good-mean_bad_higher),abs(mean_good-mean_bad_lower))-minval)/rang)
+            separation.append(min(abs(mean_good-mean_bad_higher),(mean_good-mean_bad_lower)/rang))
         else:
             separation.append(0)
         
         
+  
+   
         
         
         for k in bott:
             frame_bad.append(norm_dtwdlist.iloc[k-1][i])
         mean_bad=np.mean(frame_bad)
         if abs(mean_bad-mean_good)> min_rang:
-            separation2.append((abs(mean_good-mean_bad)-minval)/rang)
+            separation2.append(abs(mean_good-mean_bad)/rang)
         else:
             separation2.append(0)
         rangel.append(mean_bad-mean_good)
-   
+        if i ==123:
+            print(separation[i])
+            print(np.mean(frame_bad_higher))
+            print(frame_good)
+            
+            print(frame_bad_higher)
+            print(mean_good)
+            print(rang)
+        frame_good=[]
+        frame_bad_higher=[]
+        frame_bad_lower=[]
+        frame_bad=[]
     
     for i in range(len(separation)):
         separation[i]= max(separation[i],separation2[i])
-        
+
     
     separation_sorted=sorted(separation) #ascending order
     
     cutoff=separation_sorted[int(np.floor(len(separation)*0.8))]
-    
-    
+
     chose_times=[]
     for i in range(len(separation)):
         if separation[i] > cutoff:
             chose_times.append(i)
     
     for i in chose_times:
-        plt.axvspan(i, i+1, facecolor='grey', alpha=0.5)
+        plt.axvspan(i, i+1, facecolor='grey', alpha=0.1)
     
     return chose_times,separation,rangel
 
-#top=[3,5,2]
-#bott=[1,10,8,9,4,6]
-#dtwdlist=dtwrecon(top,v1(3))
-#[chose_times,separation,rangel]=dtwhighlight(top,bott,dtwdlist)
+top=[3,5,2]
+bott=[1,10,8,9,4,6]
+dtwdlist=dtwrecon(top,v17(2))
+[chose_times,separation,rangel]=dtwhighlight(top,bott,dtwdlist)
 

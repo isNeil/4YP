@@ -90,7 +90,7 @@ def v4(index):
 #    plt.tight_layout()
      
     
-    df = pd.DataFrame(np.array([angle3,angle4,angle5,angle6,angle7,angle8,angle9,angle10]))
+    df = pd.DataFrame(np.array([angle1,angle2,angle3,angle4,angle5,angle6,angle7,angle8,angle9,angle10]))
     
     return df
     

@@ -11,8 +11,7 @@ import matplotlib.pyplot as plt
 
 
 
-
-def v1(index):
+def v16(index):
     plot1= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\1.json')
     plot2= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\2.json')
     plot3= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\3.json')
@@ -46,11 +45,6 @@ def v1(index):
 
     #mapping index to joint 
     dex=joints[index]
-    
-    
-    #for i in range(np.shape(plot1)[1]):
-    #    dist.append(((plot1.iloc[dex][i][0])**2+(plot1.iloc[dex][i][1])**2+(plot1.iloc[dex][i][2])**2)**0.5)
-    
     
     
     for i in range(np.shape(plot1)[1]):
@@ -129,22 +123,22 @@ def v1(index):
     return df
 
 #right side first
-df=v1(1) #hip
-df=v1(4)
-df=v1(2) #knee
-df=v1(5)
-df=v1(3) #foot
-df=v1(6)
-df=v1(7) #spine
-df=v1(8) #thorax
-df=v1(9) #nose
-df=v1(10) #head
-df=v1(14) #shoulder
-df=v1(11) 
-df=v1(15) #arm
-df=v1(12)
-df=v1(16) #wrsit
-df=v1(13)
+#df=v1(1) #hip
+#df=v1(4)
+#df=v1(2) #knee
+#df=v1(5)
+#df=v1(3) #foot
+#df=v1(6)
+#df=v1(7) #spine
+#df=v1(8) #thorax
+#df=v1(9) #nose
+#df=v1(10) #head
+#df=v1(14) #shoulder
+#df=v1(11) 
+#df=v1(15) #arm
+#df=v1(12)
+#df=v1(16) #wrsit
+#df=v1(13)
 #print(df.iloc[0,:].values.tolist())
 
     

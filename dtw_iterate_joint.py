@@ -24,26 +24,24 @@ from v10f import v10
 from v4f import v4
 from v11f import v11
 from v15f import v15
+from v16f import v16
+from v17f import v17
+from v18f import v18
 
 top=[3,5,2]
 bott=[1,10,8,9,4,6]
 
 joints=[0,1,2,3,6,7,8,12,13,14,15,17,18,19,25,26,27]
-functions = [v1, v4]
+functions = [v1,v4,v16,v17,v18]
 output=[]
-
+sec=[]
 for func in functions:
+    
     for i in range(len(joints)):
-        plt.figure(i)
         dtwdlist=dtwrecon(top,func(i))
         [chose_times,separation,rangel]=dtwhighlight(top,bott,dtwdlist)
-        output.append([chose_times,separation,rangel])
-        plt.savefig("Images/dtw_v1_%d.jpg"%(i), dpi=60) 
-    
-
-
-##raw = 'asdfa3fa'
-
+        output.append(separation)
+    sec.append([output])
 ##choose joint using func(joint index)
 #isanything = [dtwhighlight(top,bott,dtwrecon(top,func(2))) for func in functions]
 
