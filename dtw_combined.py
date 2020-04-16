@@ -207,9 +207,15 @@ def dtwrecon(top,vdata):
         if i != 6:
             if i ==2:
                 
-                plt.plot(dtwdlist.iloc[i],'purple',alpha=0.4)
+                plt.plot(dtwdlist.iloc[i],'purple',alpha=1)
+            if i == 1:
+                plt.plot(dtwdlist.iloc[i],'pink',alpha=0.8)
+            if i == 4:
+                plt.plot(dtwdlist.iloc[i],'pink',alpha=0.8)
             else:
                 plt.plot(dtwdlist.iloc[i],'green',alpha=0.4)
+        
+        
          
         
     plt.ylabel('Distance')
@@ -284,17 +290,16 @@ def dtwhighlight(top,bott,dtwdlist):
                 frame_bad_lower.append(norm_dtwdlist.iloc[k-1][i])      
         if len(frame_bad_lower) > 0:
             mean_bad_lower=np.mean(frame_bad_lower)
-            
-        else: mean_bad_lower=0
+        else: mean_bad_lower=mean_good
         if len(frame_bad_higher) > 0:
             mean_bad_higher=np.mean(frame_bad_higher)
         else: 
-            mean_bad_higher=0
+            mean_bad_higher=mean_good
         
         if abs(mean_bad_higher-mean_good) and abs(mean_bad_lower-mean_good) > min_rang:
             
             #only here normalisation
-            separation.append(min(abs(mean_good-mean_bad_higher),(mean_good-mean_bad_lower)/rang))
+            separation.append(min(abs(mean_good-mean_bad_higher),abs(mean_good-mean_bad_lower)/rang))
         else:
             separation.append(0)
         
@@ -311,26 +316,33 @@ def dtwhighlight(top,bott,dtwdlist):
         else:
             separation2.append(0)
         rangel.append(mean_bad-mean_good)
-        if i ==123:
-            print(separation[i])
-            print(np.mean(frame_bad_higher))
-            print(frame_good)
-            
-            print(frame_bad_higher)
-            print(mean_good)
-            print(rang)
+
         frame_good=[]
         frame_bad_higher=[]
         frame_bad_lower=[]
         frame_bad=[]
-    
+       #debug
+#        if i ==3:
+#            print("sep=")
+#            print(separation)
+#            print("sep2=")
+#            print(separation2)
+#            print("rang")
+#            print(rang)
+#            print("abs(mean_good-mean_bad_higher)")
+#            print(abs(mean_good-mean_bad_higher))
+#            print("abs(mean_good-mean_bad_lower)")
+#            print(abs(mean_good-mean_bad_lower))
+#            print()
+#    
     for i in range(len(separation)):
         separation[i]= max(separation[i],separation2[i])
 
     
-    separation_sorted=sorted(separation) #ascending order
+#    separation_sorted=sorted(separation) #ascending order
     
-    cutoff=separation_sorted[int(np.floor(len(separation)*0.8))]
+#    cutoff=separation_sorted[int(np.floor(len(separation)*0.8))]
+    cutoff=0.43703790499766504
 
     chose_times=[]
     for i in range(len(separation)):
@@ -338,7 +350,7 @@ def dtwhighlight(top,bott,dtwdlist):
             chose_times.append(i)
     
     for i in chose_times:
-        plt.axvspan(i, i+1, facecolor='grey', alpha=0.1)
+        plt.axvspan(i, i+1, facecolor='grey', alpha=0.3)
     
     return chose_times,separation,rangel
 

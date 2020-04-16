@@ -23,7 +23,7 @@ from v9f import v9
 from v10f import v10
 from v4f import v4
 from v11f import v11
-from v15f import v15
+#from v15f import v15
 from v16f import v16
 from v17f import v17
 from v18f import v18
@@ -32,39 +32,40 @@ top=[3,5,2]
 bott=[1,10,8,9,4,6]
 
 joints=[0,1,2,3,6,7,8,12,13,14,15,17,18,19,25,26,27]
-#functions = [v1, v4]
+functions = [v1, v4, v16,v17,v18]
 output=[]
 
-#
-#for i in range(len(joints)):
-#    plt.figure(i)
-#    dtwdlist=dtwrecon(top,v1(i))
-#    [chose_times,separation,rangel]=dtwhighlight(top,bott,dtwdlist)
-#    output.append([chose_times,separation,rangel])
-#    plt.savefig("Images/dtw_v1_%d.jpg"%(i), dpi=100) 
-#    
+#for dtwd plots
 for i in range(len(joints)):
-    plt.figure(i+4)
-    F=v16(i)
-    plt.plot(F.iloc[0],"b",alpha=0.4)
-    plt.plot(F.iloc[1],"b",alpha=0.4)
-    plt.plot(F.iloc[2],"red",alpha=1) 
-    plt.plot(F.iloc[3],'b',alpha=0.4)
-    plt.plot(F.iloc[4],'b',alpha=0.4)
-    plt.plot(F.iloc[5],'b',alpha=0.4)
-  #  plt.plot(dist7,'pink',alpha=0.4)
-    plt.plot(F.iloc[7],'b',alpha=0.4)
-    plt.plot(F.iloc[8],'b',alpha=0.4)
-    plt.plot(F.iloc[9],'b',alpha=0.4)
-  
-    plt.ylabel('Distance')
-    plt.xlabel('Frame')
-    plt.grid(True)
+    plt.figure(i)
+    dtwdlist=dtwrecon(top,v4(i))
+    [chose_times,separation,rangel]=dtwhighlight(top,bott,dtwdlist)
+    output.append([chose_times,separation,rangel])
+    plt.savefig("Images/dtw_v4_%d_total_cluster_hd.jpg"%(i), dpi=200) 
+    plt.close()
 
-    plt.xlim((0,140))
 
-    plt.savefig("Images/dtw_v16_%d_n_color.jpg"%(i), dpi=100)
-
+#    for normal plots    
+#        F=v16(i)
+#        plt.plot(F.iloc[0],"b",alpha=0.4)
+#        plt.plot(F.iloc[1],"b",alpha=0.4)
+#        plt.plot(F.iloc[2],"red",alpha=1) 
+#        plt.plot(F.iloc[3],'b',alpha=0.4)
+#        plt.plot(F.iloc[4],'b',alpha=0.4)
+#        plt.plot(F.iloc[5],'b',alpha=0.4)
+#      #  plt.plot(dist7,'pink',alpha=0.4)
+#        plt.plot(F.iloc[7],'b',alpha=0.4)
+#        plt.plot(F.iloc[8],'b',alpha=0.4)
+#        plt.plot(F.iloc[9],'b',alpha=0.4)
+#      
+#        plt.ylabel('Distance')
+#        plt.xlabel('Frame')
+#        plt.grid(True)
+#    
+#        plt.xlim((0,140))
+#        
+#        plt.savefig("Images/dtw_v16_%d.jpg"%(i), dpi=100)
+#        plt.close()
 
     
 

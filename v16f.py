@@ -66,7 +66,6 @@ def v16(index):
     #fig, ax = plt.subplots()
     #plt.plot([np.nan]*8+dist,"b")
     
-    fig = plt.figure(figsize=(10, 3))
 
 #    plt.plot(dist1,"r",alpha=0.4)
 #    plt.plot(dist2,"b",alpha=0.4)
@@ -92,28 +91,28 @@ def v16(index):
 #    plt.plot(dist10,'b',alpha=0.4)
 #  
     
-    plt.plot(dist1,"b",alpha=0.4)
-    plt.plot(dist2,"yellow",alpha=1)
-    plt.plot(dist3,"red",alpha=1) 
-    plt.plot(dist4,'b',alpha=0.4)
-    plt.plot(dist5,'orange',alpha=1)
-    plt.plot(dist6,'b',alpha=0.4)
-  #  plt.plot(dist7,'pink',alpha=0.4)
-    plt.plot(dist8,'b',alpha=0.4)
-    plt.plot(dist9,'b',alpha=0.4)
-    plt.plot(dist10,'b',alpha=0.4)
-  
-    plt.ylabel('Distance')
-    plt.xlabel('Frame')
-    plt.grid(True)
-
-    plt.xlim((0,140))
-    plt.show()
-    
-    
-    
-    plt.tight_layout()
-     
+#    plt.plot(dist1,"b",alpha=0.4)
+#    plt.plot(dist2,"yellow",alpha=1)
+#    plt.plot(dist3,"red",alpha=1) 
+#    plt.plot(dist4,'b',alpha=0.4)
+#    plt.plot(dist5,'orange',alpha=1)
+#    plt.plot(dist6,'b',alpha=0.4)
+#  #  plt.plot(dist7,'pink',alpha=0.4)
+#    plt.plot(dist8,'b',alpha=0.4)
+#    plt.plot(dist9,'b',alpha=0.4)
+#    plt.plot(dist10,'b',alpha=0.4)
+#  
+#    plt.ylabel('Distance')
+#    plt.xlabel('Frame')
+#    plt.grid(True)
+#
+#    plt.xlim((0,140))
+#    plt.show()
+#    
+#    
+#    
+#    plt.tight_layout()
+#     
 
     #plt.show()
     

@@ -71,58 +71,58 @@ def v17(index):
     
     #fig, ax = plt.subplots()
     #plt.plot([np.nan]*8+dist,"b")
-    
-    fig = plt.figure(figsize=(10, 3))
-
-#    plt.plot(dist1,"r",alpha=0.4)
-#    plt.plot(dist2,"b",alpha=0.4)
-#    plt.plot(dist3,"y",alpha=0.4) 
-#    plt.plot(dist4,'g',alpha=0.4)
-#    plt.plot(dist5,'purple',alpha=0.4)
-#    plt.plot(dist6,'orange',alpha=0.4)
-#    plt.plot(dist7,'pink',alpha=0.4)
-#    plt.plot(dist8,'black',alpha=0.4)
-#    plt.plot(dist9,'grey',alpha=0.4)
-#    plt.plot(dist10,'brown',alpha=0.4)
-
-#top 5 shown in blue, best in green, bottom 5 in red, worst black
+#    
+#    fig = plt.figure(figsize=(10, 3))
+#
+##    plt.plot(dist1,"r",alpha=0.4)
+##    plt.plot(dist2,"b",alpha=0.4)
+##    plt.plot(dist3,"y",alpha=0.4) 
+##    plt.plot(dist4,'g',alpha=0.4)
+##    plt.plot(dist5,'purple',alpha=0.4)
+##    plt.plot(dist6,'orange',alpha=0.4)
+##    plt.plot(dist7,'pink',alpha=0.4)
+##    plt.plot(dist8,'black',alpha=0.4)
+##    plt.plot(dist9,'grey',alpha=0.4)
+##    plt.plot(dist10,'brown',alpha=0.4)
+#
+##top 5 shown in blue, best in green, bottom 5 in red, worst black
+##    plt.plot(dist1,"b",alpha=0.4)
+##    plt.plot(dist2,"b",alpha=0.4)
+##    plt.plot(dist3,"g",alpha=0.4) 
+##    plt.plot(dist4,'r',alpha=0.4)
+##    plt.plot(dist5,'b',alpha=0.4)
+##    plt.plot(dist6,'black',alpha=0.4)
+##    plt.plot(dist7,'r',alpha=0.4)
+##    plt.plot(dist8,'r',alpha=0.4)
+##    plt.plot(dist9,'r',alpha=0.4)
+##    plt.plot(dist10,'b',alpha=0.4)
+##  
+#    
 #    plt.plot(dist1,"b",alpha=0.4)
-#    plt.plot(dist2,"b",alpha=0.4)
-#    plt.plot(dist3,"g",alpha=0.4) 
-#    plt.plot(dist4,'r',alpha=0.4)
-#    plt.plot(dist5,'b',alpha=0.4)
-#    plt.plot(dist6,'black',alpha=0.4)
-#    plt.plot(dist7,'r',alpha=0.4)
-#    plt.plot(dist8,'r',alpha=0.4)
-#    plt.plot(dist9,'r',alpha=0.4)
+#    plt.plot(dist2,"yellow",alpha=1)
+#    plt.plot(dist3,"red",alpha=1) 
+#    plt.plot(dist4,'b',alpha=0.4)
+#    plt.plot(dist5,'orange',alpha=1)
+#    plt.plot(dist6,'b',alpha=0.4)
+#  #  plt.plot(dist7,'pink',alpha=0.4)
+#    plt.plot(dist8,'b',alpha=0.4)
+#    plt.plot(dist9,'b',alpha=0.4)
 #    plt.plot(dist10,'b',alpha=0.4)
 #  
-    
-    plt.plot(dist1,"b",alpha=0.4)
-    plt.plot(dist2,"yellow",alpha=1)
-    plt.plot(dist3,"red",alpha=1) 
-    plt.plot(dist4,'b',alpha=0.4)
-    plt.plot(dist5,'orange',alpha=1)
-    plt.plot(dist6,'b',alpha=0.4)
-  #  plt.plot(dist7,'pink',alpha=0.4)
-    plt.plot(dist8,'b',alpha=0.4)
-    plt.plot(dist9,'b',alpha=0.4)
-    plt.plot(dist10,'b',alpha=0.4)
-  
-    plt.ylabel('Distance')
-    plt.xlabel('Frame')
-    plt.grid(True)
-
-    plt.xlim((0,140))
-    plt.show()
-    
-    
-    
-    plt.tight_layout()
-     
-
-    #plt.show()
-    
+#    plt.ylabel('Distance')
+#    plt.xlabel('Frame')
+#    plt.grid(True)
+#
+#    plt.xlim((0,140))
+#    plt.show()
+#    
+#    
+#    
+#    plt.tight_layout()
+#     
+#
+#    #plt.show()
+#    
     #return plt.figure
     df = pd.DataFrame(np.array([dist1,dist2,dist3,dist4,dist5,dist6,dist7,dist8,dist9,dist10]))
     

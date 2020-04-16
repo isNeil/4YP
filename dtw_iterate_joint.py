@@ -42,6 +42,30 @@ for func in functions:
         [chose_times,separation,rangel]=dtwhighlight(top,bott,dtwdlist)
         output.append(separation)
     sec.append([output])
+    
+df=pd.DataFrame(output) 
+
+df.to_json(r'C:\Users\neilw\Desktop\outputdf.json')
 ##choose joint using func(joint index)
 #isanything = [dtwhighlight(top,bott,dtwrecon(top,func(2))) for func in functions]
 
+
+outputlist=[]
+
+for i in output:
+    for j in i:
+        outputlist.append(j)
+outputlistnozero= [i for i in outputlist if i != 0]
+nozero=sorted(outputlistnozero)
+limit=nozero[int(np.floor(0.8*len(nozero)))]
+#limit =0.43703790499766504
+
+outputcount=[]
+for i in output:
+    k=0
+    for j in i:
+        if j > limit:
+            k+=1
+    outputcount.append(k)
+#have list of how many frames in each plot have greater than 80% overall separation
+#choose top something to plot
