@@ -75,34 +75,36 @@ def v1(index):
         
     #######################################Below this should be a function but for now just do x
     
-    
-#    plt.plot(dist1,"b",alpha=0.4)
-#    plt.plot(dist2,"yellow",alpha=1)
+#    plt.figure(1)
+##    plt.plot(dist1,"b",alpha=0.4)
+##    plt.plot(dist2,"b",alpha=0.4)
 #    plt.plot(dist3,"red",alpha=1) 
-#    plt.plot(dist4,'b',alpha=0.4)
-#    plt.plot(dist5,'orange',alpha=1)
-#    plt.plot(dist6,'b',alpha=0.4)
-#   # plt.plot(dist7,'b',alpha=0.4)
+##    plt.plot(dist4,'b',alpha=0.4)
+##    plt.plot(dist5,'orange',alpha=1)
+##    plt.plot(dist6,'b',alpha=0.4)
+##   # plt.plot(dist7,'b',alpha=0.4)
 #    plt.plot(dist8,'b',alpha=0.4)
-#    plt.plot(dist9,'b',alpha=0.4)
-#    plt.plot(dist10,'b',alpha=0.4)
-#  
+##    plt.plot(dist9,'b',alpha=0.4)
+##    plt.plot(dist10,'b',alpha=0.4)
+##  
 #    plt.ylabel('Distance')
 #    plt.xlabel('Frame')
 #    plt.grid(True)
 #
 #    plt.xlim((0,140))
-#    plt.show()
+##    plt.ylim((505,825))
+#    
 #    
 #    plt.tight_layout()
+# 
 #    
-#    #plt.show()
+    #plt.show()
 #    
 
     df = pd.DataFrame(np.array([dist1,dist2,dist3,dist4,dist5,dist6,dist7,dist8,dist9,dist10]))
     
     return df
-
+#v1(13)
 #right side first
 #df=v1(1) #hip
 #df=v1(4)

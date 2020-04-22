@@ -37,12 +37,13 @@ output=[]
 
 #for dtwd plots
 for i in range(len(joints)):
-    plt.figure(i)
-    dtwdlist=dtwrecon(top,v4(i))
+    plt.close()
+    plt.figure
+    dtwdlist=dtwrecon(top,v3(i))
     [chose_times,separation,rangel]=dtwhighlight(top,bott,dtwdlist)
     output.append([chose_times,separation,rangel])
-    plt.savefig("Images/dtw_v4_%d_total_cluster_hd.jpg"%(i), dpi=200) 
-    plt.close()
+  # plt.savefig("Images/dtw_v3_%d_nohightlight.jpg"%(i), dpi=100) 
+    
 
 
 #    for normal plots    

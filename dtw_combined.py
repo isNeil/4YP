@@ -13,7 +13,8 @@ import matplotlib.pyplot as plt
 from fastdtw import fastdtw
 from scipy.spatial.distance import euclidean
 from v17f import v17
-
+from v4f import v4
+from v1f import v1
 def v1(index):
     plot1= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\1.json')
     plot2= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\2.json')
@@ -180,7 +181,7 @@ def dtwrecon(top,vdata):
     #bott=[1,10,8,9,4,6]
     
     data=vdata.copy()
-    refi=top[0]
+    refi=top[0]-1
     
     
     #comi=2 
@@ -203,22 +204,22 @@ def dtwrecon(top,vdata):
         for j in range(np.size(data,1)):
             dtwdlist.iloc[i][j]=dtwed[j]
         
-    
+        
         if i != 6:
             if i ==2:
                 
-                plt.plot(dtwdlist.iloc[i],'purple',alpha=1)
+                plt.plot(dtwdlist.iloc[i],'red',alpha=1)
             if i == 1:
-                plt.plot(dtwdlist.iloc[i],'pink',alpha=0.8)
+                plt.plot(dtwdlist.iloc[i],'green',alpha=0.4)
             if i == 4:
-                plt.plot(dtwdlist.iloc[i],'pink',alpha=0.8)
+                plt.plot(dtwdlist.iloc[i],'green',alpha=0.4)
             else:
                 plt.plot(dtwdlist.iloc[i],'green',alpha=0.4)
         
         
          
         
-    plt.ylabel('Distance')
+    plt.ylabel('Angle')
     plt.xlabel('Frame')
     plt.grid(True)
     plt.xlim((0,140))
@@ -349,13 +350,15 @@ def dtwhighlight(top,bott,dtwdlist):
         if separation[i] > cutoff:
             chose_times.append(i)
     
-    for i in chose_times:
-        plt.axvspan(i, i+1, facecolor='grey', alpha=0.3)
+#    for i in chose_times:
+#        plt.axvspan(i, i+1, facecolor='grey', alpha=0.3)
+
     
     return chose_times,separation,rangel
 
 top=[3,5,2]
 bott=[1,10,8,9,4,6]
-dtwdlist=dtwrecon(top,v17(2))
+dtwdlist=dtwrecon(top,v1(13))
+#plt.savefig("Images/dtw_v1_13_dtwdemonstration7.jpg", dpi=100) 
 [chose_times,separation,rangel]=dtwhighlight(top,bott,dtwdlist)
 
