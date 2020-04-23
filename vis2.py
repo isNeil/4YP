@@ -8,17 +8,28 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from colour import Color
-from smart_frame_select import smart_sel
+from extractframes import extractframes
 from v1f import v1
 from v2f import v2
 from v3f import v3
+from v5f import v5
+from v6f import v6
 from v8f import v8
 from v9f import v9
 from v10f import v10
 from v4f import v4
 from v11f import v11
 from v15f import v15
-
+from v16f import v16
+from v17f import v17
+from v18f import v18
+from dtw_combined2 import dtwd
+from dtw_combined2 import dtwrecon
+from dtw_combined2 import smart_sel2
+from warpvisualisation import dtwdnew
+import pickle
+import matplotlib
+from matplotlib import cm
 #plot1= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\RFVP\json\plot1rf3.json')
 #plot2= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\RFVP\json\plot2rf5.json')
 #plot1vel= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\RFVP\json\plot1rf3vel.json')
@@ -279,171 +290,231 @@ def Hagerstrand(plot1,index,bones,joints,graph_id):
         
 def plotpositionalderivatives(index,bones,joints,plot_num):
     #plot number starts from 0 i.e. plot 0  is for rf3
-    hl= smart_sel()
-    fig, axs = plt.subplots(5,2,figsize=(22, 10.5))
-   
-    for i in hl[plot_num]:
-        axs[0,0].axvspan(i, i+1, facecolor='grey', alpha=0.5)
-        axs[1,0].axvspan(i, i+1, facecolor='grey', alpha=0.5)
-        axs[2,0].axvspan(i, i+1, facecolor='grey', alpha=0.5)
-        axs[3,0].axvspan(i, i+1, facecolor='grey', alpha=0.5)
-        axs[4,0].axvspan(i, i+1, facecolor='grey', alpha=0.5)
-        axs[0,1].axvspan(i, i+1, facecolor='grey', alpha=0.5)
-        axs[1,1].axvspan(i, i+1, facecolor='grey', alpha=0.5)
-        axs[2,1].axvspan(i, i+1, facecolor='grey', alpha=0.5)
-        axs[3,1].axvspan(i, i+1, facecolor='grey', alpha=0.5)
-        axs[4,1].axvspan(i, i+1, facecolor='grey', alpha=0.5)
+    top=[3,5,2]
+  
+    hl= extractframes(v1(3),plot_num)
     
+    
+    fig, axs = plt.subplots(4,2,figsize=(13, 5))
+    axs[0,0].title.set_text('No DTW')
+    axs[1,0].title.set_text('Relative Rate of comparison w.r.t reference')
+    axs[2,0].title.set_text('DTW w.r.t. comparison.')
+    axs[3,0].title.set_text('DTW w.r.t. reference')
+    axs[0,1].title.set_text('DTW w.r.t reference')
+    axs[1,1].title.set_text('DTW w.r.t reference')
+    axs[2,1].title.set_text('DTW w.r.t reference')
+    axs[3,1].title.set_text('DTW w.r.t reference')
+    
+    for i in hl:
+#        axs[0,0].axvspan(i, i+1, facecolor='grey', alpha=0.3)
+#        axs[1,0].axvspan(i, i+1, facecolor='grey', alpha=0.3)
+#        axs[2,0].axvspan(i, i+1, facecolor='grey', alpha=0.3)
+        axs[3,0].axvspan(i, i+1, facecolor='grey', alpha=0.3)
+
+        axs[0,1].axvspan(i, i+1, facecolor='grey', alpha=0.3)
+        axs[1,1].axvspan(i, i+1, facecolor='grey', alpha=0.3)
+        axs[2,1].axvspan(i, i+1, facecolor='grey', alpha=0.3)
+        axs[3,1].axvspan(i, i+1, facecolor='grey', alpha=0.3)
+        
+    path=smart_sel2(v1(index),top[0]-1,plot_num)
+    new_hl=[]
+    for i in path:
+        if i[1] in hl:
+              new_hl.append(i[0])  
+    for i in new_hl:
+        axs[2,0].axvspan(i, i+1, facecolor='grey', alpha=0.3)
+                 
+              
     df=v1(index)
-    axs[0,0].plot(df.iloc[0,:],'r')
-    axs[0,0].plot(df.iloc[1,:],'b',alpha=0.4)
-    axs[0,0].plot(df.iloc[2,:],'b',alpha=0.4)
-    axs[0,0].plot(df.iloc[3,:],'b',alpha=0.4)
-    axs[0,0].plot(df.iloc[4,:],'b',alpha=0.4)
-    axs[0,0].plot(df.iloc[5,:],'b',alpha=0.4)
-    axs[0,0].plot(df.iloc[6,:],'b',alpha=0.4)
-    axs[0,0].plot(df.iloc[7,:],'b',alpha=0.4)
-    axs[0,0].plot(df.iloc[plot_num,:],'g')
+    axs[0,0].plot(df.iloc[0,:],'b',alpha=0.3)
+    axs[0,0].plot(df.iloc[1,:],'b',alpha=0.3)
+    axs[0,0].plot(df.iloc[2,:],'r')
+    axs[0,0].plot(df.iloc[3,:],'b',alpha=0.3)
+    axs[0,0].plot(df.iloc[4,:],'b',alpha=0.3)
+    axs[0,0].plot(df.iloc[5,:],'b',alpha=0.3)
+   # axs[0,1].plot(df.iloc[6,:],'b',alpha=0.3)
+    axs[0,0].plot(df.iloc[7,:],'b',alpha=0.3) 
+    axs[0,0].plot(df.iloc[plot_num,:],'black')
     axs[0,0].set_ylabel('Distance')
-    axs[0,0].set_xlabel('Frame')
-    #normalise
-    ymin, ymax = axs[0,0].get_ylim()
-    y_range = ymax-ymin
+   # axs[0,0].set_xlabel('Frame')   
+
+
+
+    dfata=dtwdnew(v1(index),2,plot_num)
+#    axs[1,0].bar(range(len(dfata)),dfata)
+    axs[1,0].plot(dfata)
+    for i in range(len(dfata)):
+        if dfata[i]>1:
+            axs[2,0].axvspan(i, i+1, facecolor='blue', alpha=0.2)
+        elif dfata[i]<1:
+            axs[2,0].axvspan(i, i+1, facecolor='orange', alpha=0.2)
+            
+    
+    
+    axs[1,0].set_ylabel('Relative Rate')
+  #  axs[1,0].set_xlabel('Frame')   
+    
         
-    df=v8(index)
-    axs[0,1].plot(df.iloc[0,:],'r')
-    axs[0,1].plot(df.iloc[1,:],'b',alpha=0.4)
-    axs[0,1].plot(df.iloc[2,:],'b',alpha=0.4)
-    axs[0,1].plot(df.iloc[3,:],'b',alpha=0.4)
-    axs[0,1].plot(df.iloc[4,:],'b',alpha=0.4)
-    axs[0,1].plot(df.iloc[5,:],'b',alpha=0.4)
-    axs[0,1].plot(df.iloc[6,:],'b',alpha=0.4)
-    axs[0,1].plot(df.iloc[7,:],'b',alpha=0.4) 
-    axs[0,1].plot(df.iloc[plot_num,:],'g')
-    axs[0,1].set_ylabel('Distance')
-    axs[0,1].set_xlabel('Frame')   
-    #normalise
-    axs[0,1].set_ylim([-y_range/2, y_range/2])
-    
+    dfata=dtwdnew(v1(index),plot_num,2)
+    for i in range(len(dfata)):
+        if dfata[i]>1:
+            axs[3,0].axvspan(i, i+1, facecolor='orange', alpha=0.2)
+        elif dfata[i]<1:
+            axs[3,0].axvspan(i, i+1, facecolor='blue', alpha=0.2)
+#    dfataref=np.zeros(len(path))
+#    for i in path:
+#        dfataref[i[0]]=dfata[i[1]]
+#    for i in range(len(dfataref)):
+#        if dfataref[i]>1:
+#            axs[3,0].axvspan(i, i+1, facecolor='blue', alpha=0.2)
+#        elif dfataref[i]<1:
+#            axs[3,0].axvspan(i, i+1, facecolor='orange', alpha=0.2)
+#    
+    df=dtwrecon([plot_num+1],v1(index))
+    axs[2,0].plot(df.iloc[0,:],'g',alpha=0.3)
+    axs[2,0].plot(df.iloc[1,:],'g',alpha=0.3)
+    axs[2,0].plot(df.iloc[2,:],'r')
+    axs[2,0].plot(df.iloc[3,:],'g',alpha=0.3)
+    axs[2,0].plot(df.iloc[4,:],'g',alpha=0.3)
+    axs[2,0].plot(df.iloc[5,:],'g',alpha=0.3)
+    #axs[0,0].plot(df.iloc[6,:],'b',alpha=0.3)
+    axs[2,0].plot(df.iloc[7,:],'g',alpha=0.3)
+    axs[2,0].plot(df.iloc[plot_num,:],'black')
+    axs[2,0].set_ylabel('Distance')
+  #  axs[2,0].set_xlabel('Frame')
 
-    df=v2(index)
-    axs[1,0].plot(df.iloc[0,:],'r')
-    axs[1,0].plot(df.iloc[1,:],'b',alpha=0.4)
-    axs[1,0].plot(df.iloc[2,:],'b',alpha=0.4)
-    axs[1,0].plot(df.iloc[3,:],'b',alpha=0.4)
-    axs[1,0].plot(df.iloc[4,:],'b',alpha=0.4)
-    axs[1,0].plot(df.iloc[5,:],'b',alpha=0.4)
-    axs[1,0].plot(df.iloc[6,:],'b',alpha=0.4)
-    axs[1,0].plot(df.iloc[7,:],'b',alpha=0.4)
-    axs[1,0].plot(df.iloc[plot_num,:],'g')
-    axs[1,0].set_ylabel('Velocity')
-    axs[1,0].set_xlabel('Frame')    
-    #normalise
-    ymin, ymax = axs[1,0].get_ylim()
-    y_range = ymax-ymin
-
-    df=v9(index)
-    axs[1,1].plot(df.iloc[0,:],'r')
-    axs[1,1].plot(df.iloc[1,:],'b',alpha=0.4)
-    axs[1,1].plot(df.iloc[2,:],'b',alpha=0.4)
-    axs[1,1].plot(df.iloc[3,:],'b',alpha=0.4)
-    axs[1,1].plot(df.iloc[4,:],'b',alpha=0.4)
-    axs[1,1].plot(df.iloc[5,:],'b',alpha=0.4)
-    axs[1,1].plot(df.iloc[6,:],'b',alpha=0.4)
-    axs[1,1].plot(df.iloc[7,:],'b',alpha=0.4)   
-    axs[1,1].plot(df.iloc[plot_num,:],'g')
-    axs[1,1].set_ylabel('Velocity')
-    axs[1,1].set_xlabel('Frame')   
-    #normalise
-    axs[1,1].set_ylim([-y_range/2, y_range/2])        
-
-    
-    
-    df=v3(index)
-    axs[2,0].plot(df.iloc[0,:],'r')
-    axs[2,0].plot(df.iloc[1,:],'b',alpha=0.4)
-    axs[2,0].plot(df.iloc[2,:],'b',alpha=0.4)
-    axs[2,0].plot(df.iloc[3,:],'b',alpha=0.4)
-    axs[2,0].plot(df.iloc[4,:],'b',alpha=0.4)
-    axs[2,0].plot(df.iloc[5,:],'b',alpha=0.4)
-    axs[2,0].plot(df.iloc[6,:],'b',alpha=0.4)
-    axs[2,0].plot(df.iloc[7,:],'b',alpha=0.4)   
-    axs[2,0].plot(df.iloc[plot_num,:],'g')
-    axs[2,0].set_ylabel('Acceleration')
-    axs[2,0].set_xlabel('Frame')
-    #normalise
-    ymin, ymax = axs[2,0].get_ylim()
-    y_range = ymax-ymin
-
-
-
-    df=v10(index)
-    axs[2,1].plot(df.iloc[0,:],'r')
-    axs[2,1].plot(df.iloc[1,:],'b',alpha=0.4)
-    axs[2,1].plot(df.iloc[2,:],'b',alpha=0.4)
-    axs[2,1].plot(df.iloc[3,:],'b',alpha=0.4)
-    axs[2,1].plot(df.iloc[4,:],'b',alpha=0.4)
-    axs[2,1].plot(df.iloc[5,:],'b',alpha=0.4)
-    axs[2,1].plot(df.iloc[6,:],'b',alpha=0.4)
-    axs[2,1].plot(df.iloc[7,:],'b',alpha=0.4)   
-    axs[2,1].plot(df.iloc[plot_num,:],'g')
-    axs[2,1].set_ylabel('Acceleration')
-    axs[2,1].set_xlabel('Frame')   
-        #normalise
-    axs[2,1].set_ylim([-y_range/2, y_range/2])
-
-    df=v4(15)
-    axs[3,0].plot(df.iloc[0,:],'r')
-    axs[3,0].plot(df.iloc[1,:],'b',alpha=0.4)
-    axs[3,0].plot(df.iloc[2,:],'b',alpha=0.4)
-    axs[3,0].plot(df.iloc[3,:],'b',alpha=0.4)
-    axs[3,0].plot(df.iloc[4,:],'b',alpha=0.4)
-    axs[3,0].plot(df.iloc[5,:],'b',alpha=0.4)
-    axs[3,0].plot(df.iloc[6,:],'b',alpha=0.4)
-    axs[3,0].plot(df.iloc[7,:],'b',alpha=0.4)   
-    axs[3,0].plot(df.iloc[plot_num,:],'g')
-    axs[3,0].set_ylabel('Angle')
+    df=dtwrecon(top,v1(index))
+    axs[3,0].plot(df.iloc[0,:],'g',alpha=0.3)
+    axs[3,0].plot(df.iloc[1,:],'g',alpha=0.3)
+    axs[3,0].plot(df.iloc[2,:],'r')
+    axs[3,0].plot(df.iloc[3,:],'g',alpha=0.3)
+    axs[3,0].plot(df.iloc[4,:],'g',alpha=0.3)
+    axs[3,0].plot(df.iloc[5,:],'g',alpha=0.3)
+    #axs[0,0].plot(df.iloc[6,:],'b',alpha=0.3)
+    axs[3,0].plot(df.iloc[7,:],'g',alpha=0.3)
+    axs[3,0].plot(df.iloc[plot_num,:],'black')
+    axs[3,0].set_ylabel('Distance')
     axs[3,0].set_xlabel('Frame')
-    #normalise
-    ymin, ymax = axs[3,0].get_ylim()
-    y_range = ymax-ymin
+
     
-    df=v11(15)
-    axs[3,1].plot(df.iloc[0,:],'r')
-    axs[3,1].plot(df.iloc[1,:],'b',alpha=0.4)
-    axs[3,1].plot(df.iloc[2,:],'b',alpha=0.4)
-    axs[3,1].plot(df.iloc[3,:],'b',alpha=0.4)
-    axs[3,1].plot(df.iloc[4,:],'b',alpha=0.4)
-    axs[3,1].plot(df.iloc[5,:],'b',alpha=0.4)
-    axs[3,1].plot(df.iloc[6,:],'b',alpha=0.4)
-    axs[3,1].plot(df.iloc[7,:],'b',alpha=0.4)   
-    axs[3,1].plot(df.iloc[plot_num,:],'g')
-    axs[3,1].set_ylabel('Angle')
-    axs[3,1].set_xlabel('Frame')   
+    df=dtwrecon(top,v16(index))
+    axs[0,1].plot(df.iloc[0,:],'g',alpha=0.3)
+    axs[0,1].plot(df.iloc[1,:],'g',alpha=0.3)
+    axs[0,1].plot(df.iloc[2,:],'r')
+    axs[0,1].plot(df.iloc[3,:],'g',alpha=0.3)
+    axs[0,1].plot(df.iloc[4,:],'g',alpha=0.3)
+    axs[0,1].plot(df.iloc[5,:],'g',alpha=0.3)
+   # axs[0,1].plot(df.iloc[6,:],'b',alpha=0.3)
+    axs[0,1].plot(df.iloc[7,:],'g',alpha=0.3)
+    axs[0,1].plot(df.iloc[plot_num,:],'black')
+    axs[0,1].set_ylabel('Displacement X')
+ #   axs[0,1].set_xlabel('Frame')    
     #normalise
-    axs[3,1].set_ylim([-y_range/2, y_range/2])
-    
-    df=v15()
-    def plot(axis,dist3,dist3p,color,color2,space):
+  
         
-       
-        for i in range(len(dist3)):
-            y=[dist3[i],dist3p[i]]
-            x=[i+space,i+space]
-            y2=[dist3[i],(dist3[i]+dist3p[i])/2]
-            axis.plot(x,y, color, alpha=1)
-            axis.plot(x,y2, color2, alpha=1)
+    df=dtwrecon(top,v17(index))
+    axs[1,1].plot(df.iloc[0,:],'g',alpha=0.3)
+    axs[1,1].plot(df.iloc[1,:],'g',alpha=0.3)
+    axs[1,1].plot(df.iloc[2,:],'r')
+    axs[1,1].plot(df.iloc[3,:],'g',alpha=0.3)
+    axs[1,1].plot(df.iloc[4,:],'g',alpha=0.3)
+    axs[1,1].plot(df.iloc[5,:],'g',alpha=0.3)
+   # axs[2,0].plot(df.iloc[6,:],'b',alpha=0.3)
+    axs[1,1].plot(df.iloc[7,:],'g',alpha=0.3)   
+    axs[1,1].plot(df.iloc[plot_num,:],'black')
+    axs[1,1].set_ylabel('Displacement Y')
+  #  axs[1,1].set_xlabel('Frame')
+    #normalise
+
+
+    df=dtwrecon(top,v18(index))
+    axs[2,1].plot(df.iloc[0,:],'g',alpha=0.3)
+    axs[2,1].plot(df.iloc[1,:],'g',alpha=0.3)
+    axs[2,1].plot(df.iloc[2,:],'r')
+    axs[2,1].plot(df.iloc[3,:],'g',alpha=0.3)
+    axs[2,1].plot(df.iloc[4,:],'g',alpha=0.3)
+    axs[2,1].plot(df.iloc[5,:],'g',alpha=0.3)
+    #axs[2,1].plot(df.iloc[6,:],'b',alpha=0.3)
+    axs[2,1].plot(df.iloc[7,:],'g',alpha=0.3)   
+    axs[2,1].plot(df.iloc[plot_num,:],'black')
+    axs[2,1].set_ylabel('Displacement Z')
+   # axs[2,1].set_xlabel('Frame')   
+
+ 
+    df=dtwrecon(top,v4(index))
+    axs[3,1].plot(df.iloc[0,:],'g',alpha=0.3)
+    axs[3,1].plot(df.iloc[1,:],'g',alpha=0.3)
+    axs[3,1].plot(df.iloc[2,:],'r')
+    axs[3,1].plot(df.iloc[3,:],'g',alpha=0.3)
+    axs[3,1].plot(df.iloc[4,:],'g',alpha=0.3)
+    axs[3,1].plot(df.iloc[5,:],'g',alpha=0.3)
+   # axs[3,0].plot(df.iloc[6,:],'b',alpha=0.3)
+    axs[3,1].plot(df.iloc[7,:],'g',alpha=0.3)   
+    axs[3,1].plot(df.iloc[plot_num,:],'black')
+    axs[3,1].set_ylabel('Angle')
+    axs[3,1].set_xlabel('Frame')
+    #normalise
+
+   
+
     
-    plot(axs[4,0],df[0],df[1],"r","pink",0)
-    plot(axs[4,0],df[2*plot_num],df[2*plot_num+1],"b","aqua",0.5)
-    axs[4,0].set_ylabel('Distance')
-    axs[4,0].set_xlabel('Frame') 
+    #################################
+#    functions = [v1,v2,v3,v4,v5,v6,v16,v17,v18]
+#    output_mean,output_var = pickle.load(open("output.p","rb"))
+#    a_mean = np.array(output_mean)
+#    a_var = np.array(output_var)
+#    ind_mean = np.argpartition(a_mean, -5)[-5:]
+#    ind_var= np.argpartition(a_var,-5)[-5:]
+#    a_mean[ind_mean]
+#    a_var[ind_var]
+#    
+#    output_mean_formatted=[]
+#    eachmeasure=[]
+#    for j in range(len(functions)):
+#        for i in range(17):
+#            eachmeasure.append(output_mean[i+j*17])
+#            
+#        output_mean_formatted.append(eachmeasure)  
+#        eachmeasure=[]
+#    
+#    print(output_mean_formatted)  
+#    df = pd.DataFrame(output_mean_formatted) 
+#    
+#    df=df[[0,1,4,2,5,3,6,7,8,9,10,14,11,15,12,16,13]]
+#    output_mean_formatted=df.values.tolist()
+#    plt.figure(0)
+#    viridis = cm.get_cmap('binary', 256)
+#    newcolors = viridis(np.linspace(0, 1, 256))
+#    
+#    cmap = matplotlib.colors.ListedColormap(newcolors, name='colors', N=None)
+#    
+#    img = axs[4,1].imshow(output_mean_formatted, cmap=cmap)
+#    
+#    
+#    x_label_list = ['Pelvis', 'R. Hip', 'L. Hip', 'R. Knee', 'L. Knee', 'R. Foot', 'L. Foot', 'Spine', 'Thorax', 'Neck', 'Head', 'R. Arm', 'L. Arm', 'R. Elbow', 'L. Elbow', 'R. Wrist', 'L. Wrist']
+#    
+#    axs[4,1].set_xticks(range(17))
+#    
+#    axs[4,1].set_xticklabels(x_label_list)
+#    y_label_list = ['Distance', 'Speed', 'Acceleration', 'Angle', 'Angular Velocity', 'Angular Acceleration', 'X axis Displacement', 'Y axis Displacement','Z axis Displacement' ]
+#    
+#    axs[4,1].set_yticks(range(len(functions)))
+#    
+#    axs[4,1].set_yticklabels(y_label_list)
+#    
+    
+
+
 
     fig.tight_layout()
-#    for preload
-    plt.savefig("Images/std_vis_%d.jpg"%(plot_num), dpi=60)    
 
-#bones=[[0,1],[1,2],[2,3],[0,6],[6,7],[7,8],[0,12],[12,13],[13,14],[14,15],[13,17],[17,18],[18,19],[13,25],[25,26],[26,27]]
-#joints=[0,1,2,3,6,7,8,12,13,14,15,17,18,19,25,26,27]
-#for i in range(0,11):
-#    plotpositionalderivatives(16,bones,joints,i)
+#    for preload
+    plt.savefig("Images/UI2/stdvis_trial_%d_keypoint_%d.jpg"%(plot_num,index), dpi=100)    
+
+bones=[[0,1],[1,2],[2,3],[0,6],[6,7],[7,8],[0,12],[12,13],[13,14],[14,15],[13,17],[17,18],[18,19],[13,25],[25,26],[26,27]]
+joints=[0,1,2,3,6,7,8,12,13,14,15,17,18,19,25,26,27]
+for i in range(10): 
+    for j in range(1,17):
+    
+        plotpositionalderivatives(16,bones,joints,i)
+        plt.close()

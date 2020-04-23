@@ -31,19 +31,19 @@ joints=[0,1,2,3,6,7,8,12,13,14,15,17,18,19,25,26,27]
 #-----------------------------------------------------------------------------
 #Load formatted data
 
-#plot1= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\1.json')
-#plot2= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\2.json')
+plot1= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\1.json')
+plot2= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\2.json')
 plot3= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\3.json')
 plot4= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\4.json')
 plot5= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\5.json')
 plot6= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\6.json')
 plot7= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\7.json')
 plot8= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\8.json')
-plot9= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\10.json')
-plot10= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\9.json')
-
-plot1=plot3
-plot2=plot4
+plot9= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\9.json')
+plot10= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\10.json')
+plotlist=[plot1,plot2,plot3,plot4,plot5,plot6,plot7,plot8,plot9,plot10]
+plota=plot1
+plotb=plot3
 
 
 
@@ -83,11 +83,11 @@ jeleton=[]
 skeleton2=[]
 jeleton2=[]
 
-temp=frame_init(skeleton,jeleton,frame,plot1,bones,joints,True,False,vec(1,1,1))
+temp=frame_init(skeleton,jeleton,frame,plota,bones,joints,True,False,vec(1,1,1))
 skeleton=temp[0]
 jeleton=temp[1]
 
-temp=frame_init(skeleton2,jeleton2,frame,plot2,bones,joints,True,False,vec(0.5,0.5,0.5))
+temp=frame_init(skeleton2,jeleton2,frame,plotb,bones,joints,True,False,vec(0.5,0.5,0.5))
 skeleton2=temp[0]
 jeleton2=temp[1]
 
@@ -111,45 +111,27 @@ jeleton2=temp[1]
    
 running = True
 #------------------------------------------------------------------------------
-#change plot menu
+#change trial menu
+
+def M3(m):
+    global keypoint
+    dex=['Keypoint 1','Keypoint 2','Keypoint 3','Keypoint 4','Keypoint 5','Keypoint 6','Keypoint 7','Keypoint 8','Keypoint 9','Keypoint 10','Keypoint 11','Keypoint 12','Keypoint 13','Keypoint 14','Keypoint 15','Keypoint 16'].index(val)
+    keypoint=dex
+    
+        
+plot_menu=menu(choices=['Keypoint 1','Keypoint 2','Keypoint 3','Keypoint 4','Keypoint 5','Keypoint 6','Keypoint 7','Keypoint 8','Keypoint 9','Keypoint 10','Keypoint 11','Keypoint 12','Keypoint 13','Keypoint 14','Keypoint 15','Keypoint 16'], index=1, bind=M3)
+
+#change trial menu
 plot_num= 1
 def M2(m):
-    global plot_num,plot1,plot3,plot4,plot5,plot6,plot7,plot8,plot9,plot10,running
+    global plot_num,plotlist,running,keypoint,plota
     val = m.selected
-    if val == "Plot 4": 
-        plot1= plot4
-        plot_num = 1
-        gwt2.text="\n\n<img src='std_vis_1.jpg'/>"
-    elif val == "Plot 5":
-        plot1=plot5
-        plot_num = 2
-        gwt2.text="\n\n<img src='std_vis_2.jpg'/>"
-    elif val == "Plot 6":
-        plot1=plot6
-        plot_num = 3
-        gwt2.text="\n\n<img src='std_vis_3.jpg'/>"
-    elif val == "Plot 7":
-        plot1=plot7
-        plot_num = 4
-        gwt2.text="\n\n<img src='std_vis_4.jpg'/>"
-    elif val == "Plot 8":
-        plot1=plot8
-        plot_num = 5
-        gwt2.text="\n\n<img src='std_vis_5.jpg'/>"
-    elif val == "Plot 9":
-        plot1=plot9
-        plot_num = 6
-        gwt2.text="\n\n<img src='std_vis_6.jpg'/>"
-    elif val == "Plot 10":
-        plot1=plot10
-        plot_num = 7
-        gwt2.text="\n\n<img src='std_vis_7.jpg'/>"
-    elif val == "Plot 3":
-        plot1 = plot3
-        plot_num =0
-        gwt2.text="\n\n<img src='std_vis_0.jpg'/>"
-    running =True
-plot_menu=menu(choices=['Plot 3','Plot 4','Plot 5','Plot 6','Plot 7','Plot 8','Plot 9','Plot 10'], index=1, bind=M2)
+    dex=['Trial 1','Trial 2','Trial 3','Trial 4','Trial 5','Trial 6','Anomaly','Trial 8','Trial 9','Trial 10'].index(val)
+    plota=plotlist[dex]
+    gwt2.text="\n\n<img src='Images/UIresize/stdvis_trial_%d_keypoint_%d.jpg'/>"%(dex,2)
+    plot_num=dex
+        
+plot_menu=menu(choices=['Trial 1','Trial 2','Trial 3','Trial 4','Trial 5','Trial 6','Anomaly','Trial 8','Trial 9','Trial 10'], index=1, bind=M2)
 #-----------------------------------------------------------------------------
 #Toggle comparison model
 Visible=True
