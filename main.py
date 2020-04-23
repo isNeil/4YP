@@ -112,26 +112,30 @@ jeleton2=temp[1]
 running = True
 #------------------------------------------------------------------------------
 #change trial menu
-
-def M3(m):
+plot_num= 1
+keypoint=1
+def M3(m1):
     global keypoint
+    val = m1.selected
     dex=['Keypoint 1','Keypoint 2','Keypoint 3','Keypoint 4','Keypoint 5','Keypoint 6','Keypoint 7','Keypoint 8','Keypoint 9','Keypoint 10','Keypoint 11','Keypoint 12','Keypoint 13','Keypoint 14','Keypoint 15','Keypoint 16'].index(val)
-    keypoint=dex
+    keypoint=dex+1
+    gwt2.text="\n\n<img src='Images/UIresize/titlestdvis_trial_%d_keypoint_%d.jpg'/>"%(plot_num,keypoint)
     
         
-plot_menu=menu(choices=['Keypoint 1','Keypoint 2','Keypoint 3','Keypoint 4','Keypoint 5','Keypoint 6','Keypoint 7','Keypoint 8','Keypoint 9','Keypoint 10','Keypoint 11','Keypoint 12','Keypoint 13','Keypoint 14','Keypoint 15','Keypoint 16'], index=1, bind=M3)
+plot_menu=menu(choices=['Keypoint 1','Keypoint 2','Keypoint 3','Keypoint 4','Keypoint 5','Keypoint 6','Keypoint 7','Keypoint 8','Keypoint 9','Keypoint 10','Keypoint 11','Keypoint 12','Keypoint 13','Keypoint 14','Keypoint 15','Keypoint 16'], index=0, bind=M3)
 
 #change trial menu
-plot_num= 1
+
 def M2(m):
     global plot_num,plotlist,running,keypoint,plota
     val = m.selected
     dex=['Trial 1','Trial 2','Trial 3','Trial 4','Trial 5','Trial 6','Anomaly','Trial 8','Trial 9','Trial 10'].index(val)
     plota=plotlist[dex]
-    gwt2.text="\n\n<img src='Images/UIresize/stdvis_trial_%d_keypoint_%d.jpg'/>"%(dex,2)
     plot_num=dex
+    gwt2.text="\n\n<img src='Images/UIresize/titlestdvis_trial_%d_keypoint_%d.jpg'/>"%(plot_num,keypoint)
+    
         
-plot_menu=menu(choices=['Trial 1','Trial 2','Trial 3','Trial 4','Trial 5','Trial 6','Anomaly','Trial 8','Trial 9','Trial 10'], index=1, bind=M2)
+plot_menu=menu(choices=['Trial 1','Trial 2','Trial 3','Trial 4','Trial 5','Trial 6','Anomaly','Trial 8','Trial 9','Trial 10'], index=0, bind=M2)
 #-----------------------------------------------------------------------------
 #Toggle comparison model
 Visible=True

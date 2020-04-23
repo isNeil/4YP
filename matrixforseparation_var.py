@@ -71,8 +71,10 @@ for j in range(len(functions)):
 print(output_var_formatted)  
 df = pd.DataFrame(output_var_formatted) 
 
-df=df[[0,1,4,2,5,3,6,7,8,9,10,14,11,15,12,16,13]]
-df.to_json(r'C:\Users\neilw\Desktop\420varformated.json')
+df=df[[1,4,2,5,3,6,7,8,9,10,14,11,15,12,16,13]]
+
+df = df.drop([df.index[1] , df.index[2],df.index[4] , df.index[5] ])
+#df.to_json(r'C:\Users\neilw\Desktop\420varformated.json')
 output_var_formatted=df.values.tolist()
 #output_mean_formatted= pd.read_json(r'C:\Users\neilw\Desktop\420formated.json')
 
@@ -83,19 +85,20 @@ newcolors = viridis(np.linspace(0, 1, 256))
 cmap = matplotlib.colors.ListedColormap(newcolors, name='colors', N=None)
 
 
-fig, ax = plt.subplots(1,1,figsize=(15, 7.5))
+fig, ax = plt.subplots(1,1,figsize=(13, 7.5))
 
 img = ax.imshow(output_var_formatted, cmap=cmap)
 
 
-x_label_list = ['Pelvis', 'R. Hip', 'L. Hip', 'R. Knee', 'L. Knee', 'R. Foot', 'L. Foot', 'Spine', 'Thorax', 'Neck', 'Head', 'R. Arm', 'L. Arm', 'R. Elbow', 'L. Elbow', 'R. Wrist', 'L. Wrist']
+x_label_list = [ 'R. Hip', 'L. Hip', 'R. Knee', 'L. Knee', 'R. Foot', 'L. Foot', 'Spine', 'Thorax', 'Neck', 'Head', 'R. Arm', 'L. Arm', 'R. Elbow', 'L. Elbow', 'R. Wrist', 'L. Wrist']
 
 ax.set_xticks(range(17))
 
 ax.set_xticklabels(x_label_list)
-y_label_list = ['Distance', 'Speed', 'Acceleration', 'Angle', 'Angular Velocity', 'Angular Acceleration', 'X axis Displacement', 'Y axis Displacement','Z axis Displacement' ]
+y_label_list = ['Distance', 'Angle', 'X axis Displacement', 'Y axis Displacement','Z axis Displacement' ]
 
-ax.set_yticks(range(len(functions)))
+
+ax.set_yticks(range(np.size(df,0)))
 
 ax.set_yticklabels(y_label_list)
 

@@ -296,8 +296,8 @@ def plotpositionalderivatives(index,bones,joints,plot_num):
     
     
     fig, axs = plt.subplots(4,2,figsize=(13, 5))
-    axs[0,0].title.set_text('No DTW')
-    axs[1,0].title.set_text('Relative Rate of comparison w.r.t reference')
+    axs[0,0].title.set_text('Mean Separation')
+    axs[1,0].title.set_text('Variance Sepearation')
     axs[2,0].title.set_text('DTW w.r.t. comparison.')
     axs[3,0].title.set_text('DTW w.r.t. reference')
     axs[0,1].title.set_text('DTW w.r.t reference')
@@ -361,15 +361,15 @@ def plotpositionalderivatives(index,bones,joints,plot_num):
             axs[3,0].axvspan(i, i+1, facecolor='orange', alpha=0.2)
         elif dfata[i]<1:
             axs[3,0].axvspan(i, i+1, facecolor='blue', alpha=0.2)
-#    dfataref=np.zeros(len(path))
-#    for i in path:
-#        dfataref[i[0]]=dfata[i[1]]
-#    for i in range(len(dfataref)):
-#        if dfataref[i]>1:
-#            axs[3,0].axvspan(i, i+1, facecolor='blue', alpha=0.2)
-#        elif dfataref[i]<1:
-#            axs[3,0].axvspan(i, i+1, facecolor='orange', alpha=0.2)
-#    
+    dfataref=np.zeros(len(path))
+    for i in path:
+        dfataref[i[0]]=dfata[i[1]]
+    for i in range(len(dfataref)):
+        if dfataref[i]>1:
+            axs[3,0].axvspan(i, i+1, facecolor='blue', alpha=0.2)
+        elif dfataref[i]<1:
+            axs[3,0].axvspan(i, i+1, facecolor='orange', alpha=0.2)
+    
     df=dtwrecon([plot_num+1],v1(index))
     axs[2,0].plot(df.iloc[0,:],'g',alpha=0.3)
     axs[2,0].plot(df.iloc[1,:],'g',alpha=0.3)
@@ -509,12 +509,14 @@ def plotpositionalderivatives(index,bones,joints,plot_num):
     fig.tight_layout()
 
 #    for preload
-    plt.savefig("Images/UI2/stdvis_trial_%d_keypoint_%d.jpg"%(plot_num,index), dpi=100)    
+#    plt.savefig("Images/UI2/stdvis_trial_%d_keypoint_%d.jpg"%(plot_num,index), dpi=100)    
 
-bones=[[0,1],[1,2],[2,3],[0,6],[6,7],[7,8],[0,12],[12,13],[13,14],[14,15],[13,17],[17,18],[18,19],[13,25],[25,26],[26,27]]
-joints=[0,1,2,3,6,7,8,12,13,14,15,17,18,19,25,26,27]
-for i in range(10): 
-    for j in range(1,17):
-    
-        plotpositionalderivatives(16,bones,joints,i)
-        plt.close()
+
+#bones=[[0,1],[1,2],[2,3],[0,6],[6,7],[7,8],[0,12],[12,13],[13,14],[14,15],[13,17],[17,18],[18,19],[13,25],[25,26],[26,27]]
+#joints=[0,1,2,3,6,7,8,12,13,14,15,17,18,19,25,26,27]
+#for i in range(10): 
+#    for j in range(1,17):
+#    
+#        plotpositionalderivatives(16,bones,joints,i)
+#        plt.close()
+#plotpositionalderivatives(16,bones,joints,1)
