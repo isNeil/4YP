@@ -182,14 +182,14 @@ def Timewarp(b):
     global var_speed
     if var_speed== True:
         var_speed = False
-        b.text="Timewarp On"
+        b.text="Time HL On"
         
     else:
         var_speed = True
-        b.text="Timewarp Off"
+        b.text="Time HL Off"
         
 
-time_b=button(text="Timewarp Off", pos=scene.caption_anchor, bind=Timewarp)
+time_b=button(text="Timewarp HL Off", pos=scene.caption_anchor, bind=Timewarp)
 
 #frame slider 
 
