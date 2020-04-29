@@ -89,24 +89,24 @@ def dtwrecon(top,vdata):
             dtwdlist.iloc[i][j]=dtwed[j]
         
         
-#        if i != 6:
-#            if i ==2:
-#                
-#                plt.plot(dtwdlist.iloc[i],'blue',alpha=1)
-#            if i == 1:
-#                plt.plot(dtwdlist.iloc[i],'blue',alpha=0.8)
-#            if i == 4:
-#                plt.plot(dtwdlist.iloc[i],'blue',alpha=0.8)
-#            else:
-#                plt.plot(dtwdlist.iloc[i],'green',alpha=0.4)
-#        
-#        
-#         
-#        
-#    plt.ylabel('Distance')
-#    plt.xlabel('Frame')
-#    plt.grid(True)
-#    plt.xlim((0,140))
+        if i != 6:
+            if i ==2:
+                
+                plt.plot(dtwdlist.iloc[i],'blue',alpha=1)
+            if i == 1:
+                plt.plot(dtwdlist.iloc[i],'blue',alpha=0.8)
+            if i == 4:
+                plt.plot(dtwdlist.iloc[i],'blue',alpha=0.8)
+            else:
+                plt.plot(dtwdlist.iloc[i],'green',alpha=0.4)
+        
+        
+         
+        
+    plt.ylabel('Distance')
+    plt.xlabel('Frame')
+    plt.grid(True)
+    plt.xlim((0,140))
 #    
     return dtwdlist
 
@@ -187,9 +187,9 @@ def dtwhighlight(top,bott,dtwdlist):
 
 
 #
-#top=[3,5,2]
-#bott=[1,10,8,9,4,6]
-#dtwdlist=dtwrecon(top,v1(3))
+top=[3,5,2]
+bott=[1,10,8,9,4,6]
+dtwdlist=dtwrecon(top,v17(7))
 ##plt.savefig("Images/rfootdist.jpg", dpi=100) 
 #[chose_times_mean,chose_times_var,allstats,differences_mean,differences_var]=dtwhighlight(top,bott,dtwdlist)
 

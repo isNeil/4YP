@@ -3,6 +3,8 @@
 Created on Tue Apr 14 05:26:23 2020
 
 @author: neilw
+
+used to create 3 clusters for old method
 """
 
 
@@ -216,8 +218,9 @@ def dtwrecon(top,vdata):
 def dtwhighlight(top,bott,dtwdlist):  
 
     frame_good=[]
-    frame_bad=[]
-        
+    frame_bad_higher=[]
+    frame_bad_lower=[]
+    
     
     separation=[]
     norm_dtwdlist=dtwdlist.copy()
@@ -233,15 +236,26 @@ def dtwhighlight(top,bott,dtwdlist):
             frame_good.append(norm_dtwdlist.iloc[j-1][i])
         mean_good=np.mean(frame_good)
         for k in bott:
-       
-            frame_bad.append(norm_dtwdlist.iloc[k-1][i])
-        mean_bad=np.mean(frame_bad)
-        separation.append(abs(mean_good-mean_bad))
+            
+            if norm_dtwdlist.iloc[k-1][i]>=mean_good:
+                frame_bad_higher.append(norm_dtwdlist.iloc[k-1][i])
+            elif norm_dtwdlist.iloc[k-1][i]<mean_good:
+                frame_bad_lower.append(norm_dtwdlist.iloc[k-1][i])    
+            
+            
+        if frame_bad_lower == True:
+            mean_bad_lower=np.mean(frame_bad_lower)
+        else: mean_bad_lower=0
+        if frame_bad_higher == True:
+            mean_bad_higher=np.mean(frame_bad_higher)
+        else: mean_bad_higher=0
+        separation.append(min(abs(mean_good-mean_bad_higher),abs(mean_good-mean_bad_lower)))
         
     
-    separation_sorted=sorted(separation)
+    separation_sorted=sorted(separation) #ascending order
     
     cutoff=separation_sorted[int(np.floor(len(separation)*0.8))]
+    
     
     chose_times=[]
     for i in range(len(separation)):
@@ -251,13 +265,13 @@ def dtwhighlight(top,bott,dtwdlist):
     for i in chose_times:
         plt.axvspan(i, i+1, facecolor='grey', alpha=0.5)
     
-    return chose_times
+    return chose_times,separation
 
 top=[3,5,2]
 bott=[1,10,8,9,4,6]
 
 dtwdlist=dtwrecon(top,v1(3))
-dtwhighlight(top,bott,dtwdlist)
+[chose_times,separation]=dtwhighlight(top,bott,dtwdlist)
 
 
 #raw = 'asdfa3fa'

@@ -12,6 +12,7 @@ from sim import create_frame
 from sim import frame_init
 import vis2 as vis
 from smart_frame_select import smart_sel
+import pickle
 #import calc_vel_accel as deltas
 #import joint_angle as ja
 #from spherical import asSpherical
@@ -42,6 +43,9 @@ plot8= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\8.json')
 plot9= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\9.json')
 plot10= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\10.json')
 plotlist=[plot1,plot2,plot3,plot4,plot5,plot6,plot7,plot8,plot9,plot10]
+
+#plota is comparison
+#plotb is reference
 plota=plot1
 plotb=plot3
 
@@ -83,11 +87,11 @@ jeleton=[]
 skeleton2=[]
 jeleton2=[]
 
-temp=frame_init(skeleton,jeleton,frame,plota,bones,joints,True,False,vec(1,1,1))
+temp=frame_init(skeleton,jeleton,frame,plota,bones,joints,True,vec(1,1,1))
 skeleton=temp[0]
 jeleton=temp[1]
 
-temp=frame_init(skeleton2,jeleton2,frame,plotb,bones,joints,True,False,vec(0.5,0.5,0.5))
+temp=frame_init(skeleton2,jeleton2,frame,plotb,bones,joints,True,vec(0.5,0.5,0.5))
 skeleton2=temp[0]
 jeleton2=temp[1]
 
@@ -331,10 +335,10 @@ def getevent():
 
 scene.bind("mousedown", getevent)
 #-----------------------------------------------------------------------------
-#update frames when running = True
-hl=smart_sel()
+#load pickle of extractframes 
+hl = pickle.load(open("extractedframes.p","rb"))
 
-
+#run animation
 while True:
     
     
@@ -346,11 +350,11 @@ while True:
     
         sleep(1/14)
         sl.value=frame    
-        temp=create_frame(skeleton,jeleton,frame,plot1,bones,joints,True,False)
+        temp=create_frame(skeleton,jeleton,frame,plota,bones,joints,True)
         skeleton=temp[0]
         jeleton=temp[1]  
         if Visible:
-            temp=create_frame(skeleton2,jeleton2,frame,plot2,bones,joints,Visible,False)
+            temp=create_frame(skeleton2,jeleton2,frame,plotb,bones,joints,Visible)
             skeleton2=temp[0]
             jeleton2=temp[1]
         else:
@@ -369,12 +373,13 @@ while True:
        
             
     elif running:
+        #load frames for when not running but settings changed
         frame= sl.value    
-        temp=create_frame(skeleton,jeleton,frame,plot1,bones,joints,True,False)
+        temp=create_frame(skeleton,jeleton,frame,plota,bones,joints,True)
         skeleton=temp[0]
         jeleton=temp[1]
         if Visible:
-            temp=create_frame(skeleton2,jeleton2,frame,plot2,bones,joints,Visible,False)
+            temp=create_frame(skeleton2,jeleton2,frame,plotb,bones,joints,Visible)
             skeleton2=temp[0]
             jeleton2=temp[1]
         else:

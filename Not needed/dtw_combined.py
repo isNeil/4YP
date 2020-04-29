@@ -3,6 +3,8 @@
 Created on Tue Apr 14 05:26:23 2020
 
 @author: neilw
+
+combines 2 and 3 clusters
 """
 
 

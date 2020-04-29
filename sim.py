@@ -10,7 +10,7 @@ import numpy as np
 from colour import Color
 
 #simulates any frame after objects initialised
-def create_frame(skeleton,jeleton,frame,data_f,bones,joints,vis=True,tra=True):
+def create_frame(skeleton,jeleton,frame,data_f,bones,joints,vis=True):
 
     for i in range(len(bones)):
         start=data_f[frame][bones[i][0]]
@@ -28,17 +28,17 @@ def create_frame(skeleton,jeleton,frame,data_f,bones,joints,vis=True,tra=True):
         jeleton[i].visible= vis
        
 
-##attach trail , type points not so good actually
+#attach trail , type points not so good actually
 #    if tra == True:
-#        a=attach_trail(jeleton[-1],color=trace_colour)    
-#        b=attach_trail(jeleton[-2],color=trace_colour)
-#        
+#        a=attach_trail(jeleton[-1])    
+#        b=attach_trail(jeleton[-2])
+        
 
 
     return [skeleton,jeleton]
             
 #initialises skeleton in frame position
-def frame_init(skeleton,jeleton,frame,data_f,bones,joints,vis=True,tra=True,col=vec(1,1,1)):
+def frame_init(skeleton,jeleton,frame,data_f,bones,joints,vis=True,col=vec(1,1,1)):
         
     for i in range(len(bones)):
         start=data_f[frame][bones[i][0]]
@@ -53,6 +53,9 @@ def frame_init(skeleton,jeleton,frame,data_f,bones,joints,vis=True,tra=True,col=
         start=data_f[frame][joints[i]]
         jeleton.append(sphere(pos=vector(start[0],start[1],start[2]), radius=30,color=col))
         jeleton[-1].visible= vis
+
+
+        
 
     return [skeleton,jeleton]
 

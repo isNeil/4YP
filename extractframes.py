@@ -14,9 +14,10 @@ from v18f import v18
 from v4f import v4
 from v16f import v16
 
-
+import pickle
 
 def extractframes(bestmeasure,comi):
+    #returns frames for a single trial
     refi=2
     refi2=1
     refi3=4        
@@ -48,19 +49,30 @@ def extractframes(bestmeasure,comi):
             choose.append(i)
             
     return choose
-
+####################################################################
+#pickle save chosen frames 
 #bestmeasure=v1(3)
 #top=[3,5,2]
-#comi=7
+#
 #refi=2
-#choose=extractframes(bestmeasure,comi)
 #
+#choose_all=[]
+#for i in range(10):
+#    choose=extractframes(bestmeasure,i)
+#    choose_all.append(choose)
+#print(choose_all)
+#
+#pickle.dump(choose_all, open("extractedframes.p", "wb"))
+
+#####################################################################
+
 #dtwdlist=dtwrecon(top,bestmeasure)
-#
+
 #plt.figure()
-#plt.plot(dtwdlist.iloc[refi][:],'r')
-#plt.plot(dtwdlist.iloc[comi][:],'g')
-#
+#plt.plot(dtwdlist.iloc[refi][:],'b',alpha=0.4)
+#plt.plot(dtwdlist.iloc[comi][:],'g',alpha=1)
+#plt.plot(dtwdlist.iloc[1][:],'b',alpha=0.4)
+#plt.plot(dtwdlist.iloc[4][:],'b',alpha=0.4)
 #
 #plt.ylabel('Distance')
 #plt.xlabel('Frame')
