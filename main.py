@@ -10,6 +10,8 @@ import pandas as pd
 import numpy as np
 from sim import create_frame
 from sim import frame_init
+from sim import trace_init
+#from sim import trace_move
 import vis2 as vis
 from smart_frame_select import smart_sel
 import pickle
@@ -88,12 +90,21 @@ skeleton2=[]
 jeleton2=[]
 
 temp=frame_init(skeleton,jeleton,frame,plota,bones,joints,True,vec(1,1,1))
-skeleton=temp[0]
-jeleton=temp[1]
+skeleton=temp[0].copy()
+jeleton=temp[1].copy()
 
 temp=frame_init(skeleton2,jeleton2,frame,plotb,bones,joints,True,vec(0.5,0.5,0.5))
-skeleton2=temp[0]
-jeleton2=temp[1]
+skeleton2=temp[0].copy()
+jeleton2=temp[1].copy()
+
+#############################################################################
+all_traces=[]
+tracetemp=[]
+for j in range(len(joints)):
+#    
+    tracejoint = trace_init(tracetemp,plota,joints,j)
+    all_traces.append(tracejoint)
+    tracetemp=[]
 
 #    #joint angle colouring
 #    angles1=ja.joint_angle(frame,plot1,bones,joints)  
@@ -101,7 +112,7 @@ jeleton2=temp[1]
 #    angles=np.subtract(angles1,angles2)
 #
 #    red = Color("blue")
-#    colors = list(red.range_to(Color("green"),70))
+#    colors = list(red.range_to(Color("green"),141))
 #    
 #    for i in range(len(jeleton)):
 #        if angles[i]==0:
@@ -131,13 +142,22 @@ plot_menu=menu(choices=['Keypoint 1','Keypoint 2','Keypoint 3','Keypoint 4','Key
 #change trial menu
 
 def M2(m):
-    global plot_num,plotlist,running,keypoint,plota
+    global plot_num,plotlist,running,keypoint,plota, all_traces
     val = m.selected
     dex=['Trial 1','Trial 2','Trial 3','Trial 4','Trial 5','Trial 6','Anomaly','Trial 8','Trial 9','Trial 10'].index(val)
     plota=plotlist[dex]
     plot_num=dex
     gwt2.text="\n\n<img src='Images/UIresize/titlestdvis_trial_%d_keypoint_%d.jpg'/>"%(plot_num,keypoint)
     
+    
+    
+#    #update traces
+#    all_traces=[]
+#    tracetemp=[]
+#    for j in range(len(joints)):
+#    
+#        tracepoint = trace_init(tracetemp,plota,joints,j)
+#        all_traces.append(tracepoint)
         
 plot_menu=menu(choices=['Trial 1','Trial 2','Trial 3','Trial 4','Trial 5','Trial 6','Anomaly','Trial 8','Trial 9','Trial 10'], index=0, bind=M2)
 #-----------------------------------------------------------------------------
@@ -155,8 +175,83 @@ def Show(b):
         running=True
 
 show_b=button(text="Hide comparison", pos=scene.caption_anchor, bind=Show)
+##############################################################################
+
+def tracevis3(b):
+    global all_traces,running
+    if b.checked:
+        for i in all_traces[3]:
+            i.visible = True
+        running=True
+    else:
+        for i in all_traces[3]:
+            i.visible = False
+        running=True
+checkbox(bind=tracevis3, text='R Foot trace')
 
 
+def tracevis2(b):
+    global all_traces,running
+    if b.checked:
+        for i in all_traces[2]:
+            i.visible = True
+        running=True
+    else:
+        for i in all_traces[2]:
+            i.visible = False
+        running=True
+checkbox(bind=tracevis2, text='R Knee trace')
+
+
+def tracevis16(b):
+    global all_traces,running
+    if b.checked:
+        for i in all_traces[16]:
+            i.visible = True
+        running=True
+    else:
+        for i in all_traces[16]:
+            i.visible = False
+        running=True
+checkbox(bind=tracevis16, text='R Hand trace')
+
+def tracevis6(b):
+    global all_traces,running
+    if b.checked:
+        for i in all_traces[6]:
+            i.visible = True
+        running=True
+    else:
+        for i in all_traces[6]:
+            i.visible = False
+        running=True
+checkbox(bind=tracevis6, text='L Foot trace')
+
+
+def tracevis5(b):
+    global all_traces,running
+    if b.checked:
+        for i in all_traces[5]:
+            i.visible = True
+        running=True
+    else:
+        for i in all_traces[5]:
+            i.visible = False
+        running=True
+checkbox(bind=tracevis5, text='L Knee trace')
+
+
+def tracevis13(b):
+    global all_traces,running
+    if b.checked:
+        for i in all_traces[13]:
+            i.visible = True
+        running=True
+    else:
+        for i in all_traces[13]:
+            i.visible = False
+        running=True
+checkbox(bind=tracevis13, text='L Hand trace')
 #----------------------------------------------------------------------------
 #smart plot 
 
@@ -209,94 +304,94 @@ wt = wtext(text='1'.format(sl.value))
 scene.append_to_caption(' frame \n <br>')
 #-----------------------------------------------------------------------------
 #graph menu
-graph_type=0
-def M(m):
-    global graph_type
-    val = m.selected
-    if val == "TimeColour3D": 
-        graph_type = 0
-    elif val == "Hagerstrand": 
-        graph_type = 1
-    elif val == "TC3DLimb":
-        graph_type = 2
-    elif val == "StdPos":
-        graph_type = 3
-graph_menu=menu(choices=['TimeColour3D', 'Hagerstrand','TC3DLimb','StdPos'], index=0, bind=M)
+#graph_type=0
+#def M(m):
+#    global graph_type
+#    val = m.selected
+#    if val == "TimeColour3D": 
+#        graph_type = 0
+#    elif val == "Hagerstrand": 
+#        graph_type = 1
+#    elif val == "TC3DLimb":
+#        graph_type = 2
+#    elif val == "StdPos":
+#        graph_type = 3
+#graph_menu=menu(choices=['TimeColour3D', 'Hagerstrand','TC3DLimb','StdPos'], index=0, bind=M)
 
 
 #-----------------------------------------------------------------------------
 #Plot graphs button
-graph_id=0
-j_index=None
-s_index=None
-def Run(b):
-    global j_index,graph_type,graph_id,s_index
-    if j_index==None and s_index==None:
-        
-        warning.text="""  <font color="red"> No joint or bone selected </font> """
-    else:
-        warning.text=""
-        if graph_type ==0:
-            if j_index!=None and s_index==None:
-                warning.text="""  <font color="red"> Loading graph </font> """
-                vis.TimeColour3DJ(plot1,j_index,bones,joints,graph_id)
-                gwt.text="\n\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n\n <img src='Images/graph%d.jpg'/>"%graph_id
-                warning.text=""
-                # gwt2.text="\n"
-            elif j_index==None and s_index!=None:
-                warning.text="""  <font color="red"> Loading graph </font> """
-                vis.TimeColour3DS(plot1,s_index,bones,joints,graph_id)
-                gwt.text="\n\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n\n <img src='Images/graph%d.jpg'/>"%graph_id
-                warning.text=""
+#graph_id=0
+#j_index=None
+#s_index=None
+#def Run(b):
+#    global j_index,graph_type,graph_id,s_index
+#    if j_index==None and s_index==None:
+#        
+#        warning.text="""  <font color="red"> No joint or bone selected </font> """
+#    else:
+#        warning.text=""
+#        if graph_type ==0:
+#            if j_index!=None and s_index==None:
+#                warning.text="""  <font color="red"> Loading graph </font> """
+#                vis.TimeColour3DJ(plot1,j_index,bones,joints,graph_id)
+#                gwt.text="\n\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n\n <img src='Images/graph%d.jpg'/>"%graph_id
+#                warning.text=""
+#                # gwt2.text="\n"
+#            elif j_index==None and s_index!=None:
+#                warning.text="""  <font color="red"> Loading graph </font> """
+#                vis.TimeColour3DS(plot1,s_index,bones,joints,graph_id)
+#                gwt.text="\n\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n\n <img src='Images/graph%d.jpg'/>"%graph_id
+#                warning.text=""
+##            else:
+##                warning.text="""  <font color="red"> Both joint and bone selected</font> """
+#                #considering requiring multiple to be selected
+#        elif graph_type ==1:
+#            if s_index!=None:
+#                warning.text="""  <font color="red"> Select a joint</font> """
 #            else:
-#                warning.text="""  <font color="red"> Both joint and bone selected</font> """
-                #considering requiring multiple to be selected
-        elif graph_type ==1:
-            if s_index!=None:
-                warning.text="""  <font color="red"> Select a joint</font> """
-            else:
-                warning.text="""  <font color="red"> Loading graph </font> """
-                vis.Hagerstrand(plot1,j_index,bones,joints,graph_id)
-                gwt.text="\n\n1st figure shows position in y-z plane with time in x direction. 2nd figure shows position in x-y plane with time in y direction:\n\n <img src='Images/graph%d.jpg'/>"%graph_id
-                warning.text=""
-                #gwt2.text="\n <img src='%f.jpg'/>"%rngid
-        
-        elif graph_type ==2:
-            if j_index!=None:
-                if j_index-1<0 or j_index+1>=len(joints):
-                    warning.text="""  <font color="red"> Select a limb joint! (elbows and knees only)</font> """
-                elif joints[j_index-1]+1!=joints[j_index+1]-1:
-                    warning.text="""  <font color="red"> Select a limb joint! (elbows and knees only)</font> """
-                    
-                else:
-                    warning.text="""  <font color="red"> Loading graph </font> """
-                    vis.TC3DLimb(plot1,j_index,bones,joints,graph_id)
-                    gwt.text="\n\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n\n <img src='Images/graph%d.jpg'/>"%graph_id
-                    warning.text=""
-            else: 
-                warning.text="""  <font color="red"> Select a limb joint</font> """
-        elif graph_type ==3:
-            if j_index!=None and s_index==None:
-                warning.text="""  <font color="red"> Loading graph </font> """
-                #for current plots week 6 all premade for joint 16
-            
-                vis.plotpositionalderivatives(j_index,bones,joints,plot_num)
-                gwt.text="\n\nStandard selection of visualisations for a joint:\n\n <img src='Images/std_pos_vis_%d_%d.jpg'/>"%(j_index,plot_num)
-                warning.text=""
-                # gwt2.text="\n"
-            else:
-                warning.text="""  <font color="red"> Select a joint </font> """
-            
-            
-        graph_id+=1
-        
-run_b=button(text="3D plot", pos=scene.caption_anchor, bind=Run)
-#scene.append_to_caption('<br>')
-warning= wtext(text="\n",pos=scene.caption_anchor)
+#                warning.text="""  <font color="red"> Loading graph </font> """
+#                vis.Hagerstrand(plot1,j_index,bones,joints,graph_id)
+#                gwt.text="\n\n1st figure shows position in y-z plane with time in x direction. 2nd figure shows position in x-y plane with time in y direction:\n\n <img src='Images/graph%d.jpg'/>"%graph_id
+#                warning.text=""
+#                #gwt2.text="\n <img src='%f.jpg'/>"%rngid
+#        
+#        elif graph_type ==2:
+#            if j_index!=None:
+#                if j_index-1<0 or j_index+1>=len(joints):
+#                    warning.text="""  <font color="red"> Select a limb joint! (elbows and knees only)</font> """
+#                elif joints[j_index-1]+1!=joints[j_index+1]-1:
+#                    warning.text="""  <font color="red"> Select a limb joint! (elbows and knees only)</font> """
+#                    
+#                else:
+#                    warning.text="""  <font color="red"> Loading graph </font> """
+#                    vis.TC3DLimb(plot1,j_index,bones,joints,graph_id)
+#                    gwt.text="\n\n3D position of each frame plotted. Colour scale from blue to green varies with time:\n\n <img src='Images/graph%d.jpg'/>"%graph_id
+#                    warning.text=""
+#            else: 
+#                warning.text="""  <font color="red"> Select a limb joint</font> """
+#        elif graph_type ==3:
+#            if j_index!=None and s_index==None:
+#                warning.text="""  <font color="red"> Loading graph </font> """
+#                #for current plots week 6 all premade for joint 16
+#            
+#                vis.plotpositionalderivatives(j_index,bones,joints,plot_num)
+#                gwt.text="\n\nStandard selection of visualisations for a joint:\n\n <img src='Images/std_pos_vis_%d_%d.jpg'/>"%(j_index,plot_num)
+#                warning.text=""
+#                # gwt2.text="\n"
+#            else:
+#                warning.text="""  <font color="red"> Select a joint </font> """
+#            
+#            
+#        graph_id+=1
+#        
+#run_b=button(text="3D plot", pos=scene.caption_anchor, bind=Run)
+##scene.append_to_caption('<br>')
+#warning= wtext(text="\n",pos=scene.caption_anchor)
 
 #--------------------------------------------------------------------------
 #dynamic text for graph plots
-gwt = wtext(text="\n",pos=scene.caption_anchor)
+#gwt = wtext(text="\n",pos=scene.caption_anchor)
 
 
 #----------------------------------------------------------------------------
