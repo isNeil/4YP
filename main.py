@@ -301,7 +301,25 @@ scene.append_to_caption(' frame \n <br>')
 
 #--------------------------------------------------------------------------
 #dynamic text for graph plots
-#gwt = wtext(text="\n",pos=scene.caption_anchor)
+#wt2 = wtext(text="\n  <style> #overlay {  position: fixed;  display = block  width: 100%;  height: 100%;  top: 0;  left: 0;  right: 0;bottom: 0; background-color: rgba(0,0,0,0.5); z-index: 2;  cursor: pointer;}</style>")
+#wt2 = wtext(text="$('<textarea>fuck <textarea/>').val('Click above.\n').appendTo(scene.caption_anchor).css('width', '1000px').css('height', '90px').css('font-family', 'sans-serif').css('font-size', '14px')")
+#T= $('body').append('This is a test.<br>')
+#T = $('<textarea/>').val('Click above.\n').appendTo(scene.caption_anchor).css('width', '250px').css('height', '90px').css('font-family', 'sans-serif').css('font-size', '14px')
+#frameslider0= wtext(text='<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script><script>$(document).ready(function(){$("button").click(function(){$("#overlay1").animate({left: "535px"});});});</script><button>Start Animation</button><div id="overlay1"; style="background:#98bf21;height:442px;width:535px;  top: 378px;  left: 86px; position:absolute;opacity: 0.5;"></div>')
+frameslider1= wtext(text='<div id="overlay"; style="background:#ff0000;height:442px;width:2px;  top: 378px;  left: 86px; position:absolute;opacity: 1;"></div>')
+frameslider2= wtext(text='<div id="overlay"; style="background:#ff0000;height:442px;width:2px;  top: 378px;  left: 732px; position:absolute;opacity: 1;"></div>')
+
+#wt2= wtext(text='1')
+#display: none;
+#<script>
+#function on() {
+#  document.getElementById("overlay").style.display = "block";
+#}
+#
+#function off() {
+#  document.getElementById("overlay").style.display = "none";
+#}
+#</script>",pos=scene.caption_anchor)
 
 
 #----------------------------------------------------------------------------
@@ -339,8 +357,13 @@ hl = pickle.load(open("extractedframes.p","rb"))
 
 #run animation
 while True:
-    
-    
+    ##################################################
+    sliderpos=86+frame*3.83
+    sliderpos2=732+frame*3.83
+    frameslider1.text='<div id="overlay"; style="background:#ff0000;height:442px;width:2px;  top: 378px;  left: %dpx; position:absolute;opacity: 1;"></div>'%(sliderpos)
+    frameslider2.text='<div id="overlay"; style="background:#ff0000;height:442px;width:2px;  top: 378px;  left: %dpx; position:absolute;opacity: 1;"></div>'%(sliderpos2)
+
+    #################################################
     if anime:
         if var_speed:
             if frame in hl[plot_num]:        

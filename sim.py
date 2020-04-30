@@ -91,11 +91,12 @@ def trace_init(trace,data_f,joints, joint_num,vis=False):
 #all_traces=[]
 #tracetemp=[]
 #plot1= pd.read_json(r'C:\Users\neilw\Desktop\RF Vpython\jsondata\140\1.json')
-#for j in range(len(joints)):
-##    
-#    tracejoint = trace_init(tracetemp,plot1,joints,j)
-#    all_traces.append(tracejoint)
-#    tracetemp=[]
-##for i in 
-#all_traces[2][100].visible=True
-#    i.visible=True
+##for j in range(len(joints)):
+###    
+##    tracejoint = trace_init(tracetemp,plot1,joints,j)
+##    all_traces.append(tracejoint)
+##    tracetemp=[]
+#tracejoint = trace_init(tracetemp,plot1,joints,1)
+#
+#wt2 = wtext(text="\n  <button>Turn on overlay effect</button> <style> #overlay {  position: fixed;  display = block  width: 100%;  height: 100%;  top: 0;  left: 0;  right: 0;bottom: 0; background-color: rgba(1,0,0,0.5); z-index: 200; }</style>")
+#ww= wtext(text='<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script><script>$(document).ready(function(){$("button").click(function(){$("#overlay").animate({left: "250px"});});});</script><button>Start Animation</button><div id="overlay"; style="background:#98bf21;height:500px;width:500px;  top: 100px;  left: 200px; position:absolute;opacity: 0.5;"></div>')
