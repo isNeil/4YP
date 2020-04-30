@@ -93,6 +93,9 @@ temp=frame_init(skeleton,jeleton,frame,plota,bones,joints,True,vec(1,1,1))
 skeleton=temp[0].copy()
 jeleton=temp[1].copy()
 
+#colour selected keypoint measure red
+jeleton[1].color=vec(1,0,0)
+
 temp=frame_init(skeleton2,jeleton2,frame,plotb,bones,joints,True,vec(0.5,0.5,0.5))
 skeleton2=temp[0].copy()
 jeleton2=temp[1].copy()
@@ -105,39 +108,28 @@ for j in range(len(joints)):
     tracejoint = trace_init(tracetemp,plota,joints,j)
     all_traces.append(tracejoint)
     tracetemp=[]
-
-#    #joint angle colouring
-#    angles1=ja.joint_angle(frame,plot1,bones,joints)  
-#    angles2=ja.joint_angle(frame,plot2,bones,joints) 
-#    angles=np.subtract(angles1,angles2)
-#
-#    red = Color("blue")
-#    colors = list(red.range_to(Color("green"),141))
-#    
-#    for i in range(len(jeleton)):
-#        if angles[i]==0:
-#            jeleton[i].color=color.white
-#        else:
-#            rgbc=colors[abs(int(angles[i]))].rgb
-#            jeleton[i].color=vector(rgbc[0],rgbc[1],rgbc[2])
-#
-#    A.append(angles1[15])
-#    B.append(angles2[15])    
-   
+###############################################################################
 running = True
 #------------------------------------------------------------------------------
-#change trial menu
+#change joint menu
 plot_num= 1
 keypoint=1
 def M3(m1):
-    global keypoint
+    global keypoint, jeleton
     val = m1.selected
     dex=['Keypoint 1','Keypoint 2','Keypoint 3','Keypoint 4','Keypoint 5','Keypoint 6','Keypoint 7','Keypoint 8','Keypoint 9','Keypoint 10','Keypoint 11','Keypoint 12','Keypoint 13','Keypoint 14','Keypoint 15','Keypoint 16'].index(val)
     keypoint=dex+1
     gwt2.text="\n\n<img src='Images/UIresize/titlestdvis_trial_%d_keypoint_%d.jpg'/>"%(plot_num,keypoint)
     
-        
+#    #update COLOUR
+    for jele in jeleton:
+        jele.color=vec(1,1,1)   
+    jeleton[keypoint].color=vec(1,0,0)     
 plot_menu=menu(choices=['Keypoint 1','Keypoint 2','Keypoint 3','Keypoint 4','Keypoint 5','Keypoint 6','Keypoint 7','Keypoint 8','Keypoint 9','Keypoint 10','Keypoint 11','Keypoint 12','Keypoint 13','Keypoint 14','Keypoint 15','Keypoint 16'], index=0, bind=M3)
+
+
+
+
 
 #change trial menu
 
@@ -151,13 +143,9 @@ def M2(m):
     
     
     
-#    #update traces
-#    all_traces=[]
-#    tracetemp=[]
-#    for j in range(len(joints)):
-#    
-#        tracepoint = trace_init(tracetemp,plota,joints,j)
-#        all_traces.append(tracepoint)
+
+    
+
         
 plot_menu=menu(choices=['Trial 1','Trial 2','Trial 3','Trial 4','Trial 5','Trial 6','Anomaly','Trial 8','Trial 9','Trial 10'], index=0, bind=M2)
 #-----------------------------------------------------------------------------
