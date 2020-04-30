@@ -125,7 +125,7 @@ def M3(m1):
     for jele in jeleton:
         jele.color=vec(1,1,1)   
     jeleton[keypoint].color=vec(1,0,0)     
-plot_menu=menu(choices=['Keypoint 1','Keypoint 2','Keypoint 3','Keypoint 4','Keypoint 5','Keypoint 6','Keypoint 7','Keypoint 8','Keypoint 9','Keypoint 10','Keypoint 11','Keypoint 12','Keypoint 13','Keypoint 14','Keypoint 15','Keypoint 16'], index=0, bind=M3)
+joint_menu=menu(choices=['Keypoint 1','Keypoint 2','Keypoint 3','Keypoint 4','Keypoint 5','Keypoint 6','Keypoint 7','Keypoint 8','Keypoint 9','Keypoint 10','Keypoint 11','Keypoint 12','Keypoint 13','Keypoint 14','Keypoint 15','Keypoint 16'], index=0, bind=M3)
 
 
 
@@ -147,7 +147,7 @@ def M2(m):
     
 
         
-plot_menu=menu(choices=['Trial 1','Trial 2','Trial 3','Trial 4','Trial 5','Trial 6','Anomaly','Trial 8','Trial 9','Trial 10'], index=0, bind=M2)
+trial_menu=menu(choices=['Trial 1','Trial 2','Trial 3','Trial 4','Trial 5','Trial 6','Anomaly','Trial 8','Trial 9','Trial 10'], index=0, bind=M2)
 #-----------------------------------------------------------------------------
 #Toggle comparison model
 Visible=True
@@ -276,7 +276,7 @@ def Timewarp(b):
         b.text="Time HL Off"
         
 
-time_b=button(text="Timewarp HL Off", pos=scene.caption_anchor, bind=Timewarp)
+time_b=button(text="Time HL Off", pos=scene.caption_anchor, bind=Timewarp)
 
 #frame slider 
 
@@ -405,6 +405,8 @@ def getevent():
     if hit in jeleton:
         j_index=jeleton.index(hit)
         s_index=None
+        joint_menu.index=j_index-1
+        M3(joint_menu)
         print("joint selected")
     elif hit in  skeleton:
         s_index=skeleton.index(hit)
