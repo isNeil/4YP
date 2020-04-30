@@ -390,18 +390,10 @@ lastpick = None
 lastcolor = None
 
 def getevent():
-    global lasthit, lastpick, lastcolor, j_index,s_index
-    if lasthit != None:
-        if lastpick != None: lasthit.modify(lastpick, color=lastcolor)
-        else: lasthit.color = vector(lastcolor)
-        lasthit = lastpick = None
-    hit = scene.mouse.pick
-    if hit != None:
-        lasthit = hit
-        lastpick = None
-        lastcolor = vector(hit.color) # make a copy
-        hit.color = color.red
+    global j_index,s_index
     
+    hit = scene.mouse.pick
+   
     if hit in jeleton:
         j_index=jeleton.index(hit)
         s_index=None
