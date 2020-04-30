@@ -117,7 +117,7 @@ keypoint=1
 def M3(m1):
     global keypoint, jeleton
     val = m1.selected
-    dex=['Keypoint 1','Keypoint 2','Keypoint 3','Keypoint 4','Keypoint 5','Keypoint 6','Keypoint 7','Keypoint 8','Keypoint 9','Keypoint 10','Keypoint 11','Keypoint 12','Keypoint 13','Keypoint 14','Keypoint 15','Keypoint 16'].index(val)
+    dex=['R Hip','R Knee','R Foot','L Hip','L Knee','L Foot','Spine','Thorax','Neck','Head','L Arm','L Elbow','L Wrist','R Arm','R Elbow','R Wrist'].index(val)
     keypoint=dex+1
     gwt2.text="\n\n<img src='Images/UIresize/titlestdvis_trial_%d_keypoint_%d.jpg'/>"%(plot_num,keypoint)
     
@@ -125,7 +125,8 @@ def M3(m1):
     for jele in jeleton:
         jele.color=vec(1,1,1)   
     jeleton[keypoint].color=vec(1,0,0)     
-joint_menu=menu(choices=['Keypoint 1','Keypoint 2','Keypoint 3','Keypoint 4','Keypoint 5','Keypoint 6','Keypoint 7','Keypoint 8','Keypoint 9','Keypoint 10','Keypoint 11','Keypoint 12','Keypoint 13','Keypoint 14','Keypoint 15','Keypoint 16'], index=0, bind=M3)
+#joint_menu=menu(choices=['Keypoint 1','Keypoint 2','Keypoint 3','Keypoint 4','Keypoint 5','Keypoint 6','Keypoint 7','Keypoint 8','Keypoint 9','Keypoint 10','Keypoint 11','Keypoint 12','Keypoint 13','Keypoint 14','Keypoint 15','Keypoint 16'], index=0, bind=M3)
+joint_menu=menu(choices=['R Hip','L Hip','R Knee','L Knee','R Foot','L Foot','Spine','Thorax','Neck','Head','R Arm','L Arm','R Elbow','L Elbow','R Wrist','L Wrist'], index=0, bind=M3)
 
 
 
@@ -165,6 +166,10 @@ def Show(b):
 show_b=button(text="Hide comparison", pos=scene.caption_anchor, bind=Show)
 ##############################################################################
 
+gwt3 = wtext(text="\n\n Plot keypoint trace:",pos=scene.caption_anchor)
+
+
+
 def tracevis3(b):
     global all_traces,running
     if b.checked:
@@ -175,7 +180,7 @@ def tracevis3(b):
         for i in all_traces[3]:
             i.visible = False
         running=True
-checkbox(bind=tracevis3, text='R Foot trace')
+checkbox(bind=tracevis3, text='R Foot')
 
 
 def tracevis2(b):
@@ -188,7 +193,7 @@ def tracevis2(b):
         for i in all_traces[2]:
             i.visible = False
         running=True
-checkbox(bind=tracevis2, text='R Knee trace')
+checkbox(bind=tracevis2, text='R Knee')
 
 
 def tracevis16(b):
@@ -201,7 +206,7 @@ def tracevis16(b):
         for i in all_traces[16]:
             i.visible = False
         running=True
-checkbox(bind=tracevis16, text='R Hand trace')
+checkbox(bind=tracevis16, text='R Hand')
 
 def tracevis6(b):
     global all_traces,running
@@ -213,7 +218,7 @@ def tracevis6(b):
         for i in all_traces[6]:
             i.visible = False
         running=True
-checkbox(bind=tracevis6, text='L Foot trace')
+checkbox(bind=tracevis6, text='L Foot')
 
 
 def tracevis5(b):
@@ -226,7 +231,7 @@ def tracevis5(b):
         for i in all_traces[5]:
             i.visible = False
         running=True
-checkbox(bind=tracevis5, text='L Knee trace')
+checkbox(bind=tracevis5, text='L Knee')
 
 
 def tracevis13(b):
@@ -239,16 +244,16 @@ def tracevis13(b):
         for i in all_traces[13]:
             i.visible = False
         running=True
-checkbox(bind=tracevis13, text='L Hand trace')
+checkbox(bind=tracevis13, text='L Hand')
 #----------------------------------------------------------------------------
 #smart plot 
 
 #gwt2 = wtext(text="\n\n<img src='std_pos_vis_%d_%d.jpg'/>"%(j_index,plot_num),pos=scene.caption_anchor)
-gwt2 = wtext(text="\n\n<img src='std_vis_1.jpg'/>",pos=scene.caption_anchor)
+gwt2 = wtext(text="\n\n<img src='Images/UIresize/titlestdvis_trial_1_keypoint_1.jpg'/>",pos=scene.caption_anchor)
 
 #-----------------------------------------------------------------------------
-scene.append_to_caption( "\n\n Adjust slider to change frame of animation: \n\n")
-
+#scene.append_to_caption( "\n\n Adjust slider to change frame of animation: \n\n")
+scene.append_to_caption( "\n\n")
 
 anime= True
 def Play(b):
