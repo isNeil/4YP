@@ -63,10 +63,13 @@ def dtwdnew(data,comi,refi):
 #s2 = np.array(data.iloc[7])
 #path = dtw.warping_path(s1, s2)
 #dtwvis.plot_warping(s1, s2, path, filename="warp.png" )
-data = v1(13)
-lag4real2=dtwdnew(data,7,2)
-plt.figure()
-plt.plot(lag4real2)
-plt.ylabel('Relative Rate')
-plt.xlabel('Frame')
-plt.grid(True)
+
+
+
+#data = v1(13)
+#lag4real2=dtwdnew(data,7,2)
+#plt.figure()
+#plt.plot(lag4real2)
+#plt.ylabel('Relative Rate')
+#plt.xlabel('Frame')
+#plt.grid(True)

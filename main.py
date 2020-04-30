@@ -249,7 +249,7 @@ checkbox(bind=tracevis13, text='L Hand')
 #smart plot 
 
 #gwt2 = wtext(text="\n\n<img src='std_pos_vis_%d_%d.jpg'/>"%(j_index,plot_num),pos=scene.caption_anchor)
-gwt2 = wtext(text="\n\n<img src='Images/UIresize/titlestdvis_trial_1_keypoint_1.jpg'/>",pos=scene.caption_anchor)
+gwt2 = wtext(text="\n\n<img src='Images/UIresize/titlestdvis_trial_1_keypoint_1.jpg' height='42' width='42'/>",pos=scene.caption_anchor)
 
 #-----------------------------------------------------------------------------
 #scene.append_to_caption( "\n\n Adjust slider to change frame of animation: \n\n")

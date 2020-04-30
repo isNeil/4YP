@@ -28,5 +28,5 @@ im = Image.open(r"C:\Users\neilw\Desktop\RF Vpython\Jump\Images\UIresize\matrixv
 newsize = (650, 200) 
 im1 = im.resize(newsize) 
 # Shows the image in image viewer  
-im1.save(r"C:\Users\neilw\Desktop\RF Vpython\Jump\Images\UIresize\matrixvarUSE.png")    
+#im1.save(r"C:\Users\neilw\Desktop\RF Vpython\Jump\Images\UIresize\matrixvarUSE.png")    
 #       
