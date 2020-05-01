@@ -119,7 +119,7 @@ def M3(m1):
     val = m1.selected
     dex=['R Hip','R Knee','R Foot','L Hip','L Knee','L Foot','Spine','Thorax','Neck','Head','L Arm','L Elbow','L Wrist','R Arm','R Elbow','R Wrist'].index(val)
     keypoint=dex+1
-    gwt2.text="\n\n<img src='Images/UIresize/titlestdvis_trial_%d_keypoint_%d.jpg'/>"%(plot_num,keypoint)
+    gwt2.text="<img src='Images/UIresize2/stdvis_trial_%d_keypoint_%d.jpg' height='520' width='1300'/>"%(plot_num,keypoint)
     
 #    #update COLOUR
     for jele in jeleton:
@@ -140,7 +140,7 @@ def M2(m):
     dex=['Trial 1','Trial 2','Trial 3','Trial 4','Trial 5','Trial 6','Anomaly','Trial 8','Trial 9','Trial 10'].index(val)
     plota=plotlist[dex]
     plot_num=dex
-    gwt2.text="\n\n<img src='Images/UIresize/titlestdvis_trial_%d_keypoint_%d.jpg'/>"%(plot_num,keypoint)
+    gwt2.text="<img src='Images/UIresize2/stdvis_trial_%d_keypoint_%d.jpg' height='520' width='1300'/>"%(plot_num,keypoint)
     
     
     
@@ -249,8 +249,9 @@ checkbox(bind=tracevis13, text='L Hand')
 #smart plot 
 
 #gwt2 = wtext(text="\n\n<img src='std_pos_vis_%d_%d.jpg'/>"%(j_index,plot_num),pos=scene.caption_anchor)
-gwt2 = wtext(text="\n\n<img src='Images/UIresize/titlestdvis_trial_1_keypoint_1.jpg' height='42' width='42'/>",pos=scene.caption_anchor)
-
+titlematrices= wtext(text="\n\n<img src= 'Images/UIresize2/titlematrices.jpg' /><br>")
+gwt2 = wtext(text="<img src='Images/UIresize2/stdvis_trial_1_keypoint_1.jpg' height='520' width='1300'/>",pos=scene.caption_anchor)
+#
 #-----------------------------------------------------------------------------
 #scene.append_to_caption( "\n\n Adjust slider to change frame of animation: \n\n")
 scene.append_to_caption( "\n\n")
@@ -306,9 +307,14 @@ scene.append_to_caption(' frame \n <br>')
 #T= $('body').append('This is a test.<br>')
 #T = $('<textarea/>').val('Click above.\n').appendTo(scene.caption_anchor).css('width', '250px').css('height', '90px').css('font-family', 'sans-serif').css('font-size', '14px')
 #frameslider0= wtext(text='<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script><script>$(document).ready(function(){$("button").click(function(){$("#overlay1").animate({left: "535px"});});});</script><button>Start Animation</button><div id="overlay1"; style="background:#98bf21;height:442px;width:535px;  top: 378px;  left: 86px; position:absolute;opacity: 0.5;"></div>')
-frameslider1= wtext(text='<div id="overlay"; style="background:#ff0000;height:442px;width:2px;  top: 378px;  left: 86px; position:absolute;opacity: 1;"></div>')
-frameslider2= wtext(text='<div id="overlay"; style="background:#ff0000;height:442px;width:2px;  top: 378px;  left: 732px; position:absolute;opacity: 1;"></div>')
-
+frameslider1= wtext(text='')
+frameslider2= wtext(text='')
+frameslider3= wtext(text='')
+frameslider4= wtext(text='')
+frameslider5= wtext(text='')
+frameslider6= wtext(text='')
+frameslider7= wtext(text='')
+frameslider8= wtext(text='')
 #wt2= wtext(text='1')
 #display: none;
 #<script>
@@ -358,11 +364,19 @@ hl = pickle.load(open("extractedframes.p","rb"))
 #run animation
 while True:
     ##################################################
-    sliderpos=86+frame*3.83
-    sliderpos2=732+frame*3.83
-    frameslider1.text='<div id="overlay"; style="background:#ff0000;height:442px;width:2px;  top: 378px;  left: %dpx; position:absolute;opacity: 1;"></div>'%(sliderpos)
-    frameslider2.text='<div id="overlay"; style="background:#ff0000;height:442px;width:2px;  top: 378px;  left: %dpx; position:absolute;opacity: 1;"></div>'%(sliderpos2)
+    sliderpos=75+frame*3.9
+    sliderpos2=723+frame*3.9
 
+
+    frameslider1.text='<div id="overlay"; style="background:#ff0000;height:95px;width:2px;  top: 375px;  left: %dpx; position:absolute;opacity: 1;"></div>'%(sliderpos)
+    frameslider2.text='<div id="overlay"; style="background:#ff0000;height:95px;width:2px;  top: 375px;  left: %dpx; position:absolute;opacity: 1;"></div>'%(sliderpos2)
+    frameslider3.text='<div id="overlay"; style="background:#ff0000;height:95px;width:2px;  top: 500px;  left: %dpx; position:absolute;opacity: 1;"></div>'%(sliderpos)
+    frameslider4.text='<div id="overlay"; style="background:#ff0000;height:95px;width:2px;  top: 500px;  left: %dpx; position:absolute;opacity: 1;"></div>'%(sliderpos2)
+    frameslider5.text='<div id="overlay"; style="background:#ff0000;height:94px;width:2px;  top: 626px;  left: %dpx; position:absolute;opacity: 1;"></div>'%(sliderpos)
+    frameslider6.text='<div id="overlay"; style="background:#ff0000;height:94px;width:2px;  top: 626px;  left: %dpx; position:absolute;opacity: 1;"></div>'%(sliderpos2)
+    frameslider7.text='<div id="overlay"; style="background:#ff0000;height:95px;width:2px;  top: 750px;  left: %dpx; position:absolute;opacity: 1;"></div>'%(sliderpos)
+    frameslider8.text='<div id="overlay"; style="background:#ff0000;height:95px;width:2px;  top: 750px;  left: %dpx; position:absolute;opacity: 1;"></div>'%(sliderpos2)
+    
     #################################################
     if anime:
         if var_speed:

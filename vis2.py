@@ -64,13 +64,13 @@ def plotpositionalderivatives(index,bones,joints,plot_num):
         axs[3,1].axvspan(i, i+1, facecolor='grey', alpha=0.3)
         
     path=smart_sel2(v1(index),top[0]-1,plot_num)
-    new_hl=[]
-    for i in path:
-        if i[1] in hl:
-              new_hl.append(i[0])  
-    for i in new_hl:
-        axs[2,0].axvspan(i, i+1, facecolor='grey', alpha=0.3)
-                 
+#    new_hl=[]
+#    for i in path:
+#        if i[1] in hl:
+#              new_hl.append(i[0])  
+#    for i in new_hl:
+#        axs[2,0].axvspan(i, i+1, facecolor='grey', alpha=0.3)
+#                 
               
     df=v1(index)
     axs[0,0].plot(df.iloc[0,:],'b',alpha=0.3)
@@ -88,7 +88,7 @@ def plotpositionalderivatives(index,bones,joints,plot_num):
 
 
     dfata=dtwdnew(v1(index),2,plot_num)
-
+    dfata[-1]=1
     axs[1,0].plot(dfata)
 #    for i in range(len(dfata)):
 #        if dfata[i]>1:
@@ -146,19 +146,17 @@ def plotpositionalderivatives(index,bones,joints,plot_num):
     
 ##########################################################################
 #
-    for i in range(len(path)):
-        if dfata[path[i][1]]!=1:
+    for i in range(len(path)-1):
+        
+        if path[i][0]==path[i+1][0] or path[i][1]==path[i+1][1]:
             xycom = (path[i][1],df2.iloc[plot_num,path[i][1]])
             xyref = (path[i][0],df3.iloc[2,path[i][0]])
-            
             con = ConnectionPatch(xyA=xycom, xyB=xyref, coordsA="data", coordsB="data", axesA=axs[2,0], axesB=axs[3,0], color="orange",shrinkA=0.0, shrinkB=0.0)
-        
             axs[3,0].add_artist(con)
-        if dfata[path[i][1]]>1:     
+            
             xycom = (path[i+1][1],df2.iloc[plot_num,path[i+1][1]])
             xyref = (path[i+1][0],df3.iloc[2,path[i+1][0]])
             con = ConnectionPatch(xyA=xycom, xyB=xyref, coordsA="data", coordsB="data", axesA=axs[2,0], axesB=axs[3,0], color="orange",shrinkA=0.0, shrinkB=0.0)
-        
             axs[3,0].add_artist(con)
 
 
@@ -223,7 +221,7 @@ def plotpositionalderivatives(index,bones,joints,plot_num):
 
 
 
-    fig.tight_layout()
+#    fig.tight_layout()
 
 #    for preload
     plt.savefig("Images/UIresize2/stdvis_trial_%d_keypoint_%d.jpg"%(plot_num,index), dpi=96)  
@@ -258,12 +256,12 @@ def plotpositionalderivatives2(index,bones,joints,plot_num):
         axs[3,1].axvspan(i, i+1, facecolor='grey', alpha=0.3)
         
     path=smart_sel2(v4(index),top[0]-1,plot_num)
-    new_hl=[]
-    for i in path:
-        if i[1] in hl:
-              new_hl.append(i[0])  
-    for i in new_hl:
-        axs[2,0].axvspan(i, i+1, facecolor='grey', alpha=0.3)
+#    new_hl=[]
+#    for i in path:
+#        if i[1] in hl:
+#              new_hl.append(i[0])  
+#    for i in new_hl:
+#        axs[2,0].axvspan(i, i+1, facecolor='grey', alpha=0.3)
                  
               
     df=v4(index)
@@ -282,6 +280,7 @@ def plotpositionalderivatives2(index,bones,joints,plot_num):
 
 
     dfata=dtwdnew(v4(index),2,plot_num)
+    dfata[-1]=1
 #    axs[1,0].bar(range(len(dfata)),dfata)
     axs[1,0].plot(dfata)
 #    for i in range(len(dfata)):
@@ -290,7 +289,7 @@ def plotpositionalderivatives2(index,bones,joints,plot_num):
 #        elif dfata[i]<1:
 #            axs[2,0].axvspan(i, i+1, facecolor='orange', alpha=0.2)
             
-    
+
     
     axs[1,0].set_ylabel('Relative Rate')
   #  axs[1,0].set_xlabel('Frame')   
@@ -339,21 +338,26 @@ def plotpositionalderivatives2(index,bones,joints,plot_num):
 
 ##########################################################################
 #
-    for i in range(len(path)):
-        if dfata[path[i][1]]!=1:
+    for i in range(len(path)-1):
+        
+        if path[i][0]==path[i+1][0] or path[i][1]==path[i+1][1]:
             xycom = (path[i][1],df2.iloc[plot_num,path[i][1]])
             xyref = (path[i][0],df3.iloc[2,path[i][0]])
-            
             con = ConnectionPatch(xyA=xycom, xyB=xyref, coordsA="data", coordsB="data", axesA=axs[2,0], axesB=axs[3,0], color="orange",shrinkA=0.0, shrinkB=0.0)
-        
             axs[3,0].add_artist(con)
-        if dfata[path[i][1]]>1:     
+            
             xycom = (path[i+1][1],df2.iloc[plot_num,path[i+1][1]])
             xyref = (path[i+1][0],df3.iloc[2,path[i+1][0]])
             con = ConnectionPatch(xyA=xycom, xyB=xyref, coordsA="data", coordsB="data", axesA=axs[2,0], axesB=axs[3,0], color="orange",shrinkA=0.0, shrinkB=0.0)
-        
             axs[3,0].add_artist(con)
-        
+            
+#        if dfata[path[i][1]]>1:     
+#            xycom = (path[i+1][1],df2.iloc[plot_num,path[i+1][1]])
+#            xyref = (path[i+1][0],df3.iloc[2,path[i+1][0]])
+#            con = ConnectionPatch(xyA=xycom, xyB=xyref, coordsA="data", coordsB="data", axesA=axs[2,0], axesB=axs[3,0], color="orange",shrinkA=0.0, shrinkB=0.0)
+#        
+#            axs[3,0].add_artist(con)
+#        
 
 
 
@@ -427,15 +431,16 @@ def plotpositionalderivatives2(index,bones,joints,plot_num):
 #    plt.show()
 
 
-bones=[[0,1],[1,2],[2,3],[0,6],[6,7],[7,8],[0,12],[12,13],[13,14],[14,15],[13,17],[17,18],[18,19],[13,25],[25,26],[26,27]]
-joints=[0,1,2,3,6,7,8,12,13,14,15,17,18,19,25,26,27]
-for i in range(10): 
-    for j in range(1,17):
-        if j == 1 or j==4 or j==7:
-            plotpositionalderivatives2(j,bones,joints,i)
-        else:
-            plotpositionalderivatives(j,bones,joints,i)
-        plt.close()
+#bones=[[0,1],[1,2],[2,3],[0,6],[6,7],[7,8],[0,12],[12,13],[13,14],[14,15],[13,17],[17,18],[18,19],[13,25],[25,26],[26,27]]
+#joints=[0,1,2,3,6,7,8,12,13,14,15,17,18,19,25,26,27]
+#
+#for i in range(10): 
+#    for j in range(1,17):
+#        if j == 1 or j==4 or j==7:
+#            plotpositionalderivatives2(j,bones,joints,i)
+#        else:
+#            plotpositionalderivatives(j,bones,joints,i)
+#        plt.close()
 
 
 #plotpositionalderivatives2(4,bones,joints,1)
