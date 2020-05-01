@@ -45,12 +45,12 @@ def plotpositionalderivatives(index,bones,joints,plot_num):
 
     axs[0,0].title.set_text('No DTW')
     axs[1,0].title.set_text('Relative Rate of comparison w.r.t. reference')
-    axs[2,0].title.set_text('DTW w.r.t. comparison.')
+    axs[2,0].title.set_text('DTW w.r.t. comparison')
     axs[3,0].title.set_text('DTW w.r.t. reference')
-    axs[0,1].title.set_text('DTW w.r.t reference')
-    axs[1,1].title.set_text('DTW w.r.t reference')
-    axs[2,1].title.set_text('DTW w.r.t reference')
-    axs[3,1].title.set_text('DTW w.r.t reference')
+    axs[0,1].title.set_text('DTW w.r.t. reference')
+    axs[1,1].title.set_text('DTW w.r.t. reference')
+    axs[2,1].title.set_text('DTW w.r.t. reference')
+    axs[3,1].title.set_text('DTW w.r.t. reference')
     
     for i in hl:
 #        axs[0,0].axvspan(i, i+1, facecolor='grey', alpha=0.3)
@@ -238,12 +238,12 @@ def plotpositionalderivatives2(index,bones,joints,plot_num):
     fig.subplots_adjust(left=0.03, bottom=0.06, right=0.99, top=0.96, wspace=0.08, hspace=0.34)
     axs[0,0].title.set_text('No DTW')
     axs[1,0].title.set_text('Relative Rate of comparison w.r.t. reference')
-    axs[2,0].title.set_text('DTW w.r.t. comparison.')
+    axs[2,0].title.set_text('DTW w.r.t. comparison')
     axs[3,0].title.set_text('DTW w.r.t. reference')
-    axs[0,1].title.set_text('DTW w.r.t reference')
-    axs[1,1].title.set_text('DTW w.r.t reference')
-    axs[2,1].title.set_text('DTW w.r.t reference')
-    axs[3,1].title.set_text('DTW w.r.t reference')
+    axs[0,1].title.set_text('DTW w.r.t. reference')
+    axs[1,1].title.set_text('DTW w.r.t. reference')
+    axs[2,1].title.set_text('DTW w.r.t. reference')
+    axs[3,1].title.set_text('DTW w.r.t. reference')
     
     for i in hl:
 #        axs[0,0].axvspan(i, i+1, facecolor='grey', alpha=0.3)

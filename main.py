@@ -93,8 +93,8 @@ temp=frame_init(skeleton,jeleton,frame,plota,bones,joints,True,vec(1,1,1))
 skeleton=temp[0].copy()
 jeleton=temp[1].copy()
 
-#colour selected keypoint measure red
-jeleton[1].color=vec(1,0,0)
+
+
 
 temp=frame_init(skeleton2,jeleton2,frame,plotb,bones,joints,True,vec(0.5,0.5,0.5))
 skeleton2=temp[0].copy()
@@ -112,22 +112,22 @@ for j in range(len(joints)):
 running = True
 #------------------------------------------------------------------------------
 #change joint menu
-plot_num= 1
-keypoint=1
+
 def M3(m1):
     global keypoint, jeleton
     val = m1.selected
-    dex=['R Hip','R Knee','R Foot','L Hip','L Knee','L Foot','Spine','Thorax','Neck','Head','L Arm','L Elbow','L Wrist','R Arm','R Elbow','R Wrist'].index(val)
+    dex=['R Hip','R Knee','R Foot','L Hip','L Knee','L Foot','Spine','Thorax','Neck','Head','L Arm','L Elbow','L Wrist','R Arm','R Elbow','R Wrist','Overall'].index(val)
     keypoint=dex+1
+    
     gwt2.text="<img src='Images/UIresize2/stdvis_trial_%d_keypoint_%d.jpg' height='520' width='1300'/>"%(plot_num,keypoint)
+
     
 #    #update COLOUR
     for jele in jeleton:
-        jele.color=vec(1,1,1)   
-    jeleton[keypoint].color=vec(1,0,0)     
-#joint_menu=menu(choices=['Keypoint 1','Keypoint 2','Keypoint 3','Keypoint 4','Keypoint 5','Keypoint 6','Keypoint 7','Keypoint 8','Keypoint 9','Keypoint 10','Keypoint 11','Keypoint 12','Keypoint 13','Keypoint 14','Keypoint 15','Keypoint 16'], index=0, bind=M3)
-joint_menu=menu(choices=['R Hip','L Hip','R Knee','L Knee','R Foot','L Foot','Spine','Thorax','Neck','Head','R Arm','L Arm','R Elbow','L Elbow','R Wrist','L Wrist'], index=0, bind=M3)
-
+        jele.color=vec(1,1,1)
+    if keypoint!=17:    
+        jeleton[keypoint].color=vec(1,0,0)     
+joint_menu=menu(choices=['Overall','R Hip','L Hip','R Knee','L Knee','R Foot','L Foot','Spine','Thorax','Neck','Head','R Arm','L Arm','R Elbow','L Elbow','R Wrist','L Wrist'], index=0, bind=M3)
 
 
 
@@ -246,11 +246,13 @@ def tracevis13(b):
         running=True
 checkbox(bind=tracevis13, text='L Hand')
 #----------------------------------------------------------------------------
-#smart plot 
 
+
+plot_num= 0
+keypoint=17
 #gwt2 = wtext(text="\n\n<img src='std_pos_vis_%d_%d.jpg'/>"%(j_index,plot_num),pos=scene.caption_anchor)
 titlematrices= wtext(text="\n\n<img src= 'Images/UIresize2/titlematrices.jpg' /><br>")
-gwt2 = wtext(text="<img src='Images/UIresize2/stdvis_trial_1_keypoint_1.jpg' height='520' width='1300'/>",pos=scene.caption_anchor)
+gwt2 = wtext(text="<img src='Images/UIresize2/stdvis_trial_%d_keypoint_%d.jpg' height='520' width='1300'/>"%(plot_num,keypoint))
 #
 #-----------------------------------------------------------------------------
 #scene.append_to_caption( "\n\n Adjust slider to change frame of animation: \n\n")
@@ -302,11 +304,6 @@ scene.append_to_caption(' frame \n <br>')
 
 #--------------------------------------------------------------------------
 #dynamic text for graph plots
-#wt2 = wtext(text="\n  <style> #overlay {  position: fixed;  display = block  width: 100%;  height: 100%;  top: 0;  left: 0;  right: 0;bottom: 0; background-color: rgba(0,0,0,0.5); z-index: 2;  cursor: pointer;}</style>")
-#wt2 = wtext(text="$('<textarea>fuck <textarea/>').val('Click above.\n').appendTo(scene.caption_anchor).css('width', '1000px').css('height', '90px').css('font-family', 'sans-serif').css('font-size', '14px')")
-#T= $('body').append('This is a test.<br>')
-#T = $('<textarea/>').val('Click above.\n').appendTo(scene.caption_anchor).css('width', '250px').css('height', '90px').css('font-family', 'sans-serif').css('font-size', '14px')
-#frameslider0= wtext(text='<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script><script>$(document).ready(function(){$("button").click(function(){$("#overlay1").animate({left: "535px"});});});</script><button>Start Animation</button><div id="overlay1"; style="background:#98bf21;height:442px;width:535px;  top: 378px;  left: 86px; position:absolute;opacity: 0.5;"></div>')
 frameslider1= wtext(text='')
 frameslider2= wtext(text='')
 frameslider3= wtext(text='')
@@ -315,17 +312,6 @@ frameslider5= wtext(text='')
 frameslider6= wtext(text='')
 frameslider7= wtext(text='')
 frameslider8= wtext(text='')
-#wt2= wtext(text='1')
-#display: none;
-#<script>
-#function on() {
-#  document.getElementById("overlay").style.display = "block";
-#}
-#
-#function off() {
-#  document.getElementById("overlay").style.display = "none";
-#}
-#</script>",pos=scene.caption_anchor)
 
 
 #----------------------------------------------------------------------------
@@ -343,14 +329,19 @@ def getevent():
     if hit in jeleton:
         j_index=jeleton.index(hit)
         s_index=None
-        joint_menu.index=j_index-1
+        
+        dex=['R Hip','R Knee','R Foot','L Hip','L Knee','L Foot','Spine','Thorax','Neck','Head','L Arm','L Elbow','L Wrist','R Arm','R Elbow','R Wrist']
+       
+        menu_index=['Overall','R Hip','L Hip','R Knee','L Knee','R Foot','L Foot','Spine','Thorax','Neck','Head','R Arm','L Arm','R Elbow','L Elbow','R Wrist','L Wrist'].index(dex[j_index-1])
+        joint_menu.index=menu_index
         M3(joint_menu)
         print("joint selected")
+        print(j_index)
     elif hit in  skeleton:
         s_index=skeleton.index(hit)
         j_index=None
         print("bone selected")
-        print(s_index)
+        
     else:
         print("not in list")
         j_index=None
