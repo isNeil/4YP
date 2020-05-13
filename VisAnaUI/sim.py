@@ -60,13 +60,13 @@ def frame_init(skeleton,jeleton,frame,data_f,bones,joints,vis=True,col=vec(1,1,1
     return [skeleton,jeleton]
 
 
-def trace_init(trace,data_f,joints, joint_num,vis=False):
+def trace_init(data_f,joints, joint_num,vis=False):
     #indexed already so just 1,2,3 .... for a particular joint returns trace
     red = Color("blue")
     colors = list(red.range_to(Color("green"),np.size(data_f,1)))
     #
     
-    
+    trace=[]
     for j in range(np.size(data_f,1)):
         
         rgbc=colors[j].rgb

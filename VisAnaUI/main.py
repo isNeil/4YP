@@ -102,12 +102,12 @@ jeleton2=temp[1].copy()
 
 #############################################################################
 all_traces=[]
-tracetemp=[]
+
 for j in range(len(joints)):
 #    
-    tracejoint = trace_init(tracetemp,plota,joints,j)
+    tracejoint = trace_init(plota,joints,j)
     all_traces.append(tracejoint)
-    tracetemp=[]
+    
 ###############################################################################
 running = True
 #------------------------------------------------------------------------------
@@ -136,12 +136,28 @@ joint_menu=menu(choices=['Overall','R Hip','L Hip','R Knee','L Knee','R Foot','L
 
 def M2(m):
     global plot_num,plotlist,running,keypoint,plota, all_traces
+    
+    
     val = m.selected
     dex=['Trial 1','Trial 2','Trial 3','Trial 4','Trial 5','Trial 6','Anomaly','Trial 8','Trial 9','Trial 10'].index(val)
     plota=plotlist[dex]
     plot_num=dex
     gwt2.text="<img src='Images/UIresize2/stdvis_trial_%d_keypoint_%d.jpg' height='520' width='1300'/>"%(plot_num,keypoint)
     
+    
+    for j in range(len(joints)):
+        for i in all_traces[j]:
+            i.visible=False
+        tracejoint = trace_init(plota,joints,j)
+        all_traces[j]=tracejoint
+#        for i in all_traces[j]:
+#            i.visible=True
+    tracevis3(ch3)
+    tracevis2(ch2)
+    tracevis16(ch16)
+    tracevis6(ch6)
+    tracevis5(ch5)
+    tracevis13(ch13)
     
     
 
@@ -180,7 +196,7 @@ def tracevis3(b):
         for i in all_traces[3]:
             i.visible = False
         running=True
-checkbox(bind=tracevis3, text='R Foot')
+ch3=checkbox(bind=tracevis3, text='R Foot')
 
 
 def tracevis2(b):
@@ -193,7 +209,7 @@ def tracevis2(b):
         for i in all_traces[2]:
             i.visible = False
         running=True
-checkbox(bind=tracevis2, text='R Knee')
+ch2=checkbox(bind=tracevis2, text='R Knee')
 
 
 def tracevis16(b):
@@ -206,7 +222,7 @@ def tracevis16(b):
         for i in all_traces[16]:
             i.visible = False
         running=True
-checkbox(bind=tracevis16, text='R Hand')
+ch16=checkbox(bind=tracevis16, text='R Hand')
 
 def tracevis6(b):
     global all_traces,running
@@ -218,7 +234,7 @@ def tracevis6(b):
         for i in all_traces[6]:
             i.visible = False
         running=True
-checkbox(bind=tracevis6, text='L Foot')
+ch6=checkbox(bind=tracevis6, text='L Foot')
 
 
 def tracevis5(b):
@@ -231,7 +247,7 @@ def tracevis5(b):
         for i in all_traces[5]:
             i.visible = False
         running=True
-checkbox(bind=tracevis5, text='L Knee')
+ch5=checkbox(bind=tracevis5, text='L Knee')
 
 
 def tracevis13(b):
@@ -244,7 +260,7 @@ def tracevis13(b):
         for i in all_traces[13]:
             i.visible = False
         running=True
-checkbox(bind=tracevis13, text='L Hand')
+ch13=checkbox(bind=tracevis13, text='L Hand')
 #----------------------------------------------------------------------------
 
 
